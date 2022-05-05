@@ -258,7 +258,7 @@ while True:
                         pygame.display.update()
 
     if selection == 5:  ####################SKAAVOK###################
-        show_text(scores, 0, 0, white)
+        show_text(str(scores), 0, 0, white)
         randx = random.randint(100, 900)
         randy = random.randint(100, 500)
         pygame.draw.circle(screen, white, (randx, randy), 20)
@@ -275,10 +275,19 @@ while True:
                     xs, ys = event.pos
 
                     if (math.sqrt(abs(xs - randx)**2 + abs(ys - randy)**2) <= 20):
+                        screen.fill(black)
                         scores = scores + 1
                         randx = random.randint(100, 900)
                         randy = random.randint(100, 500)
                         pygame.draw.circle(screen, white, (randx, randy), 20)
+                        show_text(str(scores), 0, 0, white)
+                        pygame.display.update()
+                    else:
+                        screen.fill(black)
+                        scores = scores - 1
+                        show_text(str(scores), 0, 0, white)
+                        pygame.draw.circle(screen, white, (randx, randy), 20)
+                        pygame.display.update()
 
 
     if selection == 6:  #####################WORM#####################
