@@ -1,8 +1,20 @@
 import pygame
 import random
 import math
-
+import sqlite3
+import time
 from Title import *
+
+#################DB-highScores#############################
+#pastryHigh(int)#skaavokHigh(int)#wormHigh(int)#
+
+connection = sqlite3.connect("DB.db")
+c = connection.cursor()
+result = c.execute("SELECT * FROM highScores")
+result = result.fetchall()
+print("High Scores", result)
+
+
 #test
 pink = (255, 200, 200)
 blue = (0, 0, 255)
@@ -57,6 +69,10 @@ while True:
         for event in pygame.event.get():
             if event.type == pygame.KEYDOWN and event.key == K_ESCAPE:
                 print("quitting")
+                result = c.execute("SELECT * FROM highScores")
+                result = result.fetchall()
+                connection.commit()
+                connection.close()
                 quit()
             if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
                 x, y = event.pos
@@ -233,7 +249,10 @@ while True:
         pygame.mixer.music.play(-1)
         edp445 = pygame.image.load("Logo/edp455.jpg")
         screen.blit(edp445, (350, 150))
+        pastryHigh = c.execute("SELECT pastryHigh FROM highScores")
+        pastryHigh = pastryHigh.fetchall()
         show_text("Pastry Actuations: " + str(totala), 0, 0, white)
+        show_text("HIGH SCORE: " + str(pastryHigh[0][0]), 500, 0, white)
         pygame.display.update()
         while selection == 4:
             for event in pygame.event.get():
@@ -245,16 +264,20 @@ while True:
                     print("escape")
                 if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
                     xa, ya = event.pos
-                    # print("coords:")
-                    # print("x:"+str(xa))
-                    # print("y:"+str(ya))
-                    # print(totala)
+    
                     if xa >= 350 and xa <= 650 and ya >= 150 and ya <= 450:
                         pygame.mixer.Sound.play(click)
+                        pastryHigh = c.execute("SELECT pastryHigh FROM highScores")
+                        pastryHigh = pastryHigh.fetchall()
                         totala += 1
                         screen.fill(black)
                         screen.blit(edp445, (350, 150))
                         show_text("Pastry Actuations: " + str(totala), 0, 0, white)
+                        if (totala > pastryHigh[0][0]):
+                          c.execute("UPDATE highScores SET pastryHigh ="+ str(totala))
+                        pastryHigh = c.execute("SELECT pastryHigh FROM highScores")
+                        pastryHigh = pastryHigh.fetchall()
+                        show_text("HIGH SCORE: " + str(pastryHigh[0][0]), 500, 0, white)
                         pygame.display.update()
 
     if selection == 5:  ####################SKAAVOK###################
@@ -273,7 +296,6 @@ while True:
                     print("escape")
                 if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
                     xs, ys = event.pos
-
                     if (math.sqrt(abs(xs - randx)**2 + abs(ys - randy)**2) <= 20):
                         screen.fill(black)
                         scores = scores + 1
@@ -285,9 +307,12 @@ while True:
                     else:
                         screen.fill(black)
                         scores = scores - 1
+                        if (scores <= 0):
+                            scores = 0
                         show_text(str(scores), 0, 0, white)
                         pygame.draw.circle(screen, white, (randx, randy), 20)
                         pygame.display.update()
+                    
 
 
     if selection == 6:  #####################WORM#####################
