@@ -1,4 +1,6 @@
 import pygame
+import random
+import math
 
 from Title import *
 #test
@@ -28,6 +30,9 @@ p2scorep = 0
 #######PASTRY ACTUATOR VARS########
 totala = 0
 displayscorea = ""
+###################################
+###########SKAAVOK VARS############
+scores = 0
 ###################################
 pygame.mixer.pre_init()
 pygame.mixer.music.load("Music/GloriousSound.mp3")
@@ -127,13 +132,14 @@ while True:
                     selection = 6  # go to worm
                     print("going to worm")
 
-    if selection == 2:
+    if selection == 2: ###########################NFTS#######################
         screen.fill(black)
         show_text("NFTS", 0, 0, white)
         for event in pygame.event.get():
             if event.type == pygame.KEYDOWN and event.key == K_ESCAPE:
                 selection = 0
                 print("escape")
+
     if selection == 3:  ############################PING######################
         pingSelect()
         screen.fill(black)
@@ -252,14 +258,29 @@ while True:
                         pygame.display.update()
 
     if selection == 5:  ####################SKAAVOK###################
-        show_text("skaavok", 0, 0, white)
-        for event in pygame.event.get():
-            if event.type == pygame.KEYDOWN and event.key == K_ESCAPE:
-                selection = 0
-                pygame.mixer.pre_init()
-                pygame.mixer.music.load("Music/GloriousSound.mp3")
-                pygame.mixer.music.play(-1)
-                print("escape")
+        show_text(scores, 0, 0, white)
+        randx = random.randint(100, 900)
+        randy = random.randint(100, 500)
+        pygame.draw.circle(screen, white, (randx, randy), 20)
+        pygame.display.update()
+        while selection == 5:
+            for event in pygame.event.get():
+                if event.type == pygame.KEYDOWN and event.key == K_ESCAPE:
+                    selection = 0
+                    pygame.mixer.pre_init()
+                    pygame.mixer.music.load("Music/GloriousSound.mp3")
+                    pygame.mixer.music.play(-1)
+                    print("escape")
+                if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
+                    xs, ys = event.pos
+
+                    if (math.sqrt(abs(xs - randx)**2 + abs(ys - randy)**2) <= 20):
+                        scores = scores + 1
+                        randx = random.randint(100, 900)
+                        randy = random.randint(100, 500)
+                        pygame.draw.circle(screen, white, (randx, randy), 20)
+
+
     if selection == 6:  #####################WORM#####################
         show_text("worm", 0, 0, white)
         for event in pygame.event.get():
