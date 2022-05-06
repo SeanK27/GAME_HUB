@@ -32,6 +32,11 @@ def show_text(msg, xp, yp, color):
   msgobj = fontobj.render(msg, False, color)
   screen.blit(msgobj, (xp, yp))
 
+def show_text_size(msg, xp, yp, color, size):
+  fontobj = pygame.font.SysFont("comicsans", size)
+  msgobj = fontobj.render(msg, False, color)
+  screen.blit(msgobj, (xp, yp))
+
 
 
 
@@ -126,3 +131,30 @@ def wormSelect():
   drawSelect()
   pygame.display.update()
   time.sleep(0.25)
+
+def countDownScreen():
+  screen.fill(black)
+  # show_text_size("5", 400, 100, white, 400)
+  # pygame.display.update()
+  # time.sleep(1)
+  # screen.fill(black)
+  # show_text_size("4", 400, 100, white, 400)
+  # pygame.display.update()
+  # time.sleep(1)
+  # screen.fill(black)
+  show_text_size("3", 400, 100, white, 400)
+  pygame.display.update()
+  time.sleep(1)
+  screen.fill(black)
+  show_text_size("2", 400, 100, white, 400)
+  pygame.display.update()
+  time.sleep(1)
+  screen.fill(black)
+  show_text_size("1", 400, 100, white, 400)
+  pygame.display.update()
+  time.sleep(1)
+  screen.fill(black)
+  show_text_size("GO", 300, 100, white, 400)
+  pygame.display.update()
+  time.sleep(1)
+

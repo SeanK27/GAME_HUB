@@ -4,6 +4,7 @@ import math
 import sqlite3
 import time
 from Title import *
+pygame.init()
 
 #################DB-highScores#############################
 #pastryHigh(int)#skaavokHigh(int)#wormHigh(int)#
@@ -45,6 +46,10 @@ displayscorea = ""
 ###################################
 ###########SKAAVOK VARS############
 scores = 0
+clock = pygame.time.Clock()
+ADDITION = pygame.USEREVENT + 1
+current_time = 0
+start_time = 0
 ###################################
 pygame.mixer.pre_init()
 pygame.mixer.music.load("Music/GloriousSound.mp3")
@@ -71,6 +76,7 @@ while True:
                 print("quitting")
                 result = c.execute("SELECT * FROM highScores")
                 result = result.fetchall()
+                print(result[0])
                 connection.commit()
                 connection.close()
                 quit()
@@ -281,12 +287,32 @@ while True:
                         pygame.display.update()
 
     if selection == 5:  ####################SKAAVOK###################
+        countDownScreen()
+        screen.fill(black)
+        skaavokHigh = c.execute("SELECT skaavokHigh FROM highScores")
+        skaavokHigh = skaavokHigh.fetchall()
         show_text(str(scores), 0, 0, white)
+        show_text("HIGH SCORE: " + str(skaavokHigh[0][0]), 300, 0, white)
         randx = random.randint(100, 900)
         randy = random.randint(100, 500)
         pygame.draw.circle(screen, white, (randx, randy), 20)
         pygame.display.update()
+        start_time = pygame.time.get_ticks()
         while selection == 5:
+            pygame.draw.rect(screen, black, (700, 0, 300, 35))
+            formatted_score = abs(((pygame.time.get_ticks()-start_time)/1000)-30)
+            show_text(str(round(formatted_score, 2)), 700, 0, white)
+            show_text("sec left", 800, 0, white)
+            pygame.display.update()
+            if (pygame.time.get_ticks()-start_time >= 30000):
+                screen.fill(black)
+                show_text("GAME OVER", 0, 0, white)
+                pygame.display.update()
+                time.sleep(2)
+                selection = 0
+                pygame.mixer.pre_init()
+                pygame.mixer.music.load("Music/GloriousSound.mp3")
+                pygame.mixer.music.play(-1)
             for event in pygame.event.get():
                 if event.type == pygame.KEYDOWN and event.key == K_ESCAPE:
                     selection = 0
@@ -297,12 +323,18 @@ while True:
                 if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
                     xs, ys = event.pos
                     if (math.sqrt(abs(xs - randx)**2 + abs(ys - randy)**2) <= 20):
+                        pygame.mixer.Sound.play(click)
                         screen.fill(black)
                         scores = scores + 1
                         randx = random.randint(100, 900)
                         randy = random.randint(100, 500)
                         pygame.draw.circle(screen, white, (randx, randy), 20)
                         show_text(str(scores), 0, 0, white)
+                        if (scores > skaavokHigh[0][0]):
+                          c.execute("UPDATE highScores SET skaavokHigh ="+ str(scores))
+                        skaavokHigh = c.execute("SELECT skaavokHigh FROM highScores")
+                        skaavokHigh = skaavokHigh.fetchall()
+                        show_text("HIGH SCORE: " + str(skaavokHigh[0][0]), 300, 0, white)
                         pygame.display.update()
                     else:
                         screen.fill(black)
@@ -310,6 +342,7 @@ while True:
                         if (scores <= 0):
                             scores = 0
                         show_text(str(scores), 0, 0, white)
+                        show_text("HIGH SCORE: " + str(skaavokHigh[0][0]), 300, 0, white)
                         pygame.draw.circle(screen, white, (randx, randy), 20)
                         pygame.display.update()
                     
