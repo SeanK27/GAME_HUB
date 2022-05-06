@@ -15,7 +15,6 @@ result = c.execute("SELECT * FROM highScores")
 result = result.fetchall()
 print("High Scores", result)
 
-########
 #test
 pink = (255, 200, 200)
 blue = (0, 0, 255)
