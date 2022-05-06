@@ -287,6 +287,7 @@ while True:
                         pygame.display.update()
 
     if selection == 5:  ####################SKAAVOK###################
+        scores = 0
         countDownScreen()
         screen.fill(black)
         skaavokHigh = c.execute("SELECT skaavokHigh FROM highScores")
@@ -313,12 +314,14 @@ while True:
                 pygame.mixer.pre_init()
                 pygame.mixer.music.load("Music/GloriousSound.mp3")
                 pygame.mixer.music.play(-1)
+                scores = 0
             for event in pygame.event.get():
                 if event.type == pygame.KEYDOWN and event.key == K_ESCAPE:
                     selection = 0
                     pygame.mixer.pre_init()
                     pygame.mixer.music.load("Music/GloriousSound.mp3")
                     pygame.mixer.music.play(-1)
+                    scores = 0
                     print("escape")
                 if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
                     xs, ys = event.pos
