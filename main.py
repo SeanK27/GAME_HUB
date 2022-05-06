@@ -6,7 +6,7 @@ import time
 from Title import *
 pygame.init()
 
-#################DB-highScores#############################
+#################DB-highScores##################
 #pastryHigh(int)#skaavokHigh(int)#wormHigh(int)#
 
 connection = sqlite3.connect("DB.db")
