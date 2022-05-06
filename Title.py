@@ -14,19 +14,21 @@ x=0
 y=0
 colors=[pink,blue,green,white]
 pygame.init()
-screen = pygame.display.set_mode((1000,600))
-pygame.display.set_caption("window")
+screen = pygame.display.set_mode((1000,600)) 
+pygame.display.set_caption("GAMEHUB")
+#More Logos
 titleLogo = pygame.image.load("Logo/titleLogo.png")
 playButton = pygame.image.load("Logo/play.png")
 nftButton = pygame.image.load("Logo/nft.png")
 escButton = pygame.image.load("Logo/esc.png")
 
+#Button Logos
 pingLogo = pygame.image.load("Logo/ping.png")
 aimLogo = pygame.image.load("Logo/aim.png")
 wormLogo = pygame.image.load("Logo/worm.png")
 pastryLogo = pygame.image.load("Logo/pastry.png")
 
-
+#Show Text
 def show_text(msg, xp, yp, color):
   fontobj = pygame.font.SysFont("comicsans", 32)
   msgobj = fontobj.render(msg, False, color)
@@ -39,8 +41,7 @@ def show_text_size(msg, xp, yp, color, size):
 
 
 
-
-def drawTitle():
+def drawTitle(): #Title Screen
   screen.fill(black)
   pygame.display.set_caption("window")
   screen.blit(playButton, (333,266))
@@ -48,14 +49,14 @@ def drawTitle():
   screen.blit(titleLogo, (250, 30))
   pygame.display.update()
 
-def titlePlay():
+def titlePlay(): #Play button animation
   pygame.display.set_caption("window")
   screen.blit(playButton, (338, 271))
   screen.blit(nftButton, (333, 430))
   screen.blit(titleLogo, (250, 30))
   pygame.display.update()
 
-def titleNFT():
+def titleNFT(): #NFT animation
   screen.fill(black)
   pygame.display.set_caption("window")
   screen.blit(playButton, (333, 266))
@@ -64,7 +65,7 @@ def titleNFT():
   pygame.display.update()
 
 
-def drawSelect():
+def drawSelect(): #select screen
   screen.fill(black)
   screen.blit(titleLogo, (250, 30))
   screen.blit(escButton,(20,20))
@@ -75,7 +76,7 @@ def drawSelect():
   pygame.display.update()
 
 
-def pingSelect():
+def pingSelect(): #ping anim
   screen.fill(black)
   screen.blit(titleLogo, (250, 30))
   screen.blit(escButton,(20,20))
@@ -90,7 +91,7 @@ def pingSelect():
   time.sleep(0.25)
 
 
-def pastrySelect():
+def pastrySelect(): #pastry anim
   screen.fill(black)
   screen.blit(titleLogo, (250, 30))
   screen.blit(escButton,(20,20))
@@ -118,7 +119,7 @@ def aimSelect():
   pygame.display.update()
   time.sleep(0.25)
 
-def wormSelect():
+def wormSelect(): #worm anim
   screen.fill(black)
   screen.blit(titleLogo, (250, 30))
   screen.blit(escButton,(20,20))
@@ -132,7 +133,7 @@ def wormSelect():
   pygame.display.update()
   time.sleep(0.25)
 
-def countDownScreen():
+def countDownScreen(): #count down
   screen.fill(black)
   # show_text_size("5", 400, 100, white, 400)
   # pygame.display.update()
