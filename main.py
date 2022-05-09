@@ -26,6 +26,7 @@ colors = [pink, blue, green]
 pygame.init()
 screen = pygame.display.set_mode((1000, 600))
 escButton = pygame.image.load("Logo/esc.png")
+trig = 0
 
 ##########PING VARS#################
 xp = 300
@@ -112,11 +113,31 @@ while True:
                     print("going to NFTS")
 
     if selection == 1:  #####################SELECT SCREEN###################
-        drawSelect()
+        if trig != 1:  
+            drawSelect()
         for event in pygame.event.get():
             if event.type == pygame.KEYDOWN and event.key == K_ESCAPE:
-                selection = 0
+                drawSelectEsc()
+                trig = 1
                 print("escape")
+              
+            if event.type == pygame.KEYUP and event.key == K_ESCAPE and trig == 1:
+                drawSelect()
+                selection = 0
+                trig = 0
+                print("up")
+              
+            if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
+                x, y = event.pos
+                if 20 <= x <= 120 and 20 <= y <= 55:
+                    drawSelectEsc()
+                    trig = 1
+                  
+            if event.type == pygame.MOUSEBUTTONUP and event.button == 1 and trig == 1:
+                  drawSelect()
+                  selection = 0
+                  trig = 0
+                  
             if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
                 x, y = event.pos
                 # print("coords:")
@@ -252,7 +273,7 @@ while True:
         pygame.mixer.pre_init()
         pygame.mixer.music.load("Music/bangarang.mp3")
         pygame.mixer.music.play(-1)
-        edp445 = pygame.image.load("Logo/edp455.jpg")
+        edp445 = pygame.image.load("Logo/edp455.jpg.png")
         screen.blit(edp445, (350, 150))
         pastryHigh = c.execute("SELECT pastryHigh FROM highScores")
         pastryHigh = pastryHigh.fetchall()
@@ -313,6 +334,7 @@ while True:
                 pygame.mixer.pre_init()
                 pygame.mixer.music.load("Music/GloriousSound.mp3")
                 pygame.mixer.music.play(-1)
+                
                 scores = 0
             for event in pygame.event.get():
                 if event.type == pygame.KEYDOWN and event.key == K_ESCAPE:
