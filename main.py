@@ -6,14 +6,25 @@ import time
 from Title import *
 pygame.init()
 
+
 #################DB-highScores##################
 #pastryHigh(int)#skaavokHigh(int)#wormHigh(int)#
 
+###########################users############################
+#username(String)#password(String)#money(int)#nftids(String)#
+
 connection = sqlite3.connect("DB.db")
 c = connection.cursor()
+#DISPLAY DBS#
 result = c.execute("SELECT * FROM highScores")
 result = result.fetchall()
-print("High Scores", result)
+print("High Scores:", result)
+result = c.execute("SELECT * FROM users")
+result = result.fetchall()
+print("Users:", result)
+
+
+#c.execute("CREATE TABLE users (username String, password int, money double, nftids String)")
 
 
 pink = (255, 200, 200)
@@ -328,6 +339,7 @@ while True:
             if (pygame.time.get_ticks()-start_time >= 30000):
                 screen.fill(black)
                 show_text("GAME OVER", 0, 0, white)
+                
                 pygame.display.update()
                 time.sleep(2)
                 selection = 0
