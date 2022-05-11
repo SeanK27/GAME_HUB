@@ -22,6 +22,7 @@ playButton = pygame.image.load("Logo/play.png")
 nftButton = pygame.image.load("Logo/nft.png")
 escButton = pygame.image.load("Logo/esc.png")
 sescButton = pygame.image.load("Logo/sesc.png")
+soundButton = pygame.image.load("Logo/sound.png")
 
 #Button Logos
 pingLogo = pygame.image.load("Logo/ping.png")
@@ -48,6 +49,7 @@ def drawTitle(): #Title Screen
   screen.blit(playButton, (333,266))
   screen.blit(nftButton, (333,430))
   screen.blit(titleLogo, (250, 30))
+  screen.blit(soundButton, (950, 550))
   pygame.display.update()
 
 def titlePlay(): #Play button animation

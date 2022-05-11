@@ -3,6 +3,8 @@ import random
 import math
 import sqlite3
 import time
+import tkinter
+from functools import partial
 from Title import *
 pygame.init()
 
@@ -11,7 +13,7 @@ pygame.init()
 #pastryHigh(int)#skaavokHigh(int)#wormHigh(int)#
 
 ###########################users############################
-#username(String)#password(String)#money(int)#nftids(String)#
+#username(String)#password(String)#money(int)#nftids(String)#c
 
 connection = sqlite3.connect("DB.db")
 c = connection.cursor()
@@ -33,6 +35,9 @@ green = (0, 255, 0)
 black = (0, 0, 0)
 white = (255, 255, 255)
 orange = (255, 165, 0)
+red = (255, 0, 0)
+wormcolor = (251, 217, 177)
+
 colors = [pink, blue, green]
 pygame.init()
 screen = pygame.display.set_mode((1000, 600))
@@ -62,10 +67,24 @@ ADDITION = pygame.USEREVENT + 1
 current_time = 0
 start_time = 0
 ###################################
+##############WORM#################
+foodx = (random.randint(0,1000) // 20 ) * 20
+foody = (random.randint(0,600) // 20 ) * 20
+wormx = 500
+wormy = 300
+wormbody = [[0,0]]
+def updateHead():
+    wormbody[0][0] = wormx
+    wormbody[0][0] = wormy
+def addBody():
+    wormbody.append([wormx, wormy])
+updateHead()
+###################################
+volume = 0.1
 pygame.mixer.pre_init()
 pygame.mixer.music.load("Music/GloriousSound.mp3")
 pygame.mixer.music.play(-1)
-pygame.mixer.music.set_volume(0.1)
+pygame.mixer.music.set_volume(volume)
 click = pygame.mixer.Sound("Music/click.wav")
 ## 0: title screen; 1:game selection; 2: nft market; 3: ping; 4: pastryactuator; 5: skaavok; 6:worm
 selection = 0
@@ -95,7 +114,11 @@ while True:
                 x, y = event.pos
                 # print("coords:")
                 # print("x:"+str(x))
-                # print("y:"+str(y))
+                # print("y:"+str(y)) 950, 550
+                if 950 <= x <= 1000 and 550 <= y <= 600:
+                    volume = volume + 0.1
+                    pygame.mixer.music.set_volume(volume)    
+              
                 if 333 <= x <= 666 and 266 <= y <= 366:
                     pygame.mixer.Sound.play(click)
                     screen.fill(black)
@@ -385,11 +408,50 @@ while True:
 
 
     if selection == 6:  #####################WORM#####################
-        show_text("worm", 0, 0, white)
+        time.sleep(0.075)
+        screen.fill(black)
+        pygame.draw.rect(screen, red, (foodx, foody, 20, 20))
+        pygame.draw.rect(screen, wormcolor, (wormx, wormy, 20, 20))
+        pygame.display.update()
         for event in pygame.event.get():
-            if event.type == pygame.KEYDOWN and event.key == K_ESCAPE:
-                selection = 0
-                pygame.mixer.pre_init()
-                pygame.mixer.music.load("Music/GloriousSound.mp3")
-                pygame.mixer.music.play(-1)
-                print("escape")
+            if event.type == pygame.KEYDOWN:
+              if event.key == K_ESCAPE:
+                  selection = 0
+                  pygame.mixer.pre_init()
+                  pygame.mixer.music.load("Music/GloriousSound.mp3")
+                  pygame.mixer.music.play(-1)
+                  print("escape")
+              if event.key == K_DOWN:
+                  dir = 0
+              if event.key == K_UP:
+                  dir = 1
+              if event.key == K_RIGHT:
+                  dir = 2
+              if event.key == K_LEFT:
+                  dir = 3
+        if dir == 0:
+            wormy = wormy + 20
+            updateHead()
+        if dir == 1:
+            wormy = wormy - 20
+            updateHead()
+        if dir == 2:
+            wormx = wormx + 20
+            updateHead()
+        if dir == 3:
+            wormx = wormx - 20
+            updateHead()
+        if foodx == wormx and foody == wormy:
+            foodx = (random.randint(0,1000) // 20 ) * 20
+            foody = (random.randint(0,600) // 20 ) * 20
+            updateHead()
+          
+        if wormx < 0 or wormx > 1000 or wormy < 0 or wormy > 600:
+            screen.fill(black)
+            selection = 0
+            show_text(":( worm dead", 0, 0, white)
+            pygame.display.update()
+            wormx = 500
+            wormy = 300
+            updateHead()
+            time.sleep(3)
