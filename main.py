@@ -70,15 +70,9 @@ start_time = 0
 ##############WORM#################
 foodx = (random.randint(0,1000) // 20 ) * 20
 foody = (random.randint(0,600) // 20 ) * 20
-wormx = 500
-wormy = 300
-wormbody = [[0,0]]
-def updateHead():
-    wormbody[0][0] = wormx
-    wormbody[0][0] = wormy
-def addBody():
-    wormbody.append([wormx, wormy])
-updateHead()
+wormbody = [[500,300]]
+headpos = [500,300]
+dir = 2
 ###################################
 volume = 0.1
 pygame.mixer.pre_init()
@@ -409,9 +403,11 @@ while True:
 
     if selection == 6:  #####################WORM#####################
         time.sleep(0.075)
+        print(wormbody)
         screen.fill(black)
+        for n in wormbody:
+            pygame.draw.rect(screen, wormcolor, pygame.Rect(n[0], n[1], 20, 20))
         pygame.draw.rect(screen, red, (foodx, foody, 20, 20))
-        pygame.draw.rect(screen, wormcolor, (wormx, wormy, 20, 20))
         pygame.display.update()
         for event in pygame.event.get():
             if event.type == pygame.KEYDOWN:
@@ -430,28 +426,26 @@ while True:
               if event.key == K_LEFT:
                   dir = 3
         if dir == 0:
-            wormy = wormy + 20
-            updateHead()
+            headpos[1] += 20
         if dir == 1:
-            wormy = wormy - 20
-            updateHead()
+            headpos[1] -= 20
         if dir == 2:
-            wormx = wormx + 20
-            updateHead()
+            headpos[0] += 20
         if dir == 3:
-            wormx = wormx - 20
-            updateHead()
-        if foodx == wormx and foody == wormy:
-            foodx = (random.randint(0,1000) // 20 ) * 20
-            foody = (random.randint(0,600) // 20 ) * 20
-            updateHead()
+            headpos[0] -= 20
+
+        wormbody.insert(0, headpos)
+        if foodx == wormbody[0][0] and foody == wormbody[0][1]:
+            foodx = (random.randint(0,1000) // 20) * 20
+            foody = (random.randint(0,600) // 20) * 20
+        else:
+            wormbody.pop()
           
-        if wormx < 0 or wormx > 1000 or wormy < 0 or wormy > 600:
+        if wormbody[0][0] < 0 or wormbody[0][0] > 1000 or wormbody[0][1] < 0 or wormbody[0][1] > 600:
             screen.fill(black)
             selection = 0
             show_text(":( worm dead", 0, 0, white)
             pygame.display.update()
-            wormx = 500
-            wormy = 300
-            updateHead()
+            wormbody[0][0] = 500
+            wormbody[0][1] = 300
             time.sleep(3)
