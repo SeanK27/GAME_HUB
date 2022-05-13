@@ -404,12 +404,15 @@ while True:
 
     if selection == 6:  #####################WORM#####################
         time.sleep(0.075)
-        print(wormbody)
+        #print(wormbody)
+        wormHigh = c.execute("SELECT wormHigh FROM highScores")
+        wormHigh = wormHigh.fetchall()
         screen.fill(black)
         for n in wormbody:
             pygame.draw.rect(screen, wormcolor, pygame.Rect(n[0], n[1], 20, 20))
         pygame.draw.rect(screen, red, (foodx, foody, 20, 20))
-        show_text(str(scorew), 0, 0, white)
+        show_text("Score: " + str(scorew), 0, 0, white)
+        show_text("High Score: " + str(wormHigh[0][0]), 500, 0, white)
         pygame.display.update()
         for event in pygame.event.get():
             if event.type == pygame.KEYDOWN:
@@ -444,10 +447,11 @@ while True:
             foodx = (random.randint(0,1000) // 20) * 20
             foody = (random.randint(0,600) // 20) * 20
             scorew+=1
+            c.execute("UPDATE highScores SET wormHigh ="+ str(scorew))
         else:
             wormbody.pop(-1)
 
-        if wormbody[0][0] < 0 or wormbody[0][0] > 1000 or wormbody[0][1] < 0 or wormbody[0][1] > 600:
+        if headpos[0] < 0 or headpos[0] > 1000 or headpos[1] < 0 or headpos[1] > 600:
             screen.fill(black)
             selection = 0
             show_text(":( worm dead", 0, 0, white)
