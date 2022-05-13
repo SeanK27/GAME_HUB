@@ -73,6 +73,7 @@ foody = (random.randint(0,600) // 20 ) * 20
 wormbody = [[500,300]]
 headpos = [500,300]
 dir = 2
+scorew = 0
 ###################################
 volume = 0.1
 pygame.mixer.pre_init()
@@ -106,14 +107,14 @@ while True:
                 quit()
             if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
                 x, y = event.pos
-                # print("coords:")
-                # print("x:"+str(x))
-                # print("y:"+str(y)) 950, 550
+                print("coords:")
+                print("x:"+str(x))
+                print("y:"+str(y))
                 if 950 <= x <= 1000 and 550 <= y <= 600:
                     volume = volume + 0.1
                     pygame.mixer.music.set_volume(volume)    
               
-                if 333 <= x <= 666 and 266 <= y <= 366:
+                if 333 <= x <= 666 and 266 <= y <= 414:
                     pygame.mixer.Sound.play(click)
                     screen.fill(black)
                     titlePlay()
@@ -126,7 +127,7 @@ while True:
                     y = 0
                     selection = 1  # go to game selection
                     print("going to game selection")
-                if 333 <= x <= 666 and 430 <= y <= 530:
+                if 333 <= x <= 666 and 430 <= y <= 578:
                     pygame.mixer.Sound.play(click)
                     screen.fill(black)
                     titleNFT()
@@ -408,6 +409,7 @@ while True:
         for n in wormbody:
             pygame.draw.rect(screen, wormcolor, pygame.Rect(n[0], n[1], 20, 20))
         pygame.draw.rect(screen, red, (foodx, foody, 20, 20))
+        show_text(str(scorew), 0, 0, white)
         pygame.display.update()
         for event in pygame.event.get():
             if event.type == pygame.KEYDOWN:
@@ -434,18 +436,24 @@ while True:
         if dir == 3:
             headpos[0] -= 20
 
-        wormbody.insert(0, headpos)
+        #print(headpos)
+        wormbody.insert(0, [headpos[0], headpos[1]])
+        #print(wormbody)
+        #print(" ")
         if foodx == wormbody[0][0] and foody == wormbody[0][1]:
             foodx = (random.randint(0,1000) // 20) * 20
             foody = (random.randint(0,600) // 20) * 20
+            scorew+=1
         else:
-            wormbody.pop()
-          
+            wormbody.pop(-1)
+
         if wormbody[0][0] < 0 or wormbody[0][0] > 1000 or wormbody[0][1] < 0 or wormbody[0][1] > 600:
             screen.fill(black)
             selection = 0
             show_text(":( worm dead", 0, 0, white)
             pygame.display.update()
-            wormbody[0][0] = 500
-            wormbody[0][1] = 300
+            wormbody.clear()
+            wormbody.append([500,300])
+            print(wormbody)
+            scorew = 0
             time.sleep(3)
