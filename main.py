@@ -262,7 +262,6 @@ while True:
                   time.sleep(0.2)
                   selection = 6
                   trig = 0
-              
 
     if selection == 2: ###########################NFTS#######################
         screen.fill(black)
@@ -468,10 +467,21 @@ while True:
                         show_text("HIGH SCORE: " + str(skaavokHigh[0][0]), 300, 0, white)
                         pygame.draw.circle(screen, white, (randx, randy), 20)
                         pygame.display.update()
-                    
-
 
     if selection == 6:  #####################WORM#####################
+        def crash():
+            screen.fill(black)
+            selection = 0
+            show_text(":( worm dead", 0, 0, white)
+            pygame.display.update()
+            wormbody.clear()
+            wormbody.append([500, 300])
+            headpos.clear()
+            headpos.append(500)
+            headpos.append(300)
+            print(wormbody)
+            scorew = 0
+            time.sleep(3)
         pygame.mixer.music.play(0)
         time.sleep(0.075)
         #print(wormbody)
@@ -492,13 +502,13 @@ while True:
                   pygame.mixer.music.load("Music/GloriousSound.mp3")
                   pygame.mixer.music.play(-1)
                   print("escape")
-              if event.key == K_DOWN:
+              if event.key == K_DOWN and dir != 1:
                   dir = 0
-              if event.key == K_UP:
+              if event.key == K_UP and dir != 0:
                   dir = 1
-              if event.key == K_RIGHT:
+              if event.key == K_RIGHT and dir != 3:
                   dir = 2
-              if event.key == K_LEFT:
+              if event.key == K_LEFT and dir != 2:
                   dir = 3
         if dir == 0:
             headpos[1] += 20
@@ -518,17 +528,18 @@ while True:
             foody = (random.randint(0,600) // 20) * 20
             pygame.mixer.Sound.play(yum)
             scorew+=1
-            c.execute("UPDATE highScores SET wormHigh ="+ str(scorew))
+            if (scorew>wormHigh[0][0]):
+                c.execute("UPDATE highScores SET wormHigh ="+ str(scorew))
         else:
             wormbody.pop(-1)
 
         if headpos[0] < 0 or headpos[0] > 1000 or headpos[1] < 0 or headpos[1] > 600:
-            screen.fill(black)
+            crash()
             selection = 0
-            show_text(":( worm dead", 0, 0, white)
-            pygame.display.update()
-            wormbody.clear()
-            wormbody.append([500,300])
-            print(wormbody)
             scorew = 0
-            time.sleep(3)
+
+        for segment in wormbody[1:]:
+            if headpos[0] == segment[0] and headpos[1] == segment[1]:
+                crash()
+                selection = 0
+                scorew = 0
