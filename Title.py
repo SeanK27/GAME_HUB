@@ -45,7 +45,6 @@ def show_text_size(msg, xp, yp, color, size):
 
 def drawTitle(): #Title Screen
   screen.fill(black)
-  pygame.display.set_caption("window")
   screen.blit(playButton, (333,266))
   screen.blit(nftButton, (333,430))
   screen.blit(titleLogo, (250, 30))
@@ -88,13 +87,10 @@ def pingSelect(): #ping anim
   screen.blit(pastryLogo, (572,270))
   screen.blit(wormLogo, (572,400))
   pygame.display.update()
-  time.sleep(0.25)
-  drawSelect()
-  pygame.display.update()
-  time.sleep(0.25)
+  
 
 
-def pastrySelect(): #pastry anim
+def pastrySelect():
   screen.fill(black)
   screen.blit(titleLogo, (250, 30))
   screen.blit(escButton,(20,20))
@@ -103,13 +99,8 @@ def pastrySelect(): #pastry anim
   screen.blit(pastryLogo, (577,275))
   screen.blit(wormLogo, (572,400))
   pygame.display.update()
-  time.sleep(0.25)
-  drawSelect()
-  pygame.display.update()
-  time.sleep(0.25)
 
 def aimSelect():
-  screen.fill(black)
   screen.blit(titleLogo, (250, 30))
   screen.blit(escButton,(20,20))
   screen.blit(pingLogo, (143,270))
@@ -117,10 +108,6 @@ def aimSelect():
   screen.blit(pastryLogo, (572,270))
   screen.blit(wormLogo, (572,400))
   pygame.display.update()
-  time.sleep(0.25)
-  drawSelect()
-  pygame.display.update()
-  time.sleep(0.25)
 
 def wormSelect(): #worm anim
   screen.fill(black)
@@ -131,10 +118,6 @@ def wormSelect(): #worm anim
   screen.blit(pastryLogo, (572,270))
   screen.blit(wormLogo, (577,405))
   pygame.display.update()
-  time.sleep(0.25)
-  drawSelect()
-  pygame.display.update()
-  time.sleep(0.25)
 
 def drawSelectEsc(): #select screen
   screen.fill(black)

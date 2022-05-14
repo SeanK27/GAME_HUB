@@ -4,8 +4,9 @@ import math
 import sqlite3
 import time
 import tkinter
+from tkinter import *
 from functools import partial
-from Title import *
+from tkinter import filedialog
 pygame.init()
 
 
@@ -27,6 +28,12 @@ print("Users:", result)
 
 
 #c.execute("CREATE TABLE users (username String, password int, money double, nftids String)")
+
+#########################################LOGIN#################################################
+
+
+
+#########################################LOGIN#################################################
 
 
 pink = (255, 200, 200)
@@ -81,6 +88,9 @@ pygame.mixer.music.load("Music/GloriousSound.mp3")
 pygame.mixer.music.play(-1)
 pygame.mixer.music.set_volume(volume)
 click = pygame.mixer.Sound("Music/click.wav")
+balltap = pygame.mixer.Sound("Music/balltap.wav")
+yum = pygame.mixer.Sound("Music/yum.wav")
+pop = pygame.mixer.Sound("Music/pop.mp3")
 ## 0: title screen; 1:game selection; 2: nft market; 3: ping; 4: pastryactuator; 5: skaavok; 6:worm
 selection = 0
 titleLogo = pygame.image.load("Logo/titleLogo.png")
@@ -94,7 +104,8 @@ def show_text(msg, xp, yp, color):
 while True:
     pygame.display.update()
     if selection == 0:  ###################TITLE###################
-        drawTitle()
+        if trig == 0:
+          drawTitle()
         pygame.display.update()
         for event in pygame.event.get():
             if event.type == pygame.KEYDOWN and event.key == K_ESCAPE:
@@ -107,51 +118,59 @@ while True:
                 quit()
             if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
                 x, y = event.pos
-                print("coords:")
-                print("x:"+str(x))
-                print("y:"+str(y))
-                if 950 <= x <= 1000 and 550 <= y <= 600:
-                    volume = volume + 0.1
-                    pygame.mixer.music.set_volume(volume)    
-              
+                # print("coords:")
+                # print("x:"+str(x))
+                # print("y:"+str(y))
                 if 333 <= x <= 666 and 266 <= y <= 414:
                     pygame.mixer.Sound.play(click)
                     screen.fill(black)
                     titlePlay()
-                    pygame.display.update()
-                    time.sleep(0.25)
-                    drawTitle()
                     time.sleep(0.1)
-                    pygame.display.update()
                     x = 0
                     y = 0
-                    selection = 1  # go to game selection
-                    print("going to game selection")
+                    trig = 1  # go to game selection
+            if event.type == pygame.MOUSEBUTTONUP and event.button == 1 and trig == 1:
+                drawTitle()
+                time.sleep(0.2)
+                print("going to select")
+                trig=0
+                selection=1
+            if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
+                x, y = event.pos
                 if 333 <= x <= 666 and 430 <= y <= 578:
                     pygame.mixer.Sound.play(click)
                     screen.fill(black)
                     titleNFT()
-                    pygame.display.update()
-                    time.sleep(0.25)
-                    drawTitle()
                     time.sleep(0.1)
-                    pygame.display.update()
                     x = 0
                     y = 0
-                    selection = 2  # go to nft page
+                    trig =2  # go to nft page
                     print("going to NFTS")
+            if event.type == pygame.MOUSEBUTTONUP and event.button == 1 and trig == 2:
+                selection = 2
+                drawTitle()
+                time.sleep(0.2)
+                trig=0
+                selection = 2
+
+
+             # if 950 <= x <= 1000 and 550 <= y <= 600:
+              ##     pygame.mixer.music.set_volume(volume) 
 
     if selection == 1:  #####################SELECT SCREEN###################
-        if trig != 1:  
+        if trig == 0:  
             drawSelect()
+            time.sleep(0.2)
         for event in pygame.event.get():
             if event.type == pygame.KEYDOWN and event.key == K_ESCAPE:
                 drawSelectEsc()
+                time.sleep(0.1)
                 trig = 1
                 print("escape")
               
             if event.type == pygame.KEYUP and event.key == K_ESCAPE and trig == 1:
                 drawSelect()
+                time.sleep(0.2)
                 selection = 0
                 trig = 0
                 print("up")
@@ -159,11 +178,14 @@ while True:
             if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
                 x, y = event.pos
                 if 20 <= x <= 120 and 20 <= y <= 55:
+                    pygame.mixer.Sound.play(click)
                     drawSelectEsc()
+                    time.sleep(0.1)
                     trig = 1
                   
             if event.type == pygame.MOUSEBUTTONUP and event.button == 1 and trig == 1:
                   drawSelect()
+                  time.sleep(0.2)
                   selection = 0
                   trig = 0
                   
@@ -177,31 +199,69 @@ while True:
                     pygame.display.update()
                     x = 0
                     y = 0
-                    selection = 3  # go to ping
+                    trig=2
+                    pingSelect()
+                    time.sleep(0.1)
                     print("going to ping")
+            if event.type == pygame.MOUSEBUTTONUP and event.button == 1 and trig == 2:
+                  drawSelect()
+                  time.sleep(0.2)
+                  selection = 3
+                  trig = 0
+
+            if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
+                x, y = event.pos            
                 if 143 <= x <= 429 and 400 <= y <= 500:
                     pygame.mixer.Sound.play(click)
                     screen.fill(black)
                     pygame.display.update()
                     x = 0
                     y = 0
-                    selection = 5  # go to skaavok
+                    trig=3
+                    aimSelect()
+                    time.sleep(0.1)
                     print("going to skaavok")
+            if event.type == pygame.MOUSEBUTTONUP and event.button == 1 and trig == 3:
+                  drawSelect()
+                  time.sleep(0.2)
+                  selection = 5
+                  trig = 0
+                
+            if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
+                x, y = event.pos
                 if 572 <= x <= 858 and 270 <= y <= 370:
                     pygame.mixer.Sound.play(click)
                     pygame.display.update()
                     x = 0
                     y = 0
-                    selection = 4  # go to pastry actuator
+                    trig=4
+                    pastrySelect()
+                    time.sleep(0.1)
                     print("going to pastry actuator")
+            if event.type == pygame.MOUSEBUTTONUP and event.button == 1 and trig == 4:
+                  drawSelect()
+                  time.sleep(0.2)
+                  selection = 4
+                  trig = 0
+
+            if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
+                x, y =event.pos
                 if 572 <= x <= 858 and 400 <= y <= 500:
                     pygame.mixer.Sound.play(click)
                     screen.fill(black)
                     pygame.display.update()
                     x = 0
                     y = 0
-                    selection = 6  # go to worm
+                    wormSelect()
+                    time.sleep(0.1)
+                    trig=5
                     print("going to worm")
+            if event.type == pygame.MOUSEBUTTONUP and event.button == 1 and trig == 5:
+                  drawSelect()
+                  time.sleep(0.2)
+                  selection = 6
+                  trig = 0
+              
 
     if selection == 2: ###########################NFTS#######################
         screen.fill(black)
@@ -212,7 +272,7 @@ while True:
                 print("escape")
 
     if selection == 3:  ############################PING######################
-        pingSelect()
+        pygame.mixer.music.play(0)
         screen.fill(black)
         pygame.display.update()
         while selection == 3:
@@ -264,18 +324,24 @@ while True:
 
             if xp < 80 and ap < yp < ap + 150:
                 xchangep = -xchangep
+                pygame.mixer.Sound.play(balltap)
+                
             if xp > 940 and bp < yp < bp + 150:
                 xchangep = -xchangep
+                pygame.mixer.Sound.play(balltap)
+              
 
             ap = ap + acp
             bp = bp + bcp
             if ap <= 0:
                 ap = 0
+
             if ap >= 450:
                 ap = 450
 
             if bp >= 450:
                 bp = 450
+              
             if bp <= 0:
                 bp = 0
 
@@ -296,6 +362,7 @@ while True:
             yp = yp + ychangep
 
     if selection == 4:  ######################PASTRY ACTUATOR########################
+        pygame.mixer.music.play(0)
         pastrySelect()
         screen.fill(black)
         pygame.display.update()
@@ -336,6 +403,7 @@ while True:
                         pygame.display.update()
 
     if selection == 5:  ####################SKAAVOK###################
+        pygame.mixer.music.play(0)
         scores = 0
         countDownScreen()
         screen.fill(black)
@@ -377,7 +445,7 @@ while True:
                 if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
                     xs, ys = event.pos
                     if (math.sqrt(abs(xs - randx)**2 + abs(ys - randy)**2) <= 20):
-                        pygame.mixer.Sound.play(click)
+                        pygame.mixer.Sound.play(pop)
                         screen.fill(black)
                         scores = scores + 1
                         randx = random.randint(100, 900)
@@ -403,6 +471,7 @@ while True:
 
 
     if selection == 6:  #####################WORM#####################
+        pygame.mixer.music.play(0)
         time.sleep(0.075)
         #print(wormbody)
         wormHigh = c.execute("SELECT wormHigh FROM highScores")
@@ -446,6 +515,7 @@ while True:
         if foodx == wormbody[0][0] and foody == wormbody[0][1]:
             foodx = (random.randint(0,1000) // 20) * 20
             foody = (random.randint(0,600) // 20) * 20
+            pygame.mixer.Sound.play(yum)
             scorew+=1
             c.execute("UPDATE highScores SET wormHigh ="+ str(scorew))
         else:
