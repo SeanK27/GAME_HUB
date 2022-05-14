@@ -7,6 +7,7 @@ import tkinter
 from tkinter import *
 from functools import partial
 from tkinter import filedialog
+from Title import *
 pygame.init()
 
 
