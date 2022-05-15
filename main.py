@@ -467,7 +467,6 @@ while True:
         click_count = 0
         while selection == 4:
             elapsed = abs(pygame.time.get_ticks() - start)
-            print(elapsed)
             for event in pygame.event.get():
                 if event.type == pygame.KEYDOWN and event.key == K_ESCAPE:
                     selection = 0
