@@ -28,6 +28,7 @@ nftButton = pygame.image.load("Logo/nft.png")
 escButton = pygame.image.load("Logo/esc.png")
 sescButton = pygame.image.load("Logo/sesc.png")
 soundButton = pygame.image.load("Logo/sound.png")
+cheaterdetected = pygame.image.load("Logo/cheaterdetected.png")
 
 #Button Logos
 pingLogo = pygame.image.load("Logo/ping.png")
@@ -177,7 +178,7 @@ def wormSelect(): #worm anim
 def drawSelectEsc(): #select screen
   screen.fill(black)
   screen.blit(titleLogo, (250, 30))
-  screen.blit(sescButton,(20,20))
+  screen.blit(sescButton, (20,20))
   screen.blit(pingLogo, (143,270))
   screen.blit(aimLogo, (143,400))
   screen.blit(pastryLogo, (572,270))
@@ -209,3 +210,8 @@ def countDownScreen(): #count down
   show_text_size("GO", 300, 100, white, 400)
   pygame.display.update()
   time.sleep(1)
+
+def banscreen():
+  screen.fill(black)
+  screen.blit(cheaterdetected, (0,0))
+  pygame.display.update()

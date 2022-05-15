@@ -463,7 +463,11 @@ while True:
         show_text("Pastry Actuations: " + str(totala), 0, 0, white)
         show_text("HIGH SCORE: " + str(pastryHigh[0][0]), 500, 0, white)
         pygame.display.update()
+        start = pygame.time.get_ticks()
+        click_count = 0
         while selection == 4:
+            elapsed = abs(pygame.time.get_ticks() - start)
+            print(elapsed)
             for event in pygame.event.get():
                 if event.type == pygame.KEYDOWN and event.key == K_ESCAPE:
                     selection = 0
@@ -473,8 +477,15 @@ while True:
                     print("escape")
                 if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
                     xa, ya = event.pos
-    
                     if xa >= 350 and xa <= 650 and ya >= 150 and ya <= 450:
+                        start = pygame.time.get_ticks()
+                        if elapsed <= 50:
+                            click_count += 1
+                        else:
+                            click_count = 0
+                        if click_count == 100:
+                            banscreen()
+                            time.sleep(99999)
                         pygame.mixer.Sound.play(click)
                         pastryHigh = c.execute("SELECT pastryHigh FROM highScores")
                         pastryHigh = pastryHigh.fetchall()
@@ -483,11 +494,12 @@ while True:
                         screen.blit(edp445, (350, 150))
                         show_text("Pastry Actuations: " + str(totala), 0, 0, white)
                         if (totala > pastryHigh[0][0]):
-                          c.execute("UPDATE highScores SET pastryHigh ="+ str(totala))
+                          c.execute("UPDATE highScores SET pastryHigh =" + str(totala))
                         pastryHigh = c.execute("SELECT pastryHigh FROM highScores")
                         pastryHigh = pastryHigh.fetchall()
                         show_text("HIGH SCORE: " + str(pastryHigh[0][0]), 500, 0, white)
                         pygame.display.update()
+
 
     if selection == 5:  ####################SKAAVOK###################
         pygame.mixer.music.play(0)
