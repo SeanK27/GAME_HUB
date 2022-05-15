@@ -8,7 +8,8 @@ blue = (0,0,255)
 green = (0,255,0)
 black = (0,0,0)
 white = (255,255,255)
-orange = (255, 165, 0)
+orange = (255,165,0)
+red = (255,0,0)
 
 x=0
 y=0
@@ -56,6 +57,7 @@ def titlePlay(): #Play button animation
   screen.blit(playButton, (338, 271))
   screen.blit(nftButton, (333, 430))
   screen.blit(titleLogo, (250, 30))
+  screen.blit(soundButton, (950, 550))
   pygame.display.update()
 
 def titleNFT(): #NFT animation
@@ -64,8 +66,36 @@ def titleNFT(): #NFT animation
   screen.blit(playButton, (333, 266))
   screen.blit(nftButton, (338, 435))
   screen.blit(titleLogo, (250, 30))
+  screen.blit(soundButton, (950, 550))
   pygame.display.update()
 
+def drawTitleoff(): #Title Screen
+  screen.fill(black)
+  screen.blit(playButton, (333,266))
+  screen.blit(nftButton, (333,430))
+  screen.blit(titleLogo, (250, 30))
+  screen.blit(soundButton, (950, 550))
+  pygame.draw.line(screen, red, (955, 555), (995, 595), 5)
+  pygame.display.update()
+
+def titlePlayoff(): #Play button animation
+  pygame.display.set_caption("window")
+  screen.blit(playButton, (338, 271))
+  screen.blit(nftButton, (333, 430))
+  screen.blit(titleLogo, (250, 30))
+  screen.blit(soundButton, (950, 550))
+  pygame.draw.line(screen, red, (955, 555), (995, 595), 5)
+  pygame.display.update()
+
+def titleNFToff(): #NFT animation
+  screen.fill(black)
+  pygame.display.set_caption("window")
+  screen.blit(playButton, (333, 266))
+  screen.blit(nftButton, (338, 435))
+  screen.blit(titleLogo, (250, 30))
+  screen.blit(soundButton, (950, 550))
+  pygame.draw.line(screen, red, (955, 555), (995, 595), 5)
+  pygame.display.update()
 
 def drawSelect(): #select screen
   screen.fill(black)
@@ -77,7 +107,6 @@ def drawSelect(): #select screen
   screen.blit(wormLogo, (572,400))
   pygame.display.update()
 
-
 def pingSelect(): #ping anim
   screen.fill(black)
   screen.blit(titleLogo, (250, 30))
@@ -87,10 +116,9 @@ def pingSelect(): #ping anim
   screen.blit(pastryLogo, (572,270))
   screen.blit(wormLogo, (572,400))
   pygame.display.update()
-  
 
 
-def pastrySelect():
+def pastrySelect(): #pastry actuator anim
   screen.fill(black)
   screen.blit(titleLogo, (250, 30))
   screen.blit(escButton,(20,20))
@@ -100,7 +128,7 @@ def pastrySelect():
   screen.blit(wormLogo, (572,400))
   pygame.display.update()
 
-def aimSelect():
+def aimSelect(): #skaavok anim
   screen.blit(titleLogo, (250, 30))
   screen.blit(escButton,(20,20))
   screen.blit(pingLogo, (143,270))
@@ -154,4 +182,3 @@ def countDownScreen(): #count down
   show_text_size("GO", 300, 100, white, 400)
   pygame.display.update()
   time.sleep(1)
-

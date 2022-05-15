@@ -106,7 +106,10 @@ while True:
     pygame.display.update()
     if selection == 0:  ###################TITLE###################
         if trig == 0:
-          drawTitle()
+            if volume == 0:
+                drawTitleoff()
+            else:
+                drawTitle()
         pygame.display.update()
         for event in pygame.event.get():
             if event.type == pygame.KEYDOWN and event.key == K_ESCAPE:
@@ -119,40 +122,60 @@ while True:
                 quit()
             if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
                 x, y = event.pos
-                # print("coords:")
-                # print("x:"+str(x))
-                # print("y:"+str(y))
+                print("coords:")
+                print("x:"+str(x))
+                print("y:"+str(y))
+                if 950 <= x <= 1000 and 550 <= y <= 600:
+                    if volume != 0:
+                        volume = 0
+                        pygame.mixer.music.set_volume(volume)
+                        drawTitleoff()
+                    else:
+                        volume = 0.1
+                        pygame.mixer.music.set_volume(volume)
+                        drawTitle()
                 if 333 <= x <= 666 and 266 <= y <= 414:
                     pygame.mixer.Sound.play(click)
                     screen.fill(black)
-                    titlePlay()
+                    if volume == 0:
+                        drawTitleoff()
+                    else:
+                        drawTitle()
                     time.sleep(0.1)
                     x = 0
                     y = 0
                     trig = 1  # go to game selection
             if event.type == pygame.MOUSEBUTTONUP and event.button == 1 and trig == 1:
-                drawTitle()
+                if volume == 0:
+                    drawTitleoff()
+                else:
+                    drawTitle()
                 time.sleep(0.2)
                 print("going to select")
-                trig=0
-                selection=1
+                trig = 0
+                selection = 1
             if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
                 x, y = event.pos
                 if 333 <= x <= 666 and 430 <= y <= 578:
                     pygame.mixer.Sound.play(click)
                     screen.fill(black)
-                    titleNFT()
+                    if volume == 0:
+                        titleNFToff()
+                    else:
+                        titleNFT()
                     time.sleep(0.1)
                     x = 0
                     y = 0
-                    trig =2  # go to nft page
+                    trig = 2  # go to nft page
                     print("going to NFTS")
             if event.type == pygame.MOUSEBUTTONUP and event.button == 1 and trig == 2:
                 selection = 2
-                drawTitle()
+                if volume == 0:
+                    drawTitleoff()
+                else:
+                    drawTitle()
                 time.sleep(0.2)
                 trig=0
-                selection = 2
 
 
              # if 950 <= x <= 1000 and 550 <= y <= 600:
