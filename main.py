@@ -8,14 +8,15 @@ from tkinter import *
 from functools import partial
 from tkinter import filedialog
 from Title import *
+from tkinter import messagebox
 pygame.init()
 
 
 #################DB-highScores##################
 #pastryHigh(int)#skaavokHigh(int)#wormHigh(int)#
 
-###########################users############################
-#username(String)#password(String)#money(int)#nftids(String)#c
+###########################users#############################
+#username(String)#password(String)#money(int)#nftids(String)#
 
 connection = sqlite3.connect("DB.db")
 c = connection.cursor()
@@ -27,22 +28,35 @@ result = c.execute("SELECT * FROM users")
 result = result.fetchall()
 print("Users:", result)
 
-
-#c.execute("CREATE TABLE users (username String, password int, money double, nftids String)")
-
 #########################################LOGIN#################################################
 
 def validateLogin(username, password):
-	print("username entered :", username.get())
-	print("password entered :", password.get())
-	return
+    print("username entered :", username.get())
+    print("password entered :", password.get())
+
+    for users in result:
+        if username.get() == users[0] and password.get() == users[1]:
+            messagebox.showinfo("Success!", "Welcome," + username.get() + "to GameHub!")
+            user = username.get()
+            return
+
+def Register(username, password):
+    print("username entered :", username.get())
+    print("password entered :", password.get())
+    for users in result:
+        if username.get() == users[0]:
+            messagebox.showerror("Username Error", "Username already in use.")
+            return
+        else:
+            c.execute('INSERT INTO Customers(username, password) VALUES('+username.get()+','+password.get()+')')
+            messagebox.showinfo("Success!", "Thank you for joining GameHub!\n\nPlease Login.")
 
 #def quit():
 #  tkWindow.destroy
 
 #window
-tkWindow = Tk()  
-tkWindow.geometry('400x150')  
+tkWindow = Tk()
+tkWindow.geometry('400x150')
 tkWindow.title('GameHub Login')
 
 #username label and text entry box
@@ -55,16 +69,16 @@ passwordLabel = Label(tkWindow,text="Password").grid(row=1, column=0)
 password = StringVar()
 passwordEntry = Entry(tkWindow, textvariable=password, show='*').grid(row=1, column=1)  
 
-validateLogin = partial(validateLogin, username, password)
+Register = partial(Register, username, password)
 
 #login button
-loginButton = Button(tkWindow, text="Login", command=validateLogin).grid(row=4, column=0)  
+loginButton = Button(tkWindow, text="Login", command=validateLogin).grid(row=4, column=0)
 
 #Register button
-loginButton = Button(tkWindow, text="Register", command=validateLogin).grid(row=4, column=2)  
+registerButton = Button(tkWindow, text="Register", command=Register).grid(row=4, column=1)
 
 #Play as guest button
-playasguestButton = Button(tkWindow, text="Play as guest", command=tkWindow.destroy).grid(row=10, column=1) 
+playasguestButton = Button(tkWindow, text="Play as guest", command=tkWindow.destroy).grid(row=10, column=0)
 
 tkWindow.mainloop()
 
