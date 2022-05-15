@@ -20,6 +20,11 @@ pygame.init()
 
 connection = sqlite3.connect("DB.db")
 c = connection.cursor()
+####QUERY TESTING####
+
+
+
+#####################
 #DISPLAY DBS#
 result = c.execute("SELECT * FROM highScores")
 result = result.fetchall()
@@ -30,29 +35,41 @@ print("Users:", result)
 
 #########################################LOGIN#################################################
 
-def validateLogin(username, password):
+def Login(username, password):
+    n = 0
     print("username entered :", username.get())
     print("password entered :", password.get())
-
+    result = c.execute("SELECT * FROM users")
+    result = result.fetchall()
     for users in result:
         if username.get() == users[0] and password.get() == users[1]:
-            messagebox.showinfo("Success!", "Welcome," + username.get() + "to GameHub!")
-            user = username.get()
-            return
+            messagebox.showinfo("Success!", "Welcome, " + username.get() + ", to GameHub!")
+            vars.user = username.get()
+            print("Username: " + vars.user)
+            tkWindow.destroy()
+            n = 1
+    if n != 1:
+        messagebox.showerror("Error", "Username or password is incorrect.\nPlease try again.")
 
 def Register(username, password):
+    m = 0
     print("username entered :", username.get())
     print("password entered :", password.get())
+    tempuser = username.get()
+    temppassword = password.get()
+    result = c.execute("SELECT * FROM users")
+    result = result.fetchall()
     for users in result:
         if username.get() == users[0]:
-            messagebox.showerror("Username Error", "Username already in use.")
-            return
-        else:
-            c.execute('INSERT INTO Customers(username, password) VALUES('+username.get()+','+password.get()+')')
-            messagebox.showinfo("Success!", "Thank you for joining GameHub!\n\nPlease Login.")
-
-#def quit():
-#  tkWindow.destroy
+            messagebox.showerror("Error", "Username already in use.")
+            m = 1
+    if m != 1:
+        c.execute(f"INSERT INTO users VALUES ('{tempuser}', '{temppassword}', 0.0, 0)")
+        connection.commit()
+        messagebox.showinfo("Success!", "Thank you for joining GameHub!\n\nPlease Login.")
+        result1 = c.execute("SELECT * FROM users")
+        result1 = result1.fetchall()
+        print("Users:", result1)
 
 #window
 tkWindow = Tk()
@@ -62,17 +79,18 @@ tkWindow.title('GameHub Login')
 #username label and text entry box
 usernameLabel = Label(tkWindow, text="User Name").grid(row=0, column=0)
 username = StringVar()
-usernameEntry = Entry(tkWindow, textvariable=username).grid(row=0, column=1)  
+usernameEntry = Entry(tkWindow, textvariable=username).grid(row=0, column=1)
 
 #password label and password entry box
-passwordLabel = Label(tkWindow,text="Password").grid(row=1, column=0)  
+passwordLabel = Label(tkWindow,text="Password").grid(row=1, column=0)
 password = StringVar()
-passwordEntry = Entry(tkWindow, textvariable=password, show='*').grid(row=1, column=1)  
+passwordEntry = Entry(tkWindow, textvariable=password, show='*').grid(row=1, column=1)
 
 Register = partial(Register, username, password)
+Login = partial(Login, username, password)
 
 #login button
-loginButton = Button(tkWindow, text="Login", command=validateLogin).grid(row=4, column=0)
+loginButton = Button(tkWindow, text="Login", command=Login).grid(row=4, column=0)
 
 #Register button
 registerButton = Button(tkWindow, text="Register", command=Register).grid(row=4, column=1)
@@ -170,9 +188,6 @@ while True:
                 quit()
             if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
                 x, y = event.pos
-                print("coords:")
-                print("x:"+str(x))
-                print("y:"+str(y))
                 if 950 <= x <= 1000 and 550 <= y <= 600:
                     if volume != 0:
                         volume = 0

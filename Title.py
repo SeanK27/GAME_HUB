@@ -2,6 +2,10 @@ import pygame
 from pygame.locals import*
 import random
 import time
+import vars
+
+user = ''
+
 
 pink = (255,200,200)
 blue = (0,0,255)
@@ -43,13 +47,16 @@ def show_text_size(msg, xp, yp, color, size):
   screen.blit(msgobj, (xp, yp))
 
 
-
 def drawTitle(): #Title Screen
   screen.fill(black)
   screen.blit(playButton, (333,266))
   screen.blit(nftButton, (333,430))
   screen.blit(titleLogo, (250, 30))
   screen.blit(soundButton, (950, 550))
+  if vars.user == "":
+    show_text_size("Playing as guest.", 0, 0, white, 15)
+  else:
+    show_text("Hi " + vars.user + "!", 0, 0, white)
   pygame.display.update()
 
 def titlePlay(): #Play button animation
@@ -58,6 +65,10 @@ def titlePlay(): #Play button animation
   screen.blit(nftButton, (333, 430))
   screen.blit(titleLogo, (250, 30))
   screen.blit(soundButton, (950, 550))
+  if vars.user == "":
+    show_text_size("Playing as guest.", 0, 0, white, 15)
+  else:
+    show_text("Hi " + vars.user + "!", 0, 0, white)
   pygame.display.update()
 
 def titleNFT(): #NFT animation
@@ -67,6 +78,10 @@ def titleNFT(): #NFT animation
   screen.blit(nftButton, (338, 435))
   screen.blit(titleLogo, (250, 30))
   screen.blit(soundButton, (950, 550))
+  if vars.user == "":
+    show_text_size("Playing as guest.", 0, 0, white, 15)
+  else:
+    show_text("Hi " + vars.user + "!", 0, 0, white)
   pygame.display.update()
 
 def drawTitleoff(): #Title Screen
@@ -76,6 +91,10 @@ def drawTitleoff(): #Title Screen
   screen.blit(titleLogo, (250, 30))
   screen.blit(soundButton, (950, 550))
   pygame.draw.line(screen, red, (955, 555), (995, 595), 5)
+  if vars.user == "":
+    show_text_size("Playing as guest.", 0, 0, white, 15)
+  else:
+    show_text("Hi " + vars.user + "!", 0, 0, white)
   pygame.display.update()
 
 def titlePlayoff(): #Play button animation
@@ -85,6 +104,10 @@ def titlePlayoff(): #Play button animation
   screen.blit(titleLogo, (250, 30))
   screen.blit(soundButton, (950, 550))
   pygame.draw.line(screen, red, (955, 555), (995, 595), 5)
+  if vars.user == "":
+    show_text_size("Playing as guest.", 0, 0, white, 15)
+  else:
+    show_text("Hi " + vars.user + "!", 0, 0, white)
   pygame.display.update()
 
 def titleNFToff(): #NFT animation
@@ -95,6 +118,10 @@ def titleNFToff(): #NFT animation
   screen.blit(titleLogo, (250, 30))
   screen.blit(soundButton, (950, 550))
   pygame.draw.line(screen, red, (955, 555), (995, 595), 5)
+  if vars.user == "":
+    show_text_size("Playing as guest.", 0, 0, white, 15)
+  else:
+    show_text("Hi " + vars.user + "!", 0, 0, white)
   pygame.display.update()
 
 def drawSelect(): #select screen
