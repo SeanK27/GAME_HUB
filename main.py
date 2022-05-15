@@ -189,6 +189,7 @@ while True:
             if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
                 x, y = event.pos
                 if 950 <= x <= 1000 and 550 <= y <= 600:
+                    pygame.mixer.Sound.play(click)
                     if volume != 0:
                         volume = 0
                         pygame.mixer.music.set_volume(volume)
