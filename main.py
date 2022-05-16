@@ -33,6 +33,14 @@ result = c.execute("SELECT * FROM users")
 result = result.fetchall()
 print("Users:", result)
 
+def getHubCoin(usern):
+    r = c.execute("SELECT * FROM users")
+    r = r.fetchall()
+    for users in r:
+      if users[0] == usern:
+          return users[2]
+    return "none"
+
 #########################################LOGIN#################################################
 
 def Login(username, password):
@@ -167,6 +175,8 @@ def show_text(msg, xp, yp, color):
     fontobj = pygame.font.SysFont("freesans", 32)
     msgobj = fontobj.render(msg, False, color)
     screen.blit(msgobj, (xp, yp))
+
+print("hee hee hee haw "+getHubCoin(user))
 
 while True:
     pygame.display.update()
@@ -357,6 +367,7 @@ while True:
             if event.type == pygame.KEYDOWN and event.key == K_ESCAPE:
                 selection = 0
                 print("escape")
+            
 
     if selection == 3:  ############################PING######################
         pygame.mixer.music.play(0)
@@ -478,11 +489,11 @@ while True:
                     xa, ya = event.pos
                     if xa >= 350 and xa <= 650 and ya >= 150 and ya <= 450:
                         start = pygame.time.get_ticks()
-                        if elapsed <= 50:
+                        if elapsed <= 1000:
                             click_count += 1
                         else:
                             click_count = 0
-                        if click_count == 100:
+                        if click_count == 15:
                             banscreen()
                             pygame.mixer.music.load("Music/happynoise.mp3") #death
                             pygame.mixer.music.play(-1)
