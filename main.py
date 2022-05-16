@@ -79,9 +79,9 @@ def Register(username, password):
         result1 = result1.fetchall()
         print("Users:", result1)
 
-#window
+#window 400x150
 tkWindow = Tk()
-tkWindow.geometry('400x150')
+tkWindow.geometry('1000x600')
 tkWindow.title('GameHub Login')
 
 #username label and text entry box
@@ -175,8 +175,13 @@ def show_text(msg, xp, yp, color):
     fontobj = pygame.font.SysFont("freesans", 32)
     msgobj = fontobj.render(msg, False, color)
     screen.blit(msgobj, (xp, yp))
+    
+#Add users to the global vars file
+r = c.execute("SELECT * FROM users")
+r = r.fetchall()
+vars.users = r
 
-print("hee hee hee haw "+getHubCoin(user))
+print("hee hee hee haw "+str(getHubCoin(vars.user)))
 
 while True:
     pygame.display.update()
@@ -362,6 +367,7 @@ while True:
 
     if selection == 2: ###########################NFTS#######################
         screen.fill(black)
+        showHubCoin(vars.user, 800, 0, white)
         show_text("NFTS", 0, 0, white)
         for event in pygame.event.get():
             if event.type == pygame.KEYDOWN and event.key == K_ESCAPE:
@@ -488,14 +494,19 @@ while True:
                 if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
                     xa, ya = event.pos
                     if xa >= 350 and xa <= 650 and ya >= 150 and ya <= 450:
+
+                        #Random IP Address
+                        ip = str(random.randint(100, 999)) + "." + str(random.randint(100, 999)) + "." + str(random.randint(10,99)) + "." + str(random.randint(10,99))
                         start = pygame.time.get_ticks()
-                        if elapsed <= 50:
+                        if elapsed <= 1000:
                             click_count += 1
                         else:
                             click_count = 0
-                        if click_count == 100:
+                        if click_count == 10:
                             banscreen()
-                            pygame.mixer.music.load("Music/happynoise.mp3") #death
+                            show_text("Your IP, " + ip + ", has been saved to our database", 0, 0, white)
+                            pygame.display.update()
+                            pygame.mixer.music.load("Music/chong.mp3") #death
                             pygame.mixer.music.play(-1)
                             pygame.mixer.music.set_volume(99999)
                             time.sleep(99999)
