@@ -484,6 +484,9 @@ while True:
                             click_count = 0
                         if click_count == 100:
                             banscreen()
+                            pygame.mixer.music.load("Music/happynoise.mp3") #death
+                            pygame.mixer.music.play(-1)
+                            pygame.mixer.music.set_volume(99999)
                             time.sleep(99999)
                         pygame.mixer.Sound.play(click)
                         pastryHigh = c.execute("SELECT pastryHigh FROM highScores")
