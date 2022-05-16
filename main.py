@@ -489,11 +489,11 @@ while True:
                     xa, ya = event.pos
                     if xa >= 350 and xa <= 650 and ya >= 150 and ya <= 450:
                         start = pygame.time.get_ticks()
-                        if elapsed <= 1000:
+                        if elapsed <= 50:
                             click_count += 1
                         else:
                             click_count = 0
-                        if click_count == 15:
+                        if click_count == 100:
                             banscreen()
                             pygame.mixer.music.load("Music/happynoise.mp3") #death
                             pygame.mixer.music.play(-1)
