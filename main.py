@@ -212,10 +212,10 @@ while True:
         pygame.draw.rect(screen,wormcolor,(860,540-y,20,20))
         pygame.draw.rect(screen,wormcolor,(860,560-y,20,20))
         pygame.draw.rect(screen,wormcolor,(860,580-y,20,20))
-        y=y+20
+        y=y+10
         
         pygame.display.update()
-        time.sleep(0.1)
+        time.sleep(0.001)
 
         if y == 700:
           y=-80
@@ -332,7 +332,8 @@ while True:
                     y = 0
                     trig=2
                     pingSelect()
-                    time.sleep(0.1)
+                    time.sleep(
+                        .1)
                     print("going to ping")
             if event.type == pygame.MOUSEBUTTONUP and event.button == 1 and trig == 2:
                   drawSelect()
@@ -363,7 +364,8 @@ while True:
                     pygame.mixer.Sound.play(click)
                     pygame.display.update()
                     x = 0
-                    y = 0
+                    y = \
+                        0
                     trig=4
                     pastrySelect()
                     time.sleep(0.1)
