@@ -132,6 +132,8 @@ screen = pygame.display.set_mode((1000, 600))
 escButton = pygame.image.load("Logo/esc.png")
 trig = 0
 
+yTitle=0
+
 ##########PING VARS#################
 xp = 300
 yp = 300
@@ -197,8 +199,28 @@ while True:
                 drawTitleoff()
             else:
                 drawTitle()
+        #left worm
+        pygame.draw.rect(screen,wormcolor,(120,0+y,20,20))
+        pygame.draw.rect(screen,wormcolor,(120,20+y,20,20))
+        pygame.draw.rect(screen,wormcolor,(120,40+y,20,20))
+        pygame.draw.rect(screen,wormcolor,(120,60+y,20,20))
+        pygame.draw.rect(screen,wormcolor,(120,80+y,20,20))
+
+        #right worm
+        pygame.draw.rect(screen,wormcolor,(860,500-y,20,20))
+        pygame.draw.rect(screen,wormcolor,(860,520-y,20,20))
+        pygame.draw.rect(screen,wormcolor,(860,540-y,20,20))
+        pygame.draw.rect(screen,wormcolor,(860,560-y,20,20))
+        pygame.draw.rect(screen,wormcolor,(860,580-y,20,20))
+        y=y+20
+        
         pygame.display.update()
+        time.sleep(0.1)
+
+        if y == 700:
+          y=-80
         for event in pygame.event.get():
+            
             if event.type == pygame.KEYDOWN and event.key == K_ESCAPE:
                 print("quitting")
                 result = c.execute("SELECT * FROM highScores")
