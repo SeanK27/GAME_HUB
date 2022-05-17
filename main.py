@@ -22,7 +22,7 @@ connection = sqlite3.connect("DB.db")
 c = connection.cursor()
 ####QUERY TESTING####
 
-c.execute("DELETE FROM users WHERE username = ''")
+#c.execute("DELETE FROM users WHERE username = ''")
 
 #####################
 #DISPLAY DBS#
@@ -38,7 +38,7 @@ def getHubCoin(usern):
     r = r.fetchall()
     for users in r:
       if users[0] == usern:
-          return users[2]
+          return float(users[2])
     return "none"
 
 #########################################LOGIN#################################################
@@ -372,12 +372,29 @@ while True:
     if selection == 2: ###########################NFTS#######################
         screen.fill(black)
         showHubCoin(vars.user, 800, 0, white)
-        show_text("NFTS", 0, 0, white)
+        drawNFT()
+      
         for event in pygame.event.get():
             if event.type == pygame.KEYDOWN and event.key == K_ESCAPE:
                 selection = 0
                 print("escape")
-            
+            if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
+                x, y =event.pos
+                
+                if 55 <= x <= 305 and 200 <= y <= 350:
+                    drawNFT0()
+
+                if 370 <= x <= 620 and 200 <= y <= 350:
+                    drawNFT1()
+
+                if 685 <= x <= 935 and 200 <= y <= 350:
+                    drawNFT2()
+
+                if 55 <= x <= 305 and 380 <= y <= 530:
+                    drawNFT3()
+                    
+
+                
 
     if selection == 3:  ############################PING######################
         pygame.mixer.music.play(0)
@@ -514,17 +531,20 @@ while True:
                             pygame.mixer.music.play(-1)
                             pygame.mixer.music.set_volume(99999)
                             time.sleep(99999)
-                         ###########   
+                        ############   
                         pygame.mixer.Sound.play(click)
                         pastryHigh = c.execute("SELECT pastryHigh FROM highScores")
                         pastryHigh = pastryHigh.fetchall()
                         totala += 1
-                        c.execute("UPDATE highScores SET pastryHigh =" + str(totala))
+                        coinamt = getHubCoin(vars.user)
+                        if coinamt != "none":
+                            coinamt += 1.0/500.0
+                        c.execute(f"UPDATE users SET money = '{coinamt}' WHERE username = '{vars.user}'")
                         screen.fill(black)
                         screen.blit(edp445, (350, 150))
                         show_text("Pastry Actuations: " + str(totala), 0, 0, white)
-                        if (totala > pastryHigh[0][0]):
-                          c.execute("UPDATE highScores SET pastryHigh =" + str(totala))
+                        if totala > pastryHigh[0][0]:
+                            c.execute("UPDATE highScores SET pastryHigh =" + str(totala))
                         pastryHigh = c.execute("SELECT pastryHigh FROM highScores")
                         pastryHigh = pastryHigh.fetchall()
                         show_text("HIGH SCORE: " + str(pastryHigh[0][0]), 500, 0, white)
