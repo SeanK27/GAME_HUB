@@ -24,7 +24,9 @@ pygame.display.set_caption("GAMEHUB")
 #More Logos
 titleLogo = pygame.image.load("Logo/titleLogo.png")
 playButton = pygame.image.load("Logo/play.png")
+plays = pygame.image.load("Logo/plays.png")
 nftButton = pygame.image.load("Logo/nft.png")
+nfts = pygame.image.load("Logo/nfts.png")
 escButton = pygame.image.load("Logo/esc.png")
 sescButton = pygame.image.load("Logo/sesc.png")
 soundButton = pygame.image.load("Logo/sound.png")
@@ -32,9 +34,13 @@ cheaterdetected = pygame.image.load("Logo/cheaterdetected.png")
 
 #Button Logos
 pingLogo = pygame.image.load("Logo/ping.png")
+pings = pygame.image.load("Logo/pings.png")
 aimLogo = pygame.image.load("Logo/aim.png")
+aims = pygame.image.load("Logo/aims.png")
 wormLogo = pygame.image.load("Logo/worm.png")
+worms = pygame.image.load("Logo/worms.png")
 pastryLogo = pygame.image.load("Logo/pastry.png")
+pastrys = pygame.image.load("Logo/pastrys.png")
 
 #Show Text
 def show_text(msg, xp, yp, color):
@@ -69,11 +75,12 @@ def drawTitle(): #Title Screen
     show_text_size("Playing as guest.", 0, 0, white, 15)
   else:
     show_text("Hi " + vars.user + "!", 0, 0, white)
+    show_text_size("User: " + vars.user, 0, 580, white, 15)
   pygame.display.update()
 
 def titlePlay(): #Play button animation
   pygame.display.set_caption("window")
-  screen.blit(playButton, (338, 271))
+  screen.blit(plays, (355, 286))
   screen.blit(nftButton, (333, 430))
   screen.blit(titleLogo, (250, 30))
   screen.blit(soundButton, (950, 550))
@@ -88,7 +95,7 @@ def titleNFT(): #NFT animation
   screen.fill(black)
   pygame.display.set_caption("window")
   screen.blit(playButton, (333, 266))
-  screen.blit(nftButton, (338, 435))
+  screen.blit(nfts, (355, 450))
   screen.blit(titleLogo, (250, 30))
   screen.blit(soundButton, (950, 550))
   showHubCoin(vars.user, 800, 0, white)
@@ -114,7 +121,7 @@ def drawTitleoff(): #Title Screen
 
 def titlePlayoff(): #Play button animation
   pygame.display.set_caption("window")
-  screen.blit(playButton, (338, 271))
+  screen.blit(plays, (355, 286))
   screen.blit(nftButton, (333, 430))
   screen.blit(titleLogo, (250, 30))
   screen.blit(soundButton, (950, 550))
@@ -130,7 +137,7 @@ def titleNFToff(): #NFT animation
   screen.fill(black)
   pygame.display.set_caption("window")
   screen.blit(playButton, (333, 266))
-  screen.blit(nftButton, (338, 435))
+  screen.blit(nfts, (355, 450))
   screen.blit(titleLogo, (250, 30))
   screen.blit(soundButton, (950, 550))
   showHubCoin(vars.user, 800, 0, white)
@@ -156,7 +163,7 @@ def pingSelect(): #ping anim
   screen.fill(black)
   screen.blit(titleLogo, (250, 30))
   screen.blit(escButton,(20,20))
-  screen.blit(pingLogo, (148,275))
+  screen.blit(pings, (162,280))
   screen.blit(aimLogo, (143,400))
   screen.blit(pastryLogo, (572,270))
   screen.blit(wormLogo, (572,400))
@@ -170,16 +177,17 @@ def pastrySelect(): #pastry actuator anim
   screen.blit(escButton,(20,20))
   screen.blit(pingLogo, (143,270))
   screen.blit(aimLogo, (143,400))
-  screen.blit(pastryLogo, (577,275))
+  screen.blit(pastrys, (591,280))
   screen.blit(wormLogo, (572,400))
   showHubCoin(vars.user, 800, 0, white)
   pygame.display.update()
 
 def aimSelect(): #skaavok anim
+  screen.fill(black)
   screen.blit(titleLogo, (250, 30))
   screen.blit(escButton,(20,20))
   screen.blit(pingLogo, (143,270))
-  screen.blit(aimLogo, (148,405))
+  screen.blit(aims, (162,410))
   screen.blit(pastryLogo, (572,270))
   screen.blit(wormLogo, (572,400))
   showHubCoin(vars.user, 800, 0, white)
@@ -192,7 +200,7 @@ def wormSelect(): #worm anim
   screen.blit(pingLogo, (143,270))
   screen.blit(aimLogo, (143,400))
   screen.blit(pastryLogo, (572,270))
-  screen.blit(wormLogo, (577,405))
+  screen.blit(worms, (591,410))
   showHubCoin(vars.user, 800, 0, white)
   pygame.display.update()
 

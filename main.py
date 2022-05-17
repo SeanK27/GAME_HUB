@@ -22,7 +22,7 @@ connection = sqlite3.connect("DB.db")
 c = connection.cursor()
 ####QUERY TESTING####
 
-
+c.execute("DELETE FROM users WHERE username = ''")
 
 #####################
 #DISPLAY DBS#
@@ -61,6 +61,7 @@ def Login(username, password):
 
 def Register(username, password):
     m = 0
+    l = 0
     print("username entered :", username.get())
     print("password entered :", password.get())
     tempuser = username.get()
@@ -71,6 +72,11 @@ def Register(username, password):
         if username.get() == users[0]:
             messagebox.showerror("Error", "Username already in use.")
             m = 1
+        if username.get() == '' or password.get() == '':
+            l = 1
+            m = 1
+    if l == 1:
+        messagebox.showerror("Error", "Please Enter valid credentials.")
     if m != 1:
         c.execute(f"INSERT INTO users VALUES ('{tempuser}', '{temppassword}', 0.0, 0)")
         connection.commit()
@@ -217,9 +223,9 @@ while True:
                     pygame.mixer.Sound.play(click)
                     screen.fill(black)
                     if volume == 0:
-                        drawTitleoff()
+                        titlePlayoff()
                     else:
-                        drawTitle()
+                        titlePlay()
                     time.sleep(0.1)
                     x = 0
                     y = 0
@@ -316,7 +322,6 @@ while True:
                 x, y = event.pos            
                 if 143 <= x <= 429 and 400 <= y <= 500:
                     pygame.mixer.Sound.play(click)
-                    screen.fill(black)
                     pygame.display.update()
                     x = 0
                     y = 0
@@ -351,7 +356,6 @@ while True:
                 x, y =event.pos
                 if 572 <= x <= 858 and 400 <= y <= 500:
                     pygame.mixer.Sound.play(click)
-                    screen.fill(black)
                     pygame.display.update()
                     x = 0
                     y = 0
@@ -495,25 +499,27 @@ while True:
                     xa, ya = event.pos
                     if xa >= 350 and xa <= 650 and ya >= 150 and ya <= 450:
 
-                        #Random IP Address
+                        #Anti Cheat
                         ip = str(random.randint(100, 999)) + "." + str(random.randint(100, 999)) + "." + str(random.randint(10,99)) + "." + str(random.randint(10,99))
                         start = pygame.time.get_ticks()
-                        if elapsed <= 1000:
+                        if elapsed <= 50:
                             click_count += 1
                         else:
                             click_count = 0
-                        if click_count == 10:
+                        if click_count == 100:
                             banscreen()
                             show_text("Your IP, " + ip + ", has been saved to our database", 0, 0, white)
                             pygame.display.update()
-                            pygame.mixer.music.load("Music/chong.mp3") #death
+                            pygame.mixer.music.load("Music/happynoise.mp3") #death
                             pygame.mixer.music.play(-1)
                             pygame.mixer.music.set_volume(99999)
                             time.sleep(99999)
+                         ###########   
                         pygame.mixer.Sound.play(click)
                         pastryHigh = c.execute("SELECT pastryHigh FROM highScores")
                         pastryHigh = pastryHigh.fetchall()
                         totala += 1
+                        c.execute("UPDATE highScores SET pastryHigh =" + str(totala))
                         screen.fill(black)
                         screen.blit(edp445, (350, 150))
                         show_text("Pastry Actuations: " + str(totala), 0, 0, white)
