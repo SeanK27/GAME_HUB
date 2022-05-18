@@ -60,12 +60,10 @@ def showHubCoin(usern, xp, yp, color):
     if usern != "none":
         for users in vars.users:
             if users[0] == usern:
-                if users[2]%1 != 0:
-                    show_text("HubCoin: " + str(round(users[2])), xp, yp, color)
+                if users[2] % 1 != 0:
+                    show_text("HubCoin: " + str(round(users[2], 2)), xp, yp, color)
                 if users[2] == 0:
                     show_text("HubCoin: " + str(0), xp, yp, color)
-                else:
-                    show_text("HubCoin: " + str(users[2]), xp, yp, color)
 
 def drawTitle(): #Title Screen
   screen.fill(black)
@@ -73,7 +71,7 @@ def drawTitle(): #Title Screen
   screen.blit(nftButton, (333,430))
   screen.blit(titleLogo, (250, 30))
   screen.blit(soundButton, (950, 550))
-  showHubCoin(vars.user, 800, 0, white)
+  showHubCoin(vars.user, 775, 0, white)
   if vars.user == "":
     show_text_size("Playing as guest.", 0, 0, white, 15)
   else:
@@ -82,12 +80,11 @@ def drawTitle(): #Title Screen
   pygame.display.update()
 
 def titlePlay(): #Play button animation
-  pygame.display.set_caption("window")
   screen.blit(plays, (355, 286))
   screen.blit(nftButton, (333, 430))
   screen.blit(titleLogo, (250, 30))
   screen.blit(soundButton, (950, 550))
-  showHubCoin(vars.user, 800, 0, white)
+  showHubCoin(vars.user, 775, 0, white)
   if vars.user == "":
     show_text_size("Playing as guest.", 0, 0, white, 15)
   else:
@@ -97,12 +94,11 @@ def titlePlay(): #Play button animation
 
 def titleNFT(): #NFT animation
   screen.fill(black)
-  pygame.display.set_caption("window")
   screen.blit(playButton, (333, 266))
   screen.blit(nfts, (355, 450))
   screen.blit(titleLogo, (250, 30))
   screen.blit(soundButton, (950, 550))
-  showHubCoin(vars.user, 800, 0, white)
+  showHubCoin(vars.user, 775, 0, white)
   if vars.user == "":
     show_text_size("Playing as guest.", 0, 0, white, 15)
   else:
@@ -116,7 +112,7 @@ def drawTitleoff(): #Title Screen
   screen.blit(nftButton, (333,430))
   screen.blit(titleLogo, (250, 30))
   screen.blit(soundButton, (950, 550))
-  showHubCoin(vars.user, 800, 0, white)
+  showHubCoin(vars.user, 775, 0, white)
   pygame.draw.line(screen, red, (955, 555), (995, 595), 5)
   if vars.user == "":
     show_text_size("Playing as guest.", 0, 0, white, 15)
@@ -126,12 +122,11 @@ def drawTitleoff(): #Title Screen
   pygame.display.update()
 
 def titlePlayoff(): #Play button animation
-  pygame.display.set_caption("window")
   screen.blit(plays, (355, 286))
   screen.blit(nftButton, (333, 430))
   screen.blit(titleLogo, (250, 30))
   screen.blit(soundButton, (950, 550))
-  showHubCoin(vars.user, 800, 0, white)
+  showHubCoin(vars.user, 775, 0, white)
   pygame.draw.line(screen, red, (955, 555), (995, 595), 5)
   if vars.user == "":
     show_text_size("Playing as guest.", 0, 0, white, 15)
@@ -142,12 +137,11 @@ def titlePlayoff(): #Play button animation
 
 def titleNFToff(): #NFT animation
   screen.fill(black)
-  pygame.display.set_caption("window")
   screen.blit(playButton, (333, 266))
   screen.blit(nfts, (355, 450))
   screen.blit(titleLogo, (250, 30))
   screen.blit(soundButton, (950, 550))
-  showHubCoin(vars.user, 800, 0, white)
+  showHubCoin(vars.user, 775, 0, white)
   pygame.draw.line(screen, red, (955, 555), (995, 595), 5)
   if vars.user == "":
     show_text_size("Playing as guest.", 0, 0, white, 15)
@@ -159,7 +153,7 @@ def titleNFToff(): #NFT animation
 
 def drawNFT(): #333x148
   screen.fill(black)
-  showHubCoin(vars.user, 800, 0, white)
+  showHubCoin(vars.user, 775, 0, white)
   screen.blit(nfts, (345, 25))
   pygame.draw.rect(screen,brown,(55,200,250,150), 10)
   pygame.draw.rect(screen,orange,(370,200,250,150), 10)
@@ -170,7 +164,7 @@ def drawNFT(): #333x148
 
 def drawNFT0():
   screen.fill(black)
-  showHubCoin(vars.user, 800, 0, white)
+  showHubCoin(vars.user, 775, 0, white)
   screen.blit(nfts, (345, 25))
   pygame.draw.rect(screen,brown,(55,200,250,150), 75)
   pygame.draw.rect(screen,orange,(370,200,250,150), 10)
@@ -181,7 +175,7 @@ def drawNFT0():
   
 def drawNFT1():
   screen.fill(black)
-  showHubCoin(vars.user, 800, 0, white)
+  showHubCoin(vars.user, 775, 0, white)
   screen.blit(nfts, (345, 25))
   pygame.draw.rect(screen,brown,(55,200,250,150), 10)
   pygame.draw.rect(screen,orange,(370,200,250,150), 75)
@@ -192,7 +186,7 @@ def drawNFT1():
 
 def drawNFT2():
   screen.fill(black)
-  showHubCoin(vars.user, 800, 0, white)
+  showHubCoin(vars.user, 775, 0, white)
   screen.blit(nfts, (345, 25))
   pygame.draw.rect(screen,brown,(55,200,250,150), 10)
   pygame.draw.rect(screen,orange,(370,200,250,150), 10)
@@ -203,7 +197,7 @@ def drawNFT2():
 
 def drawNFT3(): 
   screen.fill(black)
-  showHubCoin(vars.user, 800, 0, white)
+  showHubCoin(vars.user, 775, 0, white)
   screen.blit(nfts, (345, 25))
   pygame.draw.rect(screen,brown,(55,200,250,150), 10)
   pygame.draw.rect(screen,orange,(370,200,250,150), 10)
@@ -214,7 +208,7 @@ def drawNFT3():
 
 def drawNFT4(): 
   screen.fill(black)
-  showHubCoin(vars.user, 800, 0, white)
+  showHubCoin(vars.user, 775, 0, white)
   screen.blit(nfts, (345, 25))
   pygame.draw.rect(screen,brown,(55,200,250,150), 10)
   pygame.draw.rect(screen,orange,(370,200,250,150), 10)
@@ -225,7 +219,7 @@ def drawNFT4():
 
 def drawNFT5(): 
   screen.fill(black)
-  showHubCoin(vars.user, 800, 0, white)
+  showHubCoin(vars.user, 775, 0, white)
   screen.blit(nfts, (345, 25))
   pygame.draw.rect(screen,brown,(55,200,250,150), 10)
   pygame.draw.rect(screen,orange,(370,200,250,150), 10)
@@ -244,7 +238,7 @@ def drawSelect(): #select screen
   screen.blit(aimLogo, (143,400))
   screen.blit(pastryLogo, (572,270))
   screen.blit(wormLogo, (572,400))
-  showHubCoin(vars.user, 800, 0, white)
+  showHubCoin(vars.user, 775, 0, white)
   pygame.display.update()
 
 def pingSelect(): #ping anim
@@ -255,7 +249,7 @@ def pingSelect(): #ping anim
   screen.blit(aimLogo, (143,400))
   screen.blit(pastryLogo, (572,270))
   screen.blit(wormLogo, (572,400))
-  showHubCoin(vars.user, 800, 0, white)
+  showHubCoin(vars.user, 775, 0, white)
   pygame.display.update()
 
 
@@ -267,7 +261,7 @@ def pastrySelect(): #pastry actuator anim
   screen.blit(aimLogo, (143,400))
   screen.blit(pastrys, (591,280))
   screen.blit(wormLogo, (572,400))
-  showHubCoin(vars.user, 800, 0, white)
+  showHubCoin(vars.user, 775, 0, white)
   pygame.display.update()
 
 def aimSelect(): #skaavok anim
@@ -278,7 +272,7 @@ def aimSelect(): #skaavok anim
   screen.blit(aims, (162,410))
   screen.blit(pastryLogo, (572,270))
   screen.blit(wormLogo, (572,400))
-  showHubCoin(vars.user, 800, 0, white)
+  showHubCoin(vars.user, 775, 0, white)
   pygame.display.update()
 
 def wormSelect(): #worm anim
@@ -289,7 +283,7 @@ def wormSelect(): #worm anim
   screen.blit(aimLogo, (143,400))
   screen.blit(pastryLogo, (572,270))
   screen.blit(worms, (591,410))
-  showHubCoin(vars.user, 800, 0, white)
+  showHubCoin(vars.user, 775, 0, white)
   pygame.display.update()
 
 def drawSelectEsc(): #select screen
@@ -300,7 +294,7 @@ def drawSelectEsc(): #select screen
   screen.blit(aimLogo, (143,400))
   screen.blit(pastryLogo, (572,270))
   screen.blit(wormLogo, (572,400))
-  showHubCoin(vars.user, 800, 0, white)
+  showHubCoin(vars.user, 775, 0, white)
   pygame.display.update()
 
 def countDownScreen(): #count down

@@ -185,9 +185,11 @@ def show_text(msg, xp, yp, color):
     screen.blit(msgobj, (xp, yp))
     
 #Add users to the global vars file
-r = c.execute("SELECT * FROM users")
-r = r.fetchall()
-vars.users = r
+def addUsers():
+    r = c.execute("SELECT * FROM users")
+    r = r.fetchall()
+    vars.users = r
+addUsers()
 
 print("hee hee hee haw "+str(getHubCoin(vars.user)))
 
@@ -563,7 +565,9 @@ while True:
                         coinamt = getHubCoin(vars.user)
                         if coinamt != "none":
                             coinamt += 1.0/500.0
-                        c.execute(f"UPDATE users SET money = '{coinamt}' WHERE username = '{vars.user}'")
+                        c.execute(f"UPDATE users SET money = '{round(coinamt, 4)}' WHERE username = '{vars.user}'")
+                        connection.commit()
+                        addUsers()
                         screen.fill(black)
                         screen.blit(edp445, (350, 150))
                         show_text("Pastry Actuations: " + str(totala), 0, 0, white)
