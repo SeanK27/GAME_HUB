@@ -162,6 +162,12 @@ def drawNFT(): #333x148
   pygame.draw.rect(screen,red,(370,380,250,150), 10)
   pygame.draw.rect(screen,blue,(685,380,250,150), 10)
 
+def drawNFTnoaccount():
+  screen.fill(black)
+  show_text("Howdy! You need money to buy things!", 200, 200, white)
+  show_text("Create an account to access the NFT Shop!", 200, 268, white)
+  pygame.display.update()
+
 def drawNFT0():
   screen.fill(black)
   showHubCoin(vars.user, 775, 0, white)

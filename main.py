@@ -276,13 +276,16 @@ while True:
                     trig = 2  # go to nft page
                     print("going to NFTS")
             if event.type == pygame.MOUSEBUTTONUP and event.button == 1 and trig == 2:
-                selection = 2
                 if volume == 0:
                     drawTitleoff()
                 else:
                     drawTitle()
                 time.sleep(0.2)
-                trig=0
+                if getHubCoin(vars.user) == "none":
+                    selection = 10
+                else:
+                    selection = 2
+                trig = 0
 
 
              # if 950 <= x <= 1000 and 550 <= y <= 600:
@@ -385,14 +388,19 @@ while True:
                     y = 0
                     wormSelect()
                     time.sleep(0.1)
-                    trig=5
+                    trig = 5
                     print("going to worm")
             if event.type == pygame.MOUSEBUTTONUP and event.button == 1 and trig == 5:
                   drawSelect()
                   time.sleep(0.2)
                   selection = 6
                   trig = 0
-
+    if selection == 10:
+        drawNFTnoaccount()
+        for event in pygame.event.get():
+            if event.type == pygame.KEYDOWN and event.key == K_ESCAPE:
+                selection = 0
+                print("escape")
     if selection == 2: ###########################NFTS#######################
         screen.fill(black)
         showHubCoin(vars.user, 800, 0, white)
@@ -586,6 +594,7 @@ while True:
                         show_text("Actuations: " + str(totala), 0, 0, white)
                         if totala > pastryHigh[0][0]:
                             c.execute("UPDATE highScores SET pastryHigh =" + str(totala))
+                            connection.commit()
                         pastryHigh = c.execute("SELECT pastryHigh FROM highScores")
                         pastryHigh = pastryHigh.fetchall()
                         show_text("HIGH SCORE: " + str(pastryHigh[0][0]), 0, 40, white)
@@ -638,7 +647,7 @@ while True:
                     print("escape")
                 if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
                     xs, ys = event.pos
-                    if (math.sqrt(abs(xs - randx)**2 + abs(ys - randy)**2) <= 20):
+                    if math.sqrt(abs(xs - randx) ** 2 + abs(ys - randy) ** 2) <= 20:
                         pygame.mixer.Sound.play(pop)
                         screen.fill(black)
                         scores = scores + 1
@@ -647,7 +656,8 @@ while True:
                         pygame.draw.circle(screen, white, (randx, randy), 20)
                         show_text("Score: " + str(scores), 0, 0, white)
                         if (scores > skaavokHigh[0][0]):
-                          c.execute("UPDATE highScores SET skaavokHigh ="+ str(scores))
+                          c.execute("UPDATE highScores SET skaavokHigh =" + str(scores))
+                          connection.commit()
                         skaavokHigh = c.execute("SELECT skaavokHigh FROM highScores")
                         skaavokHigh = skaavokHigh.fetchall()
                         coinamt = getHubCoin(vars.user)
@@ -747,6 +757,7 @@ while True:
 
             if (scorew>wormHigh[0][0]):
                 c.execute("UPDATE highScores SET wormHigh ="+ str(scorew))
+                connection.commit()
         else:
             wormbody.pop(-1)
 
