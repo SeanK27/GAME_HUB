@@ -32,6 +32,7 @@ escButton = pygame.image.load("Logo/esc.png")
 sescButton = pygame.image.load("Logo/sesc.png")
 soundButton = pygame.image.load("Logo/sound.png")
 cheaterdetected = pygame.image.load("Logo/cheaterdetected.png")
+coin = pygame.image.load("coin/coin.png")
 
 # Button Logos
 pingLogo = pygame.image.load("Logo/ping.png")
@@ -42,6 +43,7 @@ wormLogo = pygame.image.load("Logo/worm.png")
 worms = pygame.image.load("Logo/worms.png")
 pastryLogo = pygame.image.load("Logo/pastry.png")
 pastrys = pygame.image.load("Logo/pastrys.png")
+leaderboards = pygame.image.load("Logo/leaderboard.png")
 
 
 # Show Text
@@ -57,14 +59,16 @@ def show_text_size(msg, xp, yp, color, size):
     screen.blit(msgobj, (xp, yp))
 
 
-def showHubCoin(usern, xp, yp, color):
+def showHubCoin(usern, xhc, yhc, color):
     if usern != "none":
         for users in vars.users:
             if users[0] == usern:
                 if users[2] % 1 != 0:
-                    show_text("HubCoin: " + str(round(users[2], 2)), xp, yp, color)
+                    show_text(str(round(users[2], 2)), xhc, yhc+2, color)
+                    screen.blit(coin, (xhc-28,yhc))
                 if users[2] == 0:
-                    show_text("HubCoin: " + str(0), xp, yp, color)
+                    show_text(str(0), xhc, yhc+2, color)
+                    screen.blit(coin, (xhc-28,yhc))
 
 
 def drawTitle():  # Title Screen
@@ -73,12 +77,12 @@ def drawTitle():  # Title Screen
     screen.blit(nftButton, (333, 430))
     screen.blit(titleLogo, (230, 30))
     screen.blit(soundButton, (930, 530))
+    screen.blit(leaderboards, (0, 570))
     showHubCoin(vars.user, 775, 0, white)
     if vars.user == "":
-        show_text_size("Playing as guest.", 0, 0, white, 15)
+        show_text_size("Playing as guest.", 0, 0, white, 20)
     else:
         show_text("Hi " + vars.user + "!", 0, 0, white)
-        show_text_size("User: " + vars.user, 0, 580, white, 15)
     pygame.display.update()
 
 
@@ -87,27 +91,28 @@ def titlePlay():  # Play button animation
     screen.blit(nftButton, (333, 430))
     screen.blit(titleLogo, (230, 30))
     screen.blit(soundButton, (930, 530))
+    screen.blit(leaderboards, (0, 570))
     showHubCoin(vars.user, 775, 0, white)
     if vars.user == "":
         show_text_size("Playing as guest.", 0, 0, white, 15)
     else:
         show_text("Hi " + vars.user + "!", 0, 0, white)
-        show_text_size("User: " + vars.user, 0, 580, white, 15)
     pygame.display.update()
 
 
 def titleNFT():  # NFT animation
     screen.fill(black)
+    #screen.blit(leaderboard, ())
     screen.blit(playButton, (333, 266))
     screen.blit(nfts, (355, 430))
     screen.blit(titleLogo, (230, 30))
     screen.blit(soundButton, (930, 530))
+    screen.blit(leaderboards, (0, 570))
     showHubCoin(vars.user, 775, 0, white)
     if vars.user == "":
         show_text_size("Playing as guest.", 0, 0, white, 15)
     else:
         show_text("Hi " + vars.user + "!", 0, 0, white)
-        show_text_size("User: " + vars.user, 0, 580, white, 15)
     pygame.display.update()
 
 
@@ -118,12 +123,12 @@ def drawTitleoff():  # Title Screen
     screen.blit(titleLogo, (230, 30))
     screen.blit(soundButton, (930, 530))
     showHubCoin(vars.user, 775, 0, white)
+    screen.blit(leaderboards, (0, 570))
     pygame.draw.line(screen, red, (955, 555), (995, 595), 5)
     if vars.user == "":
         show_text_size("Playing as guest.", 0, 0, white, 15)
     else:
         show_text("Hi " + vars.user + "!", 0, 0, white)
-        show_text_size("User: " + vars.user, 0, 580, white, 15)
     pygame.display.update()
 
 
@@ -133,12 +138,12 @@ def titlePlayoff():  # Play button animation
     screen.blit(titleLogo, (230, 30))
     screen.blit(soundButton, (930, 530))
     showHubCoin(vars.user, 775, 0, white)
+    screen.blit(leaderboards, (0, 570))
     pygame.draw.line(screen, red, (955, 555), (995, 595), 5)
     if vars.user == "":
         show_text_size("Playing as guest.", 0, 0, white, 15)
     else:
         show_text("Hi " + vars.user + "!", 0, 0, white)
-        show_text_size("User: " + vars.user, 0, 580, white, 15)
     pygame.display.update()
 
 
@@ -149,14 +154,13 @@ def titleNFToff():  # NFT animation
     screen.blit(titleLogo, (230, 30))
     screen.blit(soundButton, (930, 530))
     showHubCoin(vars.user, 775, 0, white)
+    screen.blit(leaderboards, (0, 570))
     pygame.draw.line(screen, red, (955, 555), (995, 595), 5)
     if vars.user == "":
         show_text_size("Playing as guest.", 0, 0, white, 15)
     else:
         show_text("Hi " + vars.user + "!", 0, 0, white)
-        show_text_size("User: " + vars.user, 0, 580, white, 15)
     pygame.display.update()
-
 
 def drawNFT():  # 333x148
     screen.fill(black)
@@ -169,13 +173,11 @@ def drawNFT():  # 333x148
     pygame.draw.rect(screen, red, (370, 380, 230, 130), 10)
     pygame.draw.rect(screen, blue, (685, 380, 230, 130), 10)
 
-
 def drawNFTnoaccount():
     screen.fill(black)
     show_text("Howdy! You need money to buy things!", 200, 200, white)
     show_text("Create an account to access the NFT Shop!", 200, 268, white)
     pygame.display.update()
-
 
 def drawNFT0():
     screen.fill(black)
@@ -200,7 +202,6 @@ def drawNFT1():
     pygame.draw.rect(screen, red, (370, 380, 230, 130), 10)
     pygame.draw.rect(screen, blue, (685, 380, 230, 130), 10)
 
-
 def drawNFT2():
     screen.fill(black)
     showHubCoin(vars.user, 775, 0, white)
@@ -211,7 +212,6 @@ def drawNFT2():
     pygame.draw.rect(screen, yellow, (55, 380, 230, 130), 10)
     pygame.draw.rect(screen, red, (370, 380, 230, 130), 10)
     pygame.draw.rect(screen, blue, (685, 380, 230, 130), 10)
-
 
 def drawNFT3():
     screen.fill(black)
@@ -224,7 +224,6 @@ def drawNFT3():
     pygame.draw.rect(screen, red, (370, 380, 230, 130), 10)
     pygame.draw.rect(screen, blue, (685, 380, 230, 130), 10)
 
-
 def drawNFT4():
     screen.fill(black)
     showHubCoin(vars.user, 775, 0, white)
@@ -235,7 +234,6 @@ def drawNFT4():
     pygame.draw.rect(screen, yellow, (55, 380, 230, 130), 10)
     pygame.draw.rect(screen, red, (370, 380, 230, 130), 75)
     pygame.draw.rect(screen, blue, (685, 380, 230, 130), 10)
-
 
 def drawNFT5():
     screen.fill(black)
@@ -248,7 +246,6 @@ def drawNFT5():
     pygame.draw.rect(screen, red, (370, 380, 230, 130), 10)
     pygame.draw.rect(screen, blue, (685, 380, 230, 130), 75)
 
-
 def drawSelect():  # select screen
     screen.fill(black)
     screen.blit(titleLogo, (230, 30))
@@ -259,7 +256,6 @@ def drawSelect():  # select screen
     screen.blit(wormLogo, (572, 400))
     showHubCoin(vars.user, 775, 0, white)
     pygame.display.update()
-
 
 def pingSelect():  # ping anim
     screen.fill(black)
@@ -272,7 +268,6 @@ def pingSelect():  # ping anim
     showHubCoin(vars.user, 775, 0, white)
     pygame.display.update()
 
-
 def pastrySelect():  # pastry actuator anim
     screen.fill(black)
     screen.blit(titleLogo, (230, 30))
@@ -283,7 +278,6 @@ def pastrySelect():  # pastry actuator anim
     screen.blit(wormLogo, (572, 400))
     showHubCoin(vars.user, 775, 0, white)
     pygame.display.update()
-
 
 def aimSelect():  # skaavok anim
     screen.fill(black)
@@ -296,7 +290,6 @@ def aimSelect():  # skaavok anim
     showHubCoin(vars.user, 775, 0, white)
     pygame.display.update()
 
-
 def wormSelect():  # worm anim
     screen.fill(black)
     screen.blit(titleLogo, (230, 30))
@@ -308,7 +301,6 @@ def wormSelect():  # worm anim
     showHubCoin(vars.user, 775, 0, white)
     pygame.display.update()
 
-
 def drawSelectEsc():  # select screen
     screen.fill(black)
     screen.blit(titleLogo, (230, 30))
@@ -319,7 +311,6 @@ def drawSelectEsc():  # select screen
     screen.blit(wormLogo, (572, 400))
     showHubCoin(vars.user, 775, 0, white)
     pygame.display.update()
-
 
 def countDownScreen():  # count down
     screen.fill(black)
@@ -347,31 +338,27 @@ def countDownScreen():  # count down
     pygame.display.update()
     time.sleep(1)
 
-
 def banscreen():
     screen.fill(black)
     screen.blit(cheaterdetected, (0, 0))
     pygame.display.update()
 
-
 def leaderboard():
-    show_text_size("Leaderboard", 300, 25, white, 69)
-
+    show_text_size("Leaderboard", 380, 25, white, 69)
     #show top 10 networth
-    show_text_size("Number 1", 430, 100, white, 40)
-    show_text_size("Number 2", 450, 150, white, 30)
-    show_text_size("Number 3", 450, 175, white, 30)
-    show_text_size("Number 4", 450, 200, white, 30)
-    show_text_size("Number 5", 450, 225, white, 30)
-    show_text_size("Number 6", 450, 250, white, 30)
-    show_text_size("Number 7", 450, 275, white, 30)
-    show_text_size("Number 8", 450, 300, white, 30)
-    show_text_size("Number 9", 450, 325, white, 30)
-    show_text_size("Number 10", 450, 350, white, 30)
-
-
-    show_text_size("My net worth", 450, 425, white, 30) #This one shows your net worth and ranking if you're not top 10
-
-
+    show_text_size("1. " + str(vars.sorted[0][0]) + " - " + str(vars.sorted[0][2]) + " Hub Coin", 430, 100, white, 40)
+    show_text_size("2. " + str(vars.sorted[1][0]) + " - " + str(vars.sorted[1][2]) + " Hub Coin", 450, 150, white, 30)
+    show_text_size("3. " + str(vars.sorted[2][0]) + " - " + str(vars.sorted[2][2]) + " Hub Coin", 450, 175, white, 30)
+    show_text_size("4. " + str(vars.sorted[3][0]) + " - " + str(vars.sorted[3][2]) + " Hub Coin", 450, 200, white, 30)
+    show_text_size("5. " + str(vars.sorted[4][0]) + " - " + str(vars.sorted[4][2]) + " Hub Coin", 450, 225, white, 30)
+    show_text_size("6. " + str(vars.sorted[5][0]) + " - " + str(vars.sorted[5][2]) + " Hub Coin", 450, 250, white, 30)
+    show_text_size("7. " + str(vars.sorted[6][0]) + " - " + str(vars.sorted[6][2]) + " Hub Coin", 450, 275, white, 30)
+    show_text_size("8. " + str(vars.sorted[7][0]) + " - " + str(vars.sorted[7][2]) + " Hub Coin", 450, 300, white, 30)
+    show_text_size("9. " + str(vars.sorted[8][0]) + " - " + str(vars.sorted[8][2]) + " Hub Coin", 450, 325, white, 30)
+    show_text_size("10. " + str(vars.sorted[9][0]) + " - " + str(vars.sorted[9][2]) + " Hub Coin", 450, 350, white, 30)
+    moneys = 0.0
+    for user in vars.users:
+        if user[0] == vars.user:
+            moneys = user[2]
+    show_text_size(str(vars.user) + str(moneys), 450, 425, white, 30) #This one shows your net worth and ranking if you're not top 10
     pygame.display.update()
-

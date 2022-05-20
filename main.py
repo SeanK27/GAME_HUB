@@ -9,6 +9,17 @@ from functools import partial
 from tkinter import filedialog
 from Title import *
 from tkinter import messagebox
+import mysql.connector
+import os
+
+#####SECRETS#####
+
+host1 = os.environ['host']
+user1 = os.environ['user']
+password1 = os.environ['password']
+db1 = os.environ['db']
+
+#################
 
 pygame.init()
 Clock = pygame.time.Clock()
@@ -19,24 +30,55 @@ Clock = pygame.time.Clock()
 ###########################users#############################
 # username(String)#password(String)#money(int)#nftids(String)#
 
-connection = sqlite3.connect("DB.db")
-c = connection.cursor()
+# connection = sqlite3.connect("DB.db")
+# c = connection.cursor()
+
+# conn = mysql.connector.connect(
+#     host="bvhsdrtwwbrnsac2wlsc-mysql.services.clever-cloud.com",
+#     user="ulkqho87c7b8tdam",
+#     password="dmqctKjJsJYlyFq9369e1", ex 1 hee hee
+#     db="bvhsdrtwwbrnsac2wlsc"
+#     )
+
+conn = mysql.connector.connect(
+    host=host1,
+    user=user1,
+    password=password1,
+    db=db1
+)
+
+c = conn.cursor()
+
 ####QUERY TESTING####
 
-# c.execute("DELETE FROM users WHERE username = ''")
+# c.execute("CREATE TABLE highScores (pastryHigh int, skaavokHigh int, wormHigh int)")
+
+# c.execute("CREATE TABLE users (username VARCHAR(255), password VARCHAR(255), money DOUBLE, nftids int)")
+
+# c.execute("INSERT INTO highScores VALUES (0, 0, 0)")
+
+# c.execute("DELETE FROM highScores WHERE pastryHigh = 0")
+
+# c.execute("UPDATE users SET money = 69.6969 WHERE username = 'ninja'")
+
 
 #####################
+conn.commit()
+
 # DISPLAY DBS#
 result = c.execute("SELECT * FROM highScores")
-result = result.fetchall()
-print("High Scores:", result)
+result = c.fetchall()
+# print("High Scores:", result)
 result = c.execute("SELECT * FROM users")
-result = result.fetchall()
+result = c.fetchall()
+
+
+# print("Users: ", result)
 
 
 def getHubCoin(usern):
     r = c.execute("SELECT * FROM users")
-    r = r.fetchall()
+    r = c.fetchall()
     for users in r:
         if users[0] == usern:
             return float(users[2])
@@ -50,7 +92,7 @@ def Login(username, password):
     print("username entered :", username.get())
     print("password entered :", password.get())
     result = c.execute("SELECT * FROM users")
-    result = result.fetchall()
+    result = c.fetchall()
     for users in result:
         if username.get() == users[0] and password.get() == users[1]:
             messagebox.showinfo("Success!", "Welcome, " + username.get() + ", to GameHub!")
@@ -69,7 +111,7 @@ def Register(username, password):
     tempuser = username.get()
     temppassword = password.get()
     result = c.execute("SELECT * FROM users")
-    result = result.fetchall()
+    result = c.fetchall()
     for users in result:
         if username.get() == users[0]:
             messagebox.showerror("Error", "Username already in use.")
@@ -81,13 +123,12 @@ def Register(username, password):
         messagebox.showerror("Error", "Please Enter valid credentials.")
     if m != 1:
         c.execute(f"INSERT INTO users VALUES ('{tempuser}', '{temppassword}', 0.0, 0)")
-        connection.commit()
+        conn.commit()
         messagebox.showinfo("Success!", "Thank you for joining GameHub!\n\nPlease Login.")
         result1 = c.execute("SELECT * FROM users")
-        result1 = result1.fetchall()
+        result1 = c.fetchall()
 
 
-# window 400x150
 tkWindow = Tk()
 tkWindow.geometry('1000x600')
 tkWindow.title('GameHub Login')
@@ -197,11 +238,20 @@ def show_text(msg, xp, yp, color):
 # Add users to the global vars file
 def addUsers():
     r = c.execute("SELECT * FROM users")
-    r = r.fetchall()
+    r = c.fetchall()
     vars.users = r
+    bigarr = []
+    for user in r:
+        bigarr.append(user[2])
+    bigarr.sort(reverse=True)
+    for num in bigarr:
+        for user in vars.users:
+            if user[2] == num:
+                vars.sorted.append(user)
 
 
 addUsers()
+# print(vars.sorted)
 
 while True:
     pygame.display.update()
@@ -235,10 +285,10 @@ while True:
             if event.type == pygame.KEYDOWN and event.key == K_ESCAPE:
                 print("quitting")
                 result = c.execute("SELECT * FROM highScores")
-                result = result.fetchall()
+                result = c.fetchall()
                 print(result[0])
-                connection.commit()
-                connection.close()
+                conn.commit()
+                conn.close()
                 quit()
             if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
                 x, y = event.pos
@@ -321,6 +371,13 @@ while True:
 
             if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
                 x, y = event.pos
+                if 0 <= x <= 110 and 570 <= y <= 600:
+                    pygame.mixer.Sound.play(click)
+                    selection = 7
+                    trig = 6
+
+            if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
+                x, y = event.pos
                 if 20 <= x <= 120 and 20 <= y <= 55:
                     pygame.mixer.Sound.play(click)
                     drawSelectEsc()
@@ -377,8 +434,7 @@ while True:
                     pygame.mixer.Sound.play(click)
                     pygame.display.update()
                     x = 0
-                    y = \
-                        0
+                    y = 0
                     trig = 4
                     pastrySelect()
                     time.sleep(0.1)
@@ -413,8 +469,12 @@ while True:
                 print("escape")
     if selection == 7:  ########################LEADERBOARD##################
         screen.fill(black)
+        addUsers()
         leaderboard()
         for event in pygame.event.get():
+            if event.type == pygame.KEYDOWN and event.key == K_ESCAPE:
+                print("quitting")
+                selection = 1
             if event.type == pygame.KEYDOWN and event.key == K_ESCAPE:
                 selection = 0
                 print("escape")
@@ -550,7 +610,7 @@ while True:
         edp445 = pygame.image.load("Logo/edp455.jpg.png")
         screen.blit(edp445, (350, 150))
         pastryHigh = c.execute("SELECT pastryHigh FROM highScores")
-        pastryHigh = pastryHigh.fetchall()
+        pastryHigh = c.fetchall()
         show_text("Actuations: " + str(totala), 0, 0, white)
         show_text("HIGH SCORE: " + str(pastryHigh[0][0]), 0, 40, white)
         coinamt = getHubCoin(vars.user)
@@ -592,22 +652,20 @@ while True:
                         ############
                         pygame.mixer.Sound.play(click)
                         pastryHigh = c.execute("SELECT pastryHigh FROM highScores")
-                        pastryHigh = pastryHigh.fetchall()
+                        pastryHigh = c.fetchall()
                         totala += 1
                         coinamt = getHubCoin(vars.user)
                         if coinamt != "none":
                             coinamt += 1.0 / 500.0
                             c.execute(f"UPDATE users SET money = '{round(coinamt, 4)}' WHERE username = '{vars.user}'")
-                            connection.commit()
                             addUsers()
                         screen.fill(black)
                         screen.blit(edp445, (350, 150))
                         show_text("Actuations: " + str(totala), 0, 0, white)
                         if totala > pastryHigh[0][0]:
                             c.execute("UPDATE highScores SET pastryHigh =" + str(totala))
-                            connection.commit()
                         pastryHigh = c.execute("SELECT pastryHigh FROM highScores")
-                        pastryHigh = pastryHigh.fetchall()
+                        pastryHigh = c.fetchall()
                         show_text("HIGH SCORE: " + str(pastryHigh[0][0]), 0, 40, white)
                         if coinamt != "none":
                             showHubCoin(vars.user, 700, 0, white)
@@ -619,7 +677,7 @@ while True:
         countDownScreen()
         screen.fill(black)
         skaavokHigh = c.execute("SELECT skaavokHigh FROM highScores")
-        skaavokHigh = skaavokHigh.fetchall()
+        skaavokHigh = c.fetchall()
         show_text("Score: " + str(scores), 0, 0, white)
         show_text("HIGH SCORE: " + str(skaavokHigh[0][0]), 300, 0, white)
         randx = random.randint(100, 900)
@@ -667,14 +725,14 @@ while True:
                         show_text("Score: " + str(scores), 0, 0, white)
                         if (scores > skaavokHigh[0][0]):
                             c.execute("UPDATE highScores SET skaavokHigh =" + str(scores))
-                            connection.commit()
+                            conn.commit()
                         skaavokHigh = c.execute("SELECT skaavokHigh FROM highScores")
-                        skaavokHigh = skaavokHigh.fetchall()
+                        skaavokHigh = c.fetchall()
                         coinamt = getHubCoin(vars.user)
                         if coinamt != "none":
                             coinamt += 1.0 / 15.0
                             c.execute(f"UPDATE users SET money = '{round(coinamt, 4)}' WHERE username = '{vars.user}'")
-                            connection.commit()
+                            conn.commit()
                             addUsers()
                         show_text("HIGH SCORE: " + str(skaavokHigh[0][0]), 300, 0, white)
                         if coinamt != "none":
@@ -712,7 +770,7 @@ while True:
         time.sleep(0.075)
         # print(wormbody)
         wormHigh = c.execute("SELECT wormHigh FROM highScores")
-        wormHigh = wormHigh.fetchall()
+        wormHigh = c.fetchall()
         screen.fill(black)
         for n in wormbody:
             pygame.draw.rect(screen, wormcolor, pygame.Rect(n[0], n[1], 20, 20))
@@ -762,14 +820,14 @@ while True:
             if coinamt != "none":
                 coinamt += 1.0 / 15.0
                 c.execute(f"UPDATE users SET money = '{round(coinamt, 4)}' WHERE username = '{vars.user}'")
-                connection.commit()
+                conn.commit()
                 addUsers()
             if coinamt != "none":
                 showHubCoin(vars.user, 700, 0, white)
 
             if (scorew > wormHigh[0][0]):
                 c.execute("UPDATE highScores SET wormHigh =" + str(scorew))
-                connection.commit()
+                conn.commit()
         else:
             wormbody.pop(-1)
 
