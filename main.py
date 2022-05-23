@@ -12,12 +12,17 @@ from tkinter import messagebox
 import mysql.connector
 import os
 
-#####SECRETS#####
+##########
 
 host1 = os.environ['host']
 user1 = os.environ['user']
 password1 = os.environ['password']
 db1 = os.environ['db']
+
+# host1 = os.getenv['host']
+# user1 = os.getenv['user']
+# password1 = os.getenv['password']
+# db1 = os.getenv['db']
 
 #################
 
@@ -34,18 +39,25 @@ Clock = pygame.time.Clock()
 # c = connection.cursor()
 
 # conn = mysql.connector.connect(
-#     host="bvhsdrtwwbrnsac2wlsc-mysql.services.clever-cloud.com",
-#     user="ulkqho87c7b8tdam",
+#     host="bvhsdrtwwbrnsac2wlsc-mysql.services.clever-cloud.com", 
+#     user="ulkqho87c7b8tdam", 
 #     password="dmqctKjJsJYlyFq9369e1", ex 1 hee hee
 #     db="bvhsdrtwwbrnsac2wlsc"
 #     )
 
 conn = mysql.connector.connect(
-    host=host1,
-    user=user1,
-    password=password1,
+    host=host1, 
+    user=user1, 
+    password=password1, 
     db=db1
-)
+    )
+
+# conn = mysql.connector.connect(
+#     host=vars.host1, 
+#     user=vars.user1, 
+#     password=vars.password1, 
+#     db=vars.db1
+#     )
 
 c = conn.cursor()
 
@@ -59,8 +71,11 @@ c = conn.cursor()
 
 # c.execute("DELETE FROM highScores WHERE pastryHigh = 0")
 
-# c.execute("UPDATE users SET money = 69.6969 WHERE username = 'ninja'")
+# c.execute("UPDATE users SET money = 2000 WHERE username = 'Quandavious Dingleton'")
+# c.execute("UPDATE users SET money = 6969.6969 WHERE username = 'ninja'")
 
+# c.execute("SELECT * FROM users")
+# print(c.fetchall())
 
 #####################
 conn.commit()
@@ -68,13 +83,10 @@ conn.commit()
 # DISPLAY DBS#
 result = c.execute("SELECT * FROM highScores")
 result = c.fetchall()
-# print("High Scores:", result)
+#print("High Scores:", result)
 result = c.execute("SELECT * FROM users")
 result = c.fetchall()
-
-
-# print("Users: ", result)
-
+#print("Users: ", result)
 
 def getHubCoin(usern):
     r = c.execute("SELECT * FROM users")
@@ -83,7 +95,6 @@ def getHubCoin(usern):
         if users[0] == usern:
             return float(users[2])
     return "none"
-
 
 #########################################LOGIN#################################################
 
@@ -173,7 +184,12 @@ black = (0, 0, 0)
 white = (255, 255, 255)
 orange = (255, 165, 0)
 red = (255, 0, 0)
+brown = (210, 105, 30)
 wormcolor = (251, 217, 177)
+
+###################SKINS####################
+color = white
+############################################
 
 colors = [pink, blue, green]
 pygame.init()
@@ -181,6 +197,10 @@ screen = pygame.display.set_mode((1000, 600))
 escButton = pygame.image.load("Logo/esc.png")
 trig = 0
 
+xbg = 500
+ybg = 300
+xchangebg = 2
+ychangebg = 2
 yTitle = 0
 
 ##########PING VARS#################
@@ -214,7 +234,7 @@ headpos = [500, 300]
 dir = 2
 scorew = 0
 ###################################
-volume = 0.1
+volume = 0.1    
 pygame.mixer.pre_init()
 pygame.mixer.music.load("Music/GloriousSound.mp3")
 pygame.mixer.music.play(-1)
@@ -240,27 +260,23 @@ def addUsers():
     r = c.execute("SELECT * FROM users")
     r = c.fetchall()
     vars.users = r
+    vars.sorted.clear()
     bigarr = []
     for user in r:
         bigarr.append(user[2])
-    bigarr.sort(reverse=True)
+    bigarr.sort(reverse = True)
     for num in bigarr:
         for user in vars.users:
             if user[2] == num:
                 vars.sorted.append(user)
 
-
 addUsers()
-# print(vars.sorted)
+#print(vars.sorted)
 
 while True:
     pygame.display.update()
     if selection == 0:  ###################TITLE###################
-        if trig == 0:
-            if volume == 0:
-                drawTitleoff()
-            else:
-                drawTitle()
+        screen.fill(black)
         # left worm
         pygame.draw.rect(screen, wormcolor, (120, 0 + nn, 20, 20))
         pygame.draw.rect(screen, wormcolor, (120, 20 + nn, 20, 20))
@@ -276,10 +292,35 @@ while True:
         pygame.draw.rect(screen, wormcolor, (860, 580 - nn, 20, 20))
         nn = nn + 1
 
-        pygame.display.update()
+        pygame.draw.circle(screen, color, (xbg, ybg), 10)
+
+        if xbg > 10:
+            xchangebg = -xchangebg
+    
+        if xbg < 990:
+            xchangebg = -xchangebg
+            
+        if ybg > 590:
+            ychangebg = random.uniform(-3, -2)
+        if ybg < 10:
+            ychangebg = random.uniform(2, 3)
+    
+        xbg = xbg + xchangebg
+        ybg = ybg + ychangebg
 
         if nn == 700:
             nn = -80
+
+        if trig == 0:
+            if volume == 0:
+                drawTitleoff()
+            else:
+                drawTitle()
+        
+        time.sleep(.001)
+        
+        pygame.display.update()
+        
         for event in pygame.event.get():
 
             if event.type == pygame.KEYDOWN and event.key == K_ESCAPE:
@@ -292,7 +333,7 @@ while True:
                 quit()
             if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
                 x, y = event.pos
-                if 950 <= x <= 1000 and 550 <= y <= 600:
+                if 935 <= x <= 985 and 540 <= y <= 580:
                     pygame.mixer.Sound.play(click)
                     if volume != 0:
                         volume = 0
@@ -345,11 +386,26 @@ while True:
                 if getHubCoin(vars.user) == "none":
                     selection = 10
                 else:
-                    selection = 7
+                    selection = 2
+                    x = 0
+                    y = 0
                 trig = 0
+              
+            if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
+                x, y = event.pos
+                if 5 <= x <= 115 and 565 <= y <= 595:
+                    print("leaderboard")
+                    pygame.mixer.Sound.play(click)
+                    selection = 7
+                    #trig = 6
 
-            # if 950 <= x <= 1000 and 550 <= y <= 600:
-            ##     pygame.mixer.music.set_volume(volume)
+            if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
+                x, y = event.pos
+                if 120 <= x <= 202 and 565 <= y <= 595:
+                    print("help")
+                    pygame.mixer.Sound.play(click)
+                    selection = 11
+                    #trig = 6
 
     if selection == 1:  #####################SELECT SCREEN###################
         if trig == 0:
@@ -357,7 +413,7 @@ while True:
             time.sleep(0.2)
         for event in pygame.event.get():
             if event.type == pygame.KEYDOWN and event.key == K_ESCAPE:
-                drawSelectEsc()
+                drawSelectesc()
                 time.sleep(0.1)
                 trig = 1
                 print("escape")
@@ -367,20 +423,13 @@ while True:
                 time.sleep(0.2)
                 selection = 0
                 trig = 0
-                print("up")
-
-            if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
-                x, y = event.pos
-                if 0 <= x <= 110 and 570 <= y <= 600:
-                    pygame.mixer.Sound.play(click)
-                    selection = 7
-                    trig = 6
-
+                
+                
             if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
                 x, y = event.pos
                 if 20 <= x <= 120 and 20 <= y <= 55:
                     pygame.mixer.Sound.play(click)
-                    drawSelectEsc()
+                    drawSelectesc()
                     time.sleep(0.1)
                     trig = 1
 
@@ -392,9 +441,6 @@ while True:
 
             if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
                 x, y = event.pos
-                # print("coords:")
-                # print("x:"+str(x))
-                # print("y:"+str(y))
                 if 143 <= x <= 429 and 270 <= y <= 370:
                     pygame.mixer.Sound.play(click)
                     pygame.display.update()
@@ -461,23 +507,51 @@ while True:
                 time.sleep(0.2)
                 selection = 6
                 trig = 0
-    if selection == 10:
+    if selection == 10: #####################NO ACCOUNT NFT##################
         drawNFTnoaccount()
         for event in pygame.event.get():
             if event.type == pygame.KEYDOWN and event.key == K_ESCAPE:
-                selection = 0
+                drawNFTnoaccountesc()
+                time.sleep(0.1)
+                trig = 1
                 print("escape")
+
+            if event.type == pygame.KEYUP and event.key == K_ESCAPE and trig == 1:
+                drawNFTnoaccount()
+                time.sleep(0.2)
+                selection = 0
+                trig = 0
     if selection == 7:  ########################LEADERBOARD##################
         screen.fill(black)
         addUsers()
         leaderboard()
         for event in pygame.event.get():
             if event.type == pygame.KEYDOWN and event.key == K_ESCAPE:
-                print("quitting")
-                selection = 1
-            if event.type == pygame.KEYDOWN and event.key == K_ESCAPE:
-                selection = 0
+                leaderboardesc()
+                time.sleep(0.1)
+                trig = 1
                 print("escape")
+
+            if event.type == pygame.KEYUP and event.key == K_ESCAPE and trig == 1:
+                leaderboard()
+                time.sleep(0.2)
+                selection = 0
+                trig = 0
+    if selection  == 11:  ###################HELP######################
+        screen.fill(black)
+        drawHelp()
+        for event in pygame.event.get():
+            if event.type == pygame.KEYDOWN and event.key == K_ESCAPE:
+                drawHelpesc()
+                time.sleep(0.1)
+                trig = 1
+                print("escape")
+
+            if event.type == pygame.KEYUP and event.key == K_ESCAPE and trig == 1:
+                drawHelp()
+                time.sleep(0.2)
+                selection = 0
+                trig = 0
 
     if selection == 2:  ###########################NFTS#######################
         screen.fill(black)
@@ -486,28 +560,42 @@ while True:
 
         for event in pygame.event.get():
             if event.type == pygame.KEYDOWN and event.key == K_ESCAPE:
-                selection = 0
+                drawNFTesc()
+                time.sleep(0.1)
+                trig = 1
                 print("escape")
+
+            if event.type == pygame.KEYUP and event.key == K_ESCAPE and trig == 1:
+                drawNFT()
+                time.sleep(0.2)
+                selection = 0
+                trig = 0
             if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
                 x, y = event.pos
 
-        if 55 <= x <= 305 and 200 <= y <= 350:
+        if 55 <= x <= 305 and 200 <= y <= 350 or color == brown:
             drawNFT0()
+            color = brown
 
-        if 370 <= x <= 620 and 200 <= y <= 350:
+        if 370 <= x <= 620 and 200 <= y <= 350 or color == orange:
             drawNFT1()
+            color = orange
 
-        if 685 <= x <= 935 and 200 <= y <= 350:
+        if 685 <= x <= 935 and 200 <= y <= 350 or color == pink:
             drawNFT2()
+            color = pink
 
-        if 55 <= x <= 305 and 380 <= y <= 530:
+        if 55 <= x <= 305 and 380 <= y <= 530 or color == yellow:
             drawNFT3()
+            color = yellow
 
-        if 370 <= x <= 620 and 380 <= y <= 530:
+        if 370 <= x <= 620 and 380 <= y <= 530 or color == red:
             drawNFT4()
+            color = red
 
-        if 685 <= x <= 935 and 380 <= y <= 530:
+        if 685 <= x <= 935 and 380 <= y <= 530 or color == blue:
             drawNFT5()
+            color = blue
 
     if selection == 3:  ############################PING######################
         pygame.mixer.music.play(0)
@@ -530,7 +618,7 @@ while True:
             screen.fill(black)
             show_text("Score:" + str(p1scorep), 40, 10, white)
             show_text("Score:" + str(p2scorep), 870, 10, white)
-            pygame.draw.circle(screen, green, (xp, yp), 10, 0)
+            pygame.draw.circle(screen, color, (xp, yp), 10, 0)
             pygame.draw.rect(screen, blue, (50, ap, 20, 150))
             pygame.draw.rect(screen, pink, (950, bp, 20, 150))
             pygame.draw.line(screen, white, (500, 0), (500, 600), 5)
@@ -637,11 +725,15 @@ while True:
                         ip = str(random.randint(100, 999)) + "." + str(random.randint(100, 999)) + "." + str(
                             random.randint(10, 99)) + "." + str(random.randint(10, 99))
                         start = pygame.time.get_ticks()
-                        if elapsed <= 50:
+                        #print(prev)
+                        #print(" ")
+                        #print(elapsed)
+                        if elapsed <= 150:
+                            prev = elapsed
                             click_count += 1
                         else:
                             click_count = 0
-                        if click_count == 100:
+                        if click_count == 400:
                             banscreen()
                             show_text("Your IP, " + ip + ", has been saved to our database", 0, 0, white)
                             pygame.display.update()
@@ -682,7 +774,7 @@ while True:
         show_text("HIGH SCORE: " + str(skaavokHigh[0][0]), 300, 0, white)
         randx = random.randint(100, 900)
         randy = random.randint(100, 500)
-        pygame.draw.circle(screen, white, (randx, randy), 20)
+        pygame.draw.circle(screen, color, (randx, randy), 20)
         coinamt = getHubCoin(vars.user)
         if coinamt != "none":
             showHubCoin(vars.user, 700, 0, white)
@@ -721,7 +813,7 @@ while True:
                         scores = scores + 1
                         randx = random.randint(100, 900)
                         randy = random.randint(100, 500)
-                        pygame.draw.circle(screen, white, (randx, randy), 20)
+                        pygame.draw.circle(screen, color, (randx, randy), 20)
                         show_text("Score: " + str(scores), 0, 0, white)
                         if (scores > skaavokHigh[0][0]):
                             c.execute("UPDATE highScores SET skaavokHigh =" + str(scores))
@@ -747,7 +839,7 @@ while True:
                         if coinamt != "none":
                             showHubCoin(vars.user, 700, 0, white)
                         show_text("HIGH SCORE: " + str(skaavokHigh[0][0]), 300, 0, white)
-                        pygame.draw.circle(screen, white, (randx, randy), 20)
+                        pygame.draw.circle(screen, color, (randx, randy), 20)
                         pygame.display.update()
 
     if selection == 6:  #####################WORM#####################
@@ -841,3 +933,4 @@ while True:
                 crash()
                 selection = 0
                 scorew = 0
+                
