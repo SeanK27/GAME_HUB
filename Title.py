@@ -44,6 +44,7 @@ worms = pygame.image.load("Logo/worms.png")
 pastryLogo = pygame.image.load("Logo/pastry.png")
 pastrys = pygame.image.load("Logo/pastrys.png")
 leaderboards = pygame.image.load("Logo/leaderboard.png")
+help = pygame.image.load("Logo/help button.png")
 
 
 # Show Text
@@ -72,12 +73,13 @@ def showHubCoin(usern, xhc, yhc, color):
 
 
 def drawTitle():  # Title Screen
-    screen.fill(black)
+    pygame.draw.rect(screen, white, (0,0, 1000, 600), 2)
     screen.blit(playButton, (333, 266))
     screen.blit(nftButton, (333, 430))
     screen.blit(titleLogo, (230, 30))
-    screen.blit(soundButton, (930, 530))
-    screen.blit(leaderboards, (0, 570))
+    screen.blit(soundButton, (935, 540))
+    screen.blit(leaderboards, (5, 565))
+    screen.blit(help, (120, 565))
     showHubCoin(vars.user, 775, 0, white)
     if vars.user == "":
         show_text_size("Playing as guest.", 0, 0, white, 20)
@@ -88,45 +90,48 @@ def drawTitle():  # Title Screen
 
 def titlePlay():  # Play button animation
     screen.blit(plays, (355, 286))
+    pygame.draw.rect(screen, white, (0,0, 1000, 600), 2)
     screen.blit(nftButton, (333, 430))
     screen.blit(titleLogo, (230, 30))
-    screen.blit(soundButton, (930, 530))
-    screen.blit(leaderboards, (0, 570))
+    screen.blit(soundButton, (935, 540))
+    screen.blit(leaderboards, (5, 565))     
+    screen.blit(help, (120, 565))
     showHubCoin(vars.user, 775, 0, white)
     if vars.user == "":
-        show_text_size("Playing as guest.", 0, 0, white, 15)
+        show_text_size("Playing as guest.", 0, 0, white, 20)
     else:
         show_text("Hi " + vars.user + "!", 0, 0, white)
     pygame.display.update()
 
 
 def titleNFT():  # NFT animation
-    screen.fill(black)
-    #screen.blit(leaderboard, ())
+    pygame.draw.rect(screen, white, (0,0, 1000, 600), 2)
     screen.blit(playButton, (333, 266))
     screen.blit(nfts, (355, 430))
     screen.blit(titleLogo, (230, 30))
-    screen.blit(soundButton, (930, 530))
-    screen.blit(leaderboards, (0, 570))
+    screen.blit(soundButton, (935, 540))
+    screen.blit(leaderboards, (5, 565))     
+    screen.blit(help, (120, 565))
     showHubCoin(vars.user, 775, 0, white)
     if vars.user == "":
-        show_text_size("Playing as guest.", 0, 0, white, 15)
+        show_text_size("Playing as guest.", 0, 0, white, 20)
     else:
         show_text("Hi " + vars.user + "!", 0, 0, white)
     pygame.display.update()
 
 
 def drawTitleoff():  # Title Screen
-    screen.fill(black)
+    pygame.draw.rect(screen, white, (0,0, 1000, 600), 2)
     screen.blit(playButton, (333, 266))
     screen.blit(nftButton, (333, 430))
     screen.blit(titleLogo, (230, 30))
-    screen.blit(soundButton, (930, 530))
+    screen.blit(soundButton, (935, 540))
     showHubCoin(vars.user, 775, 0, white)
-    screen.blit(leaderboards, (0, 570))
-    pygame.draw.line(screen, red, (955, 555), (995, 595), 5)
+    screen.blit(leaderboards, (5, 565))     
+    screen.blit(help, (120, 565))
+    pygame.draw.line(screen, red, (935, 540), (985, 580), 6)
     if vars.user == "":
-        show_text_size("Playing as guest.", 0, 0, white, 15)
+        show_text_size("Playing as guest.", 0, 0, white, 20)
     else:
         show_text("Hi " + vars.user + "!", 0, 0, white)
     pygame.display.update()
@@ -134,38 +139,56 @@ def drawTitleoff():  # Title Screen
 
 def titlePlayoff():  # Play button animation
     screen.blit(plays, (355, 286))
+    pygame.draw.rect(screen, white, (0,0, 1000, 600), 2)
     screen.blit(nftButton, (333, 430))
     screen.blit(titleLogo, (230, 30))
-    screen.blit(soundButton, (930, 530))
+    screen.blit(soundButton, (935, 540))
     showHubCoin(vars.user, 775, 0, white)
-    screen.blit(leaderboards, (0, 570))
-    pygame.draw.line(screen, red, (955, 555), (995, 595), 5)
+    screen.blit(leaderboards, (5, 565))     
+    screen.blit(help, (120, 565))
+    pygame.draw.line(screen, red, (935, 540), (985, 580), 6)
     if vars.user == "":
-        show_text_size("Playing as guest.", 0, 0, white, 15)
+        show_text_size("Playing as guest.", 0, 0, white, 20)
     else:
         show_text("Hi " + vars.user + "!", 0, 0, white)
     pygame.display.update()
 
 
 def titleNFToff():  # NFT animation
-    screen.fill(black)
+    pygame.draw.rect(screen, white, (0,0, 1000, 600), 2)
     screen.blit(playButton, (333, 266))
     screen.blit(nfts, (355, 430))
     screen.blit(titleLogo, (230, 30))
-    screen.blit(soundButton, (930, 530))
+    screen.blit(soundButton, (935, 540))
     showHubCoin(vars.user, 775, 0, white)
-    screen.blit(leaderboards, (0, 570))
-    pygame.draw.line(screen, red, (955, 555), (995, 595), 5)
+    screen.blit(leaderboards, (5, 565))     
+    screen.blit(help, (120, 565))
+    pygame.draw.line(screen, red, (935, 540), (985, 580), 6)
     if vars.user == "":
-        show_text_size("Playing as guest.", 0, 0, white, 15)
+        show_text_size("Playing as guest.", 0, 0, white, 20)
     else:
         show_text("Hi " + vars.user + "!", 0, 0, white)
     pygame.display.update()
 
-def drawNFT():  # 333x148
+def drawNFT():
     screen.fill(black)
+    pygame.draw.rect(screen, white, (0,0, 1000, 600), 2)
     showHubCoin(vars.user, 775, 0, white)
     screen.blit(nfts, (345, 25))
+    screen.blit(escButton, (20, 20))
+    pygame.draw.rect(screen, brown, (55, 200, 230, 130), 10)
+    pygame.draw.rect(screen, orange, (370, 200, 230, 130), 10)
+    pygame.draw.rect(screen, pink, (685, 200, 230, 130), 10)
+    pygame.draw.rect(screen, yellow, (55, 380, 230, 130), 10)
+    pygame.draw.rect(screen, red, (370, 380, 230, 130), 10)
+    pygame.draw.rect(screen, blue, (685, 380, 230, 130), 10)
+
+def drawNFTesc():
+    screen.fill(black)
+    pygame.draw.rect(screen, white, (0,0, 1000, 600), 2)
+    showHubCoin(vars.user, 775, 0, white)
+    screen.blit(nfts, (345, 25))
+    screen.blit(sescButton, (20, 20))
     pygame.draw.rect(screen, brown, (55, 200, 230, 130), 10)
     pygame.draw.rect(screen, orange, (370, 200, 230, 130), 10)
     pygame.draw.rect(screen, pink, (685, 200, 230, 130), 10)
@@ -175,14 +198,26 @@ def drawNFT():  # 333x148
 
 def drawNFTnoaccount():
     screen.fill(black)
+    screen.blit(escButton, (20, 20))
+    pygame.draw.rect(screen, white, (0,0, 1000, 600), 2)
+    show_text("Howdy! You need money to buy things!", 200, 200, white)
+    show_text("Create an account to access the NFT Shop!", 200, 268, white)
+    pygame.display.update()
+
+def drawNFTnoaccountesc():
+    screen.fill(black)
+    screen.blit(sescButton, (20, 20))
+    pygame.draw.rect(screen, white, (0,0, 1000, 600), 2)
     show_text("Howdy! You need money to buy things!", 200, 200, white)
     show_text("Create an account to access the NFT Shop!", 200, 268, white)
     pygame.display.update()
 
 def drawNFT0():
     screen.fill(black)
+    pygame.draw.rect(screen, white, (0,0, 1000, 600), 2)
     showHubCoin(vars.user, 775, 0, white)
     screen.blit(nfts, (345, 25))
+    screen.blit(escButton, (20, 20))
     pygame.draw.rect(screen, brown, (55, 200, 230, 130), 75)
     pygame.draw.rect(screen, orange, (370, 200, 230, 130), 10)
     pygame.draw.rect(screen, pink, (685, 200, 230, 130), 10)
@@ -190,11 +225,38 @@ def drawNFT0():
     pygame.draw.rect(screen, red, (370, 380, 230, 130), 10)
     pygame.draw.rect(screen, blue, (685, 380, 230, 130), 10)
 
+def drawNFT0esc():
+    screen.fill(black)
+    pygame.draw.rect(screen, white, (0,0, 1000, 600), 2)
+    showHubCoin(vars.user, 775, 0, white)
+    screen.blit(nfts, (345, 25))
+    screen.blit(sescButton, (20, 20))
+    pygame.draw.rect(screen, brown, (55, 200, 230, 130), 75)
+    pygame.draw.rect(screen, orange, (370, 200, 230, 130), 10)
+    pygame.draw.rect(screen, pink, (685, 200, 230, 130), 10)
+    pygame.draw.rect(screen, yellow, (55, 380, 230, 130), 10)
+    pygame.draw.rect(screen, red, (370, 380, 230, 130), 10)
+    pygame.draw.rect(screen, blue, (685, 380, 230, 130), 10)
 
 def drawNFT1():
     screen.fill(black)
+    pygame.draw.rect(screen, white, (0,0, 1000, 600), 2)
     showHubCoin(vars.user, 775, 0, white)
     screen.blit(nfts, (345, 25))
+    screen.blit(escButton, (20, 20))
+    pygame.draw.rect(screen, brown, (55, 200, 230, 130), 10)
+    pygame.draw.rect(screen, orange, (370, 200, 230, 130), 75)
+    pygame.draw.rect(screen, pink, (685, 200, 230, 130), 10)
+    pygame.draw.rect(screen, yellow, (55, 380, 230, 130), 10)
+    pygame.draw.rect(screen, red, (370, 380, 230, 130), 10)
+    pygame.draw.rect(screen, blue, (685, 380, 230, 130), 10)
+
+def drawNFT1esc():
+    screen.fill(black)
+    pygame.draw.rect(screen, white, (0,0, 1000, 600), 2)
+    showHubCoin(vars.user, 775, 0, white)
+    screen.blit(nfts, (345, 25))
+    screen.blit(sescButton, (20, 20))
     pygame.draw.rect(screen, brown, (55, 200, 230, 130), 10)
     pygame.draw.rect(screen, orange, (370, 200, 230, 130), 75)
     pygame.draw.rect(screen, pink, (685, 200, 230, 130), 10)
@@ -204,8 +266,23 @@ def drawNFT1():
 
 def drawNFT2():
     screen.fill(black)
+    pygame.draw.rect(screen, white, (0,0, 1000, 600), 2)
     showHubCoin(vars.user, 775, 0, white)
     screen.blit(nfts, (345, 25))
+    screen.blit(escButton, (20, 20))
+    pygame.draw.rect(screen, brown, (55, 200, 230, 130), 10)
+    pygame.draw.rect(screen, orange, (370, 200, 230, 130), 10)
+    pygame.draw.rect(screen, pink, (685, 200, 230, 130), 75)
+    pygame.draw.rect(screen, yellow, (55, 380, 230, 130), 10)
+    pygame.draw.rect(screen, red, (370, 380, 230, 130), 10)
+    pygame.draw.rect(screen, blue, (685, 380, 230, 130), 10)
+
+def drawNFT2esc():
+    screen.fill(black)
+    pygame.draw.rect(screen, white, (0,0, 1000, 600), 2)
+    showHubCoin(vars.user, 775, 0, white)
+    screen.blit(nfts, (345, 25))
+    screen.blit(sescButton, (20, 20))
     pygame.draw.rect(screen, brown, (55, 200, 230, 130), 10)
     pygame.draw.rect(screen, orange, (370, 200, 230, 130), 10)
     pygame.draw.rect(screen, pink, (685, 200, 230, 130), 75)
@@ -215,8 +292,23 @@ def drawNFT2():
 
 def drawNFT3():
     screen.fill(black)
+    pygame.draw.rect(screen, white, (0,0, 1000, 600), 2)
     showHubCoin(vars.user, 775, 0, white)
     screen.blit(nfts, (345, 25))
+    screen.blit(escButton, (20, 20))
+    pygame.draw.rect(screen, brown, (55, 200, 230, 130), 10)
+    pygame.draw.rect(screen, orange, (370, 200, 230, 130), 10)
+    pygame.draw.rect(screen, pink, (685, 200, 230, 130), 10)
+    pygame.draw.rect(screen, yellow, (55, 380, 230, 130), 75)
+    pygame.draw.rect(screen, red, (370, 380, 230, 130), 10)
+    pygame.draw.rect(screen, blue, (685, 380, 230, 130), 10)
+
+def drawNFT3esc():
+    screen.fill(black)
+    pygame.draw.rect(screen, white, (0,0, 1000, 600), 2)
+    showHubCoin(vars.user, 775, 0, white)
+    screen.blit(nfts, (345, 25))
+    screen.blit(sescButton, (20, 20))
     pygame.draw.rect(screen, brown, (55, 200, 230, 130), 10)
     pygame.draw.rect(screen, orange, (370, 200, 230, 130), 10)
     pygame.draw.rect(screen, pink, (685, 200, 230, 130), 10)
@@ -226,8 +318,23 @@ def drawNFT3():
 
 def drawNFT4():
     screen.fill(black)
+    pygame.draw.rect(screen, white, (0,0, 1000, 600), 2)
     showHubCoin(vars.user, 775, 0, white)
     screen.blit(nfts, (345, 25))
+    screen.blit(escButton, (20, 20))
+    pygame.draw.rect(screen, brown, (55, 200, 230, 130), 10)
+    pygame.draw.rect(screen, orange, (370, 200, 230, 130), 10)
+    pygame.draw.rect(screen, pink, (685, 200, 230, 130), 10)
+    pygame.draw.rect(screen, yellow, (55, 380, 230, 130), 10)
+    pygame.draw.rect(screen, red, (370, 380, 230, 130), 75)
+    pygame.draw.rect(screen, blue, (685, 380, 230, 130), 10)
+
+def drawNFT4esc():
+    screen.fill(black)
+    pygame.draw.rect(screen, white, (0,0, 1000, 600), 2)
+    showHubCoin(vars.user, 775, 0, white)
+    screen.blit(nfts, (345, 25))
+    screen.blit(sescButton, (20, 20))
     pygame.draw.rect(screen, brown, (55, 200, 230, 130), 10)
     pygame.draw.rect(screen, orange, (370, 200, 230, 130), 10)
     pygame.draw.rect(screen, pink, (685, 200, 230, 130), 10)
@@ -237,8 +344,23 @@ def drawNFT4():
 
 def drawNFT5():
     screen.fill(black)
+    pygame.draw.rect(screen, white, (0,0, 1000, 600), 2)
     showHubCoin(vars.user, 775, 0, white)
     screen.blit(nfts, (345, 25))
+    screen.blit(escButton, (20, 20))
+    pygame.draw.rect(screen, brown, (55, 200, 230, 130), 10)
+    pygame.draw.rect(screen, orange, (370, 200, 230, 130), 10)
+    pygame.draw.rect(screen, pink, (685, 200, 230, 130), 10)
+    pygame.draw.rect(screen, yellow, (55, 380, 230, 130), 10)
+    pygame.draw.rect(screen, red, (370, 380, 230, 130), 10)
+    pygame.draw.rect(screen, blue, (685, 380, 230, 130), 75)
+
+def drawNFT5esc():
+    screen.fill(black)
+    pygame.draw.rect(screen, white, (0,0, 1000, 600), 2)
+    showHubCoin(vars.user, 775, 0, white)
+    screen.blit(nfts, (345, 25))
+    screen.blit(sescButton, (20, 20))
     pygame.draw.rect(screen, brown, (55, 200, 230, 130), 10)
     pygame.draw.rect(screen, orange, (370, 200, 230, 130), 10)
     pygame.draw.rect(screen, pink, (685, 200, 230, 130), 10)
@@ -248,6 +370,7 @@ def drawNFT5():
 
 def drawSelect():  # select screen
     screen.fill(black)
+    pygame.draw.rect(screen, white, (0,0, 1000, 600), 2)
     screen.blit(titleLogo, (230, 30))
     screen.blit(escButton, (20, 20))
     screen.blit(pingLogo, (143, 270))
@@ -259,6 +382,7 @@ def drawSelect():  # select screen
 
 def pingSelect():  # ping anim
     screen.fill(black)
+    pygame.draw.rect(screen, white, (0,0, 1000, 600), 2)
     screen.blit(titleLogo, (230, 30))
     screen.blit(escButton, (20, 20))
     screen.blit(pings, (162, 280))
@@ -270,6 +394,7 @@ def pingSelect():  # ping anim
 
 def pastrySelect():  # pastry actuator anim
     screen.fill(black)
+    pygame.draw.rect(screen, white, (0,0, 1000, 600), 2)
     screen.blit(titleLogo, (230, 30))
     screen.blit(escButton, (20, 20))
     screen.blit(pingLogo, (143, 270))
@@ -281,6 +406,7 @@ def pastrySelect():  # pastry actuator anim
 
 def aimSelect():  # skaavok anim
     screen.fill(black)
+    pygame.draw.rect(screen, white, (0,0, 1000, 600),2)
     screen.blit(titleLogo, (230, 30))
     screen.blit(escButton, (20, 20))
     screen.blit(pingLogo, (143, 270))
@@ -292,6 +418,7 @@ def aimSelect():  # skaavok anim
 
 def wormSelect():  # worm anim
     screen.fill(black)
+    pygame.draw.rect(screen, white, (0,0, 1000, 600),2)
     screen.blit(titleLogo, (230, 30))
     screen.blit(escButton, (20, 20))
     screen.blit(pingLogo, (143, 270))
@@ -303,6 +430,7 @@ def wormSelect():  # worm anim
 
 def drawSelectEsc():  # select screen
     screen.fill(black)
+    pygame.draw.rect(screen, white, (0,0, 1000, 600),2)
     screen.blit(titleLogo, (230, 30))
     screen.blit(sescButton, (20, 20))
     screen.blit(pingLogo, (143, 270))
@@ -314,6 +442,7 @@ def drawSelectEsc():  # select screen
 
 def countDownScreen():  # count down
     screen.fill(black)
+    pygame.draw.rect(screen, white, (0,0, 1000, 600),2)
     # show_text_size("5", 400, 100, white, 400)
     # pygame.display.update()
     # time.sleep(1)
@@ -340,10 +469,13 @@ def countDownScreen():  # count down
 
 def banscreen():
     screen.fill(black)
+    pygame.draw.rect(screen, white, (0,0, 1000, 600),2)
     screen.blit(cheaterdetected, (0, 0))
     pygame.display.update()
 
 def leaderboard():
+    screen.blit(escButton, (20, 20))
+    pygame.draw.rect(screen, white, (0,0, 1000, 600),2)
     show_text_size("Leaderboard", 380, 25, white, 69)
     #show top 10 networth
     show_text_size("1. " + str(vars.sorted[0][0]) + " - " + str(vars.sorted[0][2]) + " Hub Coin", 430, 100, white, 40)
@@ -360,5 +492,71 @@ def leaderboard():
     for user in vars.users:
         if user[0] == vars.user:
             moneys = user[2]
-    show_text_size(str(vars.user) + str(moneys), 450, 425, white, 30) #This one shows your net worth and ranking if you're not top 10
+    if vars.user != '':
+        show_text_size(str(vars.user) + ": " + str(moneys), 450, 425, white, 30) #This one shows your net worth and ranking if you're not top 10
     pygame.display.update()
+
+def leaderboardesc():
+    screen.blit(sescButton, (20, 20))
+    pygame.draw.rect(screen, white, (0,0, 1000, 600),2)
+    show_text_size("Leaderboard", 380, 25, white, 69)
+    #show top 10 networth
+    show_text_size("1. " + str(vars.sorted[0][0]) + " - " + str(vars.sorted[0][2]) + " Hub Coin", 430, 100, white, 40)
+    show_text_size("2. " + str(vars.sorted[1][0]) + " - " + str(vars.sorted[1][2]) + " Hub Coin", 450, 150, white, 30)
+    show_text_size("3. " + str(vars.sorted[2][0]) + " - " + str(vars.sorted[2][2]) + " Hub Coin", 450, 175, white, 30)
+    show_text_size("4. " + str(vars.sorted[3][0]) + " - " + str(vars.sorted[3][2]) + " Hub Coin", 450, 200, white, 30)
+    show_text_size("5. " + str(vars.sorted[4][0]) + " - " + str(vars.sorted[4][2]) + " Hub Coin", 450, 225, white, 30)
+    show_text_size("6. " + str(vars.sorted[5][0]) + " - " + str(vars.sorted[5][2]) + " Hub Coin", 450, 250, white, 30)
+    show_text_size("7. " + str(vars.sorted[6][0]) + " - " + str(vars.sorted[6][2]) + " Hub Coin", 450, 275, white, 30)
+    show_text_size("8. " + str(vars.sorted[7][0]) + " - " + str(vars.sorted[7][2]) + " Hub Coin", 450, 300, white, 30)
+    show_text_size("9. " + str(vars.sorted[8][0]) + " - " + str(vars.sorted[8][2]) + " Hub Coin", 450, 325, white, 30)
+    show_text_size("10. " + str(vars.sorted[9][0]) + " - " + str(vars.sorted[9][2]) + " Hub Coin", 450, 350, white, 30)
+    moneys = 0.0
+    for user in vars.users:
+        if user[0] == vars.user:
+            moneys = user[2]
+    if vars.user != '':
+        show_text_size(str(vars.user) + ": " + str(moneys), 450, 425, white, 30) #This one shows your net worth and ranking if you're not top 10
+    pygame.display.update()
+
+def drawHelp():
+    screen.blit(escButton, (20, 20))
+    pygame.draw.rect(screen, white, (0,0, 1000, 600),2)
+    show_text_size("Help", 380, 25, white, 69)
+    show_text_size("Ping", 24, 100, white, 45)
+    show_text("This is a two-player game. It functions just like the popular game Pong.", 25, 130, white)
+    show_text_size("Pastry Actuator", 24, 180, white, 45)
+    show_text("This is a single player game where you click on the cupcake to gain clicks. Each 500 clicks ", 24, 210, white)
+    show_text("is worth 1 HubCoin. ", 24, 235, white)
+
+    show_text_size("S'kaavok", 24, 285, white, 45)
+    show_text("This is a single player game where the goal is to click the targets as fast as you can before ", 24, 310, white)
+    show_text("the time runs out. Every 15 targets hit in Sk'aavok gives 1 hub coin.", 24, 335, white)
+
+    show_text_size("Worm", 24, 385, white, 45)
+    show_text("This game is based on the popular game called Snake. You control a worm like object and ", 24, 410, white)
+    show_text("eat as many apples as you can. Each time you eat an apple, the worm grows in length. Use the ", 24, 435, white)
+    show_text("arrow keys to control your worm. If you run into yourself or hit the wall you will die.", 24, 460, white)
+    show_text("Press [ESC] to close this window.", 450, 550, white)
+
+def drawHelpesc():
+    screen.blit(sescButton, (20, 20))
+    pygame.draw.rect(screen, white, (0,0, 1000, 600),2)
+    show_text_size("Help", 380, 25, white, 69)
+  
+    show_text_size("Ping", 24, 100, white, 45)
+    show_text("This is a two-player game. It functions just like the popular game Pong.", 25, 130, white)
+    show_text_size("Pastry Actuator", 24, 180, white, 45)
+    show_text("This is a single player game where you click on the cupcake to gain clicks. Each 500 clicks ", 24, 210, white)
+    show_text("is worth 1 HubCoin. ", 24, 235, white)
+
+    show_text_size("S'kaavok", 24, 285, white, 45)
+    show_text("This is a single player game where the goal is to click the targets as fast as you can before ", 24, 310, white)
+    show_text("the time runs out. Every 15 targets hit in Sk'aavok gives 1 hub coin.", 24, 335, white)
+
+    show_text_size("Worm", 24, 385, white, 45)
+    show_text("This game is based on the popular game called Snake. You control a worm like object and ", 24, 410, white)
+    show_text("eat as many apples as you can. Each time you eat an apple, the worm grows in length. Use the ", 24, 435, white)
+    show_text("arrow keys to control your worm. If you run into yourself or hit the wall you will die.", 24, 460, white)
+    show_text("Press [ESC] to close this window.", 450, 550, white)
+    
