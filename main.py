@@ -12,6 +12,7 @@ from tkinter import messagebox
 import mysql.connector
 import os
 
+
 ##########
 
 host1 = os.environ['host']
@@ -72,10 +73,15 @@ c = conn.cursor()
 # c.execute("DELETE FROM highScores WHERE pastryHigh = 0")
 
 # c.execute("UPDATE users SET money = 2000 WHERE username = 'Quandavious Dingleton'")
-# c.execute("UPDATE users SET money = 6969.6969 WHERE username = 'ninja'")
+c.execute("UPDATE users SET money = 20.0 WHERE username = 'sean'")
 
 # c.execute("SELECT * FROM users")
 # print(c.fetchall())
+
+# c.execute("ALTER TABLE users MODIFY nftids VARCHAR(255)")
+
+c.execute("UPDATE users SET nftids = ''")
+
 
 #####################
 conn.commit()
@@ -133,7 +139,7 @@ def Register(username, password):
     if l == 1:
         messagebox.showerror("Error", "Please Enter valid credentials.")
     if m != 1:
-        c.execute(f"INSERT INTO users VALUES ('{tempuser}', '{temppassword}', 0.0, 0)")
+        c.execute(f"INSERT INTO users VALUES ('{tempuser}', '{temppassword}', 0.0, -1)")
         conn.commit()
         messagebox.showinfo("Success!", "Thank you for joining GameHub!\n\nPlease Login.")
         result1 = c.execute("SELECT * FROM users")
@@ -225,6 +231,7 @@ clock = pygame.time.Clock()
 ADDITION = pygame.USEREVENT + 1
 current_time = 0
 start_time = 0
+deltas = 0
 ###################################
 ##############WORM#################
 foodx = (random.randint(0, 1000) // 20) * 20
@@ -233,6 +240,7 @@ wormbody = [[500, 300]]
 headpos = [500, 300]
 dir = 2
 scorew = 0
+deltaw = 0.0
 ###################################
 volume = 0.1    
 pygame.mixer.pre_init()
@@ -246,14 +254,36 @@ pop = pygame.mixer.Sound("Music/pop.mp3")
 ## 0: title screen; 1:game selection; 2: nft market; 3: ping; 4: pastryactuator; 5: skaavok; 6:worm
 selection = 0
 titleLogo = pygame.image.load("Logo/titleLogo.png")
+trophy = pygame.image.load("Logo/trophy.png")
 nn = 0
+L = -1
 
 
 def show_text(msg, xp, yp, color):
-    fontobj = pygame.font.SysFont("comic sans", 32)
+    fontobj = pygame.font.Font("fonts/COMIC.TTF", 21)
     msgobj = fontobj.render(msg, False, color)
     screen.blit(msgobj, (xp, yp))
 
+def searchNFTS(usern, id):
+    c.execute(f"SELECT nftids FROM users WHERE username = '{usern}'")
+    tup = c.fetchall()
+    strr = tup[0][0]
+    print(strr)
+    for x in str(strr):
+        if x == id:
+            return True
+    return False
+
+def getNFTS(usern):
+    c.execute(f"SELECT nftids FROM users WHERE username = '{usern}'")
+    tup = c.fetchall()
+    return tup[0][0]
+
+def setNFTS(usern, id):
+    strs = getNFTS(usern)
+    strs = strs + str(id)
+    c.execute(f"UPDATE users SET nftids = '{strs}' WHERE username = '{usern}'")
+    print(strs)
 
 # Add users to the global vars file
 def addUsers():
@@ -274,51 +304,15 @@ addUsers()
 #print(vars.sorted)
 
 while True:
-    pygame.display.update()
     if selection == 0:  ###################TITLE###################
-        screen.fill(black)
+        
         # left worm
-        pygame.draw.rect(screen, wormcolor, (120, 0 + nn, 20, 20))
-        pygame.draw.rect(screen, wormcolor, (120, 20 + nn, 20, 20))
-        pygame.draw.rect(screen, wormcolor, (120, 40 + nn, 20, 20))
-        pygame.draw.rect(screen, wormcolor, (120, 60 + nn, 20, 20))
-        pygame.draw.rect(screen, wormcolor, (120, 80 + nn, 20, 20))
-
-        # right worm
-        pygame.draw.rect(screen, wormcolor, (860, 500 - nn, 20, 20))
-        pygame.draw.rect(screen, wormcolor, (860, 520 - nn, 20, 20))
-        pygame.draw.rect(screen, wormcolor, (860, 540 - nn, 20, 20))
-        pygame.draw.rect(screen, wormcolor, (860, 560 - nn, 20, 20))
-        pygame.draw.rect(screen, wormcolor, (860, 580 - nn, 20, 20))
-        nn = nn + 1
-
-        pygame.draw.circle(screen, color, (xbg, ybg), 10)
-
-        if xbg > 10:
-            xchangebg = -xchangebg
-    
-        if xbg < 990:
-            xchangebg = -xchangebg
-            
-        if ybg > 590:
-            ychangebg = random.uniform(-3, -2)
-        if ybg < 10:
-            ychangebg = random.uniform(2, 3)
-    
-        xbg = xbg + xchangebg
-        ybg = ybg + ychangebg
-
-        if nn == 700:
-            nn = -80
-
         if trig == 0:
             if volume == 0:
                 drawTitleoff()
             else:
                 drawTitle()
-        
-        time.sleep(.001)
-        
+      
         pygame.display.update()
         
         for event in pygame.event.get():
@@ -331,6 +325,7 @@ while True:
                 conn.commit()
                 conn.close()
                 quit()
+
             if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
                 x, y = event.pos
                 if 935 <= x <= 985 and 540 <= y <= 580:
@@ -343,6 +338,8 @@ while True:
                         volume = 0.1
                         pygame.mixer.music.set_volume(volume)
                         drawTitle()
+            if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
+                x, y = event.pos
                 if 333 <= x <= 666 and 266 <= y <= 414:
                     pygame.mixer.Sound.play(click)
                     screen.fill(black)
@@ -396,16 +393,50 @@ while True:
                 if 5 <= x <= 115 and 565 <= y <= 595:
                     print("leaderboard")
                     pygame.mixer.Sound.play(click)
+                    if volume == 0:
+                        titleLeaderboardV()
+                    else:
+                        titleLeaderboard()
+                    time.sleep(0.1)
+                     #leaderboard
+                    trig = 6
+            if event.type == pygame.MOUSEBUTTONUP and event.button == 1 and trig == 6:
+                if volume == 0:
+                    drawTitleoff()
+                else:
+                    drawTitle()
+                time.sleep(0.2)
+                if getHubCoin(vars.user) == "none":
                     selection = 7
-                    #trig = 6
+                else:
+                    selection = 7
+                    x = 0
+                    y = 0
+                trig = 0
 
             if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
                 x, y = event.pos
                 if 120 <= x <= 202 and 565 <= y <= 595:
                     print("help")
                     pygame.mixer.Sound.play(click)
-                    selection = 11
-                    #trig = 6
+                    if volume == 0:
+                        titleHelpv()
+                    else:
+                        titleHelp()
+                    
+                    time.sleep(0.1)
+                    trig = 7
+            if event.type == pygame.MOUSEBUTTONUP and event.button == 1 and trig == 7:
+                if volume == 0:
+                    drawTitleoff()
+                else:
+                    drawTitle()
+                time.sleep(0.2)
+                trig = 0
+                x = 0
+                y = 0
+                selection = 11
+                
 
     if selection == 1:  #####################SELECT SCREEN###################
         if trig == 0:
@@ -413,7 +444,7 @@ while True:
             time.sleep(0.2)
         for event in pygame.event.get():
             if event.type == pygame.KEYDOWN and event.key == K_ESCAPE:
-                drawSelectesc()
+                drawSelectEsc()
                 time.sleep(0.1)
                 trig = 1
                 print("escape")
@@ -421,6 +452,7 @@ while True:
             if event.type == pygame.KEYUP and event.key == K_ESCAPE and trig == 1:
                 drawSelect()
                 time.sleep(0.2)
+                screen.fill(black)
                 selection = 0
                 trig = 0
                 
@@ -429,13 +461,14 @@ while True:
                 x, y = event.pos
                 if 20 <= x <= 120 and 20 <= y <= 55:
                     pygame.mixer.Sound.play(click)
-                    drawSelectesc()
+                    drawSelectEsc()
                     time.sleep(0.1)
                     trig = 1
 
             if event.type == pygame.MOUSEBUTTONUP and event.button == 1 and trig == 1:
                 drawSelect()
                 time.sleep(0.2)
+                screen.fill(black)
                 selection = 0
                 trig = 0
 
@@ -448,8 +481,7 @@ while True:
                     y = 0
                     trig = 2
                     pingSelect()
-                    time.sleep(
-                        .1)
+                    time.sleep(.1)
                     print("going to ping")
             if event.type == pygame.MOUSEBUTTONUP and event.button == 1 and trig == 2:
                 drawSelect()
@@ -509,93 +541,174 @@ while True:
                 trig = 0
     if selection == 10: #####################NO ACCOUNT NFT##################
         drawNFTnoaccount()
-        for event in pygame.event.get():
-            if event.type == pygame.KEYDOWN and event.key == K_ESCAPE:
-                drawNFTnoaccountesc()
-                time.sleep(0.1)
-                trig = 1
-                print("escape")
-
-            if event.type == pygame.KEYUP and event.key == K_ESCAPE and trig == 1:
-                drawNFTnoaccount()
-                time.sleep(0.2)
-                selection = 0
-                trig = 0
+        while selection == 10:
+            for event in pygame.event.get():
+                if event.type == pygame.KEYDOWN and event.key == K_ESCAPE:
+                    drawNFTnoaccountesc()
+                    time.sleep(0.1)
+                    trig = 1
+                    print("escape")
+    
+                if event.type == pygame.KEYUP and event.key == K_ESCAPE and trig == 1:
+                    drawNFTnoaccount()
+                    time.sleep(0.2)
+                    screen.fill(black)
+                    selection = 0
+                    trig = 0
+                    
     if selection == 7:  ########################LEADERBOARD##################
         screen.fill(black)
         addUsers()
         leaderboard()
-        for event in pygame.event.get():
-            if event.type == pygame.KEYDOWN and event.key == K_ESCAPE:
-                leaderboardesc()
-                time.sleep(0.1)
-                trig = 1
-                print("escape")
-
-            if event.type == pygame.KEYUP and event.key == K_ESCAPE and trig == 1:
-                leaderboard()
-                time.sleep(0.2)
-                selection = 0
-                trig = 0
+        while selection == 7:
+            for event in pygame.event.get():
+                if event.type == pygame.KEYDOWN and event.key == K_ESCAPE:
+                    leaderboardesc()
+                    time.sleep(0.1)
+                    trig = 1
+                    print("escape")
+    
+                if event.type == pygame.KEYUP and event.key == K_ESCAPE and trig == 1:
+                    leaderboard()
+                    time.sleep(0.2)
+                    screen.fill(black)
+                    selection = 0
+                    trig = 0
+                    
     if selection  == 11:  ###################HELP######################
         screen.fill(black)
         drawHelp()
-        for event in pygame.event.get():
-            if event.type == pygame.KEYDOWN and event.key == K_ESCAPE:
-                drawHelpesc()
-                time.sleep(0.1)
-                trig = 1
-                print("escape")
-
-            if event.type == pygame.KEYUP and event.key == K_ESCAPE and trig == 1:
-                drawHelp()
-                time.sleep(0.2)
-                selection = 0
-                trig = 0
+        while selection == 11:
+            for event in pygame.event.get():
+                if event.type == pygame.KEYDOWN and event.key == K_ESCAPE:
+                    drawHelpesc()
+                    time.sleep(0.1)
+                    trig = 1
+                    print("escape")
+    
+                if event.type == pygame.KEYUP and event.key == K_ESCAPE and trig == 1:
+                    drawHelp()
+                    time.sleep(0.2)
+                    screen.fill(black)
+                    selection = 0
+                    trig = 0
 
     if selection == 2:  ###########################NFTS#######################
         screen.fill(black)
         showHubCoin(vars.user, 800, 0, white)
         drawNFT()
+        while selection == 2:
+            
+            if equip == 0:
+                screen.fill(black)
+                drawNFT0()
+            if equip == 1:
+                screen.fill(black)
+                drawNFT1()
+            if equip == 2:
+                screen.fill(black)
+                drawNFT2()
+            if equip == 3:
+                screen.fill(black)
+                drawNFT3()
+            if equip == 4:
+                screen.fill(black)
+                drawNFT4()
+            if equip == 5:
+                screen.fill(black)
+                drawNFT5()
+                
+            for event in pygame.event.get():
+                if event.type == pygame.KEYDOWN and event.key == K_ESCAPE:
+                    drawNFTesc()
+                    time.sleep(0.1)
+                    trig = 1
+                    print("escape")
+    
+                if event.type == pygame.KEYUP and event.key == K_ESCAPE and trig == 1:
+                    drawNFT()
+                    time.sleep(0.2)
+                    screen.fill(black)
+                    trig = 0
+                    selection = 0
+                    x = 0
+                    y = 0
+                    
+                if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
+                    x, y = event.pos
 
-        for event in pygame.event.get():
-            if event.type == pygame.KEYDOWN and event.key == K_ESCAPE:
-                drawNFTesc()
-                time.sleep(0.1)
-                trig = 1
-                print("escape")
-
-            if event.type == pygame.KEYUP and event.key == K_ESCAPE and trig == 1:
-                drawNFT()
-                time.sleep(0.2)
-                selection = 0
-                trig = 0
-            if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
-                x, y = event.pos
-
-        if 55 <= x <= 305 and 200 <= y <= 350 or color == brown:
-            drawNFT0()
-            color = brown
-
-        if 370 <= x <= 620 and 200 <= y <= 350 or color == orange:
-            drawNFT1()
-            color = orange
-
-        if 685 <= x <= 935 and 200 <= y <= 350 or color == pink:
-            drawNFT2()
-            color = pink
-
-        if 55 <= x <= 305 and 380 <= y <= 530 or color == yellow:
-            drawNFT3()
-            color = yellow
-
-        if 370 <= x <= 620 and 380 <= y <= 530 or color == red:
-            drawNFT4()
-            color = red
-
-        if 685 <= x <= 935 and 380 <= y <= 530 or color == blue:
-            drawNFT5()
-            color = blue
+                    if 450 <= x <= 532 and 530 <= y <= 570 and L >= 0 and getHubCoin(vars.user):
+                        if L == 3.5:
+                            diff = getHubCoin(vars.user) - L
+                            if getHubCoin(vars.user) >= L:
+                                if searchNFTS(vars.user, '0') != True:
+                                    c.execute(f"UPDATE users SET money = '{diff}' WHERE username = '{vars.user}'")
+                                    c.execute(setNFTS(vars.user, 0))
+                                    print("updated")
+                                    addUsers()
+                                    screen.fill(black)
+                                    drawNFT0()
+                                    pygame.display.update()
+                                else:
+                                    print("u already hav it bruh")
+                            else:
+                                print("broke ahh")
+                        if L == 100:
+                            diff = getHubCoin(vars.user) - L
+                            if getHubCoin(vars.user) >= L:
+                                if searchNFTS(vars.user, '0') != True:
+                                    c.execute(f"UPDATE users SET money = '{diff}' WHERE username = '{vars.user}'")
+                                    c.execute(setNFTS(vars.user, 0))
+                                    print("updated")
+                                    addUsers()
+                                    screen.fill(black)
+                                    drawNFT0()
+                                    pygame.display.update()
+                                else:
+                                    print("u already hav it bruh")
+                            else:
+                                print("broke ahh")
+                                
+                            
+    
+            if 55 <= x <= 305 and 200 <= y <= 350:
+                if equip == 0:
+                    drawNFT0()
+                    color == brown
+                else:
+                    drawNFT0()
+                    L = 5
+                    equip = 0
+    
+            if 370 <= x <= 620 and 200 <= y <= 350 or color == orange:
+                drawNFT1()
+                L = 15
+                equip = 1
+                print("1")
+    
+            if 685 <= x <= 935 and 200 <= y <= 350 or color == pink:
+                drawNFT2()
+                L = 25
+                equip = 2
+                print("2")
+    
+            if 55 <= x <= 305 and 380 <= y <= 530 or color == yellow:
+                drawNFT3()
+                L = 35
+                equip = 3
+                print("3")
+    
+            if 370 <= x <= 620 and 380 <= y <= 530 or color == red:
+                drawNFT4()
+                L = 45
+                equip = 4
+                print("4")
+    
+            if 685 <= x <= 935 and 380 <= y <= 530 or color == blue:
+                drawNFT5()
+                L = 55
+                equip = 5
+                print("5")
 
     if selection == 3:  ############################PING######################
         pygame.mixer.music.play(0)
@@ -604,15 +717,23 @@ while True:
         while selection == 3:
             if p1scorep == 5:
                 screen.fill(black)
-                show_text("WINNER", 40, 10, white)
+                show_text("BLUE IS THE WINNER", 40, 10, white)
+                screen.blit(trophy, (40, 40))
                 pygame.display.update()
                 time.sleep(2)
+                p2scorep = 0
+                p1scorep = 0
+                screen.fill(black)
                 selection = 1  # title
             if p2scorep == 5:
                 screen.fill(black)
-                show_text("WINNER", 870, 10, white)
+                show_text("RED IS THE WINNER", 800, 10, white)
+                screen.blit(trophy, (800, 40))
                 pygame.display.update()
                 time.sleep(2)
+                p2scorep = 0
+                p1scorep = 0
+                screen.fill(black)
                 selection = 1  # title
             pygame.display.update()
             screen.fill(black)
@@ -620,11 +741,12 @@ while True:
             show_text("Score:" + str(p2scorep), 870, 10, white)
             pygame.draw.circle(screen, color, (xp, yp), 10, 0)
             pygame.draw.rect(screen, blue, (50, ap, 20, 150))
-            pygame.draw.rect(screen, pink, (950, bp, 20, 150))
+            pygame.draw.rect(screen, red, (950, bp, 20, 150))
             pygame.draw.line(screen, white, (500, 0), (500, 600), 5)
             for event in pygame.event.get():
                 if event.type == KEYDOWN:
                     if event.key == K_ESCAPE:
+                        screen.fill(black)
                         selection = 0
                         pygame.mixer.pre_init()
                         pygame.mixer.music.load("Music/GloriousSound.mp3")
@@ -712,6 +834,7 @@ while True:
             elapsed = abs(pygame.time.get_ticks() - start)
             for event in pygame.event.get():
                 if event.type == pygame.KEYDOWN and event.key == K_ESCAPE:
+                    screen.fill(black)
                     selection = 0
                     pygame.mixer.pre_init()
                     pygame.mixer.music.load("Music/GloriousSound.mp3")
@@ -791,6 +914,7 @@ while True:
                 show_text("GAME OVER", 0, 0, white)
                 pygame.display.update()
                 time.sleep(2)
+                screen.fill(black)
                 selection = 0
                 pygame.mixer.pre_init()
                 pygame.mixer.music.load("Music/GloriousSound.mp3")
@@ -799,6 +923,7 @@ while True:
                 scores = 0
             for event in pygame.event.get():
                 if event.type == pygame.KEYDOWN and event.key == K_ESCAPE:
+                    screen.fill(black)
                     selection = 0
                     pygame.mixer.pre_init()
                     pygame.mixer.music.load("Music/GloriousSound.mp3")
@@ -835,7 +960,7 @@ while True:
                         scores = scores - 1
                         if scores <= 0:
                             scores = 0
-                        show_text("Score: " + str(scores), 0, 0, white)
+                        show_text("my balls itch please help me i cant scratch them i dont get paid enoguh" + str(scores), 0, 0, white)
                         if coinamt != "none":
                             showHubCoin(vars.user, 700, 0, white)
                         show_text("HIGH SCORE: " + str(skaavokHigh[0][0]), 300, 0, white)
@@ -843,20 +968,24 @@ while True:
                         pygame.display.update()
 
     if selection == 6:  #####################WORM#####################
-        def crash():
+        def crash(score1, coinw):
+            pygame.mixer.music.load("Music/angrychong.mp3")
             screen.fill(black)
-            selection = 0
-            show_text(":( worm dead", 0, 0, white)
+            pygame.mixer.music.play(0)
+            show_text("Your worm died.", 480, 30, white)
+            show_text("Score: " + str(score1), 490, 60, white)
+            show_text("High Score: " + str(wormHigh[0][0]), 490, 90, white)
+            show_text("+" + str(round(coinw, 2)) + " HubCoin earned", 460, 120, white)
+            screen.blit(trophy, (200, 20))
             pygame.display.update()
-            wormbody.clear()
+            wormbody.clear()    
             wormbody.append([500, 300])
             headpos.clear()
             headpos.append(500)
             headpos.append(300)
-            print(wormbody)
             scorew = 0
-            time.sleep(3)
-
+            
+            time.sleep(2)       
 
         pygame.mixer.music.play(0)
         time.sleep(0.075)
@@ -865,7 +994,7 @@ while True:
         wormHigh = c.fetchall()
         screen.fill(black)
         for n in wormbody:
-            pygame.draw.rect(screen, wormcolor, pygame.Rect(n[0], n[1], 20, 20))
+            pygame.draw.rect(screen, color, pygame.Rect(n[0], n[1], 20, 20))
         pygame.draw.rect(screen, red, (foodx, foody, 20, 20))
         show_text("Score: " + str(scorew), 0, 0, white)
         show_text("High Score: " + str(wormHigh[0][0]), 300, 0, white)
@@ -876,6 +1005,7 @@ while True:
         for event in pygame.event.get():
             if event.type == pygame.KEYDOWN:
                 if event.key == K_ESCAPE:
+                    screen.fill(black)
                     selection = 0
                     pygame.mixer.pre_init()
                     pygame.mixer.music.load("Music/GloriousSound.mp3")
@@ -910,7 +1040,8 @@ while True:
 
             coinamt = getHubCoin(vars.user)
             if coinamt != "none":
-                coinamt += 1.0 / 15.0
+                deltaw += 1.0/15.0
+                coinamt += deltaw
                 c.execute(f"UPDATE users SET money = '{round(coinamt, 4)}' WHERE username = '{vars.user}'")
                 conn.commit()
                 addUsers()
@@ -924,13 +1055,15 @@ while True:
             wormbody.pop(-1)
 
         if headpos[0] < 0 or headpos[0] > 1000 or headpos[1] < 0 or headpos[1] > 600:
-            crash()
+            crash(scorew, coinamt)
+            screen.fill(black)
             selection = 0
             scorew = 0
 
         for segment in wormbody[1:]:
             if headpos[0] == segment[0] and headpos[1] == segment[1]:
-                crash()
+                crash(scorew, coinamt)
+                screen.fill(black)
                 selection = 0
                 scorew = 0
                 
