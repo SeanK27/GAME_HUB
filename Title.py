@@ -2,7 +2,7 @@ import pygame
 from pygame.locals import *
 import random
 import time
-import vars
+from node_modules import vars
 
 pygame.init()
 user = ''
