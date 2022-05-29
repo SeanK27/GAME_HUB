@@ -12,7 +12,7 @@ from tkinter import messagebox
 import mysql.connector
 # import os
 from node_modules import vars
-
+from better_profanity import profanity
 
 ##########
 
@@ -41,25 +41,25 @@ Clock = pygame.time.Clock()
 # c = connection.cursor()
 
 # conn = mysql.connector.connect(
-#     host="bvhsdrtwwbrnsac2wlsc-mysql.services.clever-cloud.com", 
-#     user="ulkqho87c7b8tdam", 
+#     host="bvhsdrtwwbrnsac2wlsc-mysql.services.clever-cloud.com",
+#     user="ulkqho87c7b8tdam",
 #     password="dmqctKjJsJYlyFq9369e1", ex 1 hee hee
 #     db="bvhsdrtwwbrnsac2wlsc"
 #     )
 
 # conn = mysql.connector.connect(
-#     host=host1, 
-#     user=user1, 
-#     password=password1, 
+#     host=host1,
+#     user=user1,
+#     password=password1,
 #     db=db1
 #     )
 
 conn = mysql.connector.connect(
-    host=vars.host1, 
-    user=vars.user1, 
-    password=vars.password1, 
+    host=vars.host1,
+    user=vars.user1,
+    password=vars.password1,
     db=vars.db1
-    )
+)
 
 c = conn.cursor()
 
@@ -90,10 +90,12 @@ conn.commit()
 # DISPLAY DBS#
 result = c.execute("SELECT * FROM highScores")
 result = c.fetchall()
-#print("High Scores:", result)
+# print("High Scores:", result)
 result = c.execute("SELECT * FROM users")
 result = c.fetchall()
-#print("Users: ", result)
+
+
+# print("Users: ", result)
 
 def getHubCoin(usern):
     r = c.execute("SELECT * FROM users")
@@ -102,6 +104,7 @@ def getHubCoin(usern):
         if users[0] == usern:
             return float(users[2])
     return "none"
+
 
 #########################################LOGIN#################################################
 
@@ -113,7 +116,7 @@ def Login(username, password):
     result = c.fetchall()
     for users in result:
         if username.get() == users[0] and password.get() == users[1]:
-            messagebox.showinfo("Success!", "Welcome, " + username.get() + ", to GameHub!")
+            messagebox.showinfo("Success!", "Welcome, " + profanity.censor(username.get()) + ", to GameHub!")
             vars.user = username.get()
             tkWindow.destroy()
             n = 1
@@ -140,7 +143,7 @@ def Register(username, password):
     if l == 1:
         messagebox.showerror("Error", "Please Enter valid credentials.")
     if m != 1:
-        c.execute(f"INSERT INTO users VALUES ('{tempuser}', '{temppassword}', 0.0, -1)")
+        c.execute(f"INSERT INTO users VALUES ('{tempuser}', '{temppassword}', 0.0, '')")
         conn.commit()
         messagebox.showinfo("Success!", "Thank you for joining GameHub!\n\nPlease Login.")
         result1 = c.execute("SELECT * FROM users")
@@ -258,7 +261,7 @@ dir = 2
 scorew = 0
 deltaw = 0.0
 ###################################
-volume = 0.1    
+volume = 0.1
 pygame.mixer.pre_init()
 pygame.mixer.music.load("Music/GloriousSound.mp3")
 pygame.mixer.music.play(-1)
@@ -281,6 +284,7 @@ def show_text(msg, xp, yp, color):
     msgobj = fontobj.render(msg, False, color)
     screen.blit(msgobj, (xp, yp))
 
+
 def searchNFTS(usern, id):
     c.execute(f"SELECT nftids FROM users WHERE username = '{usern}'")
     tup = c.fetchall()
@@ -290,16 +294,19 @@ def searchNFTS(usern, id):
             return True
     return False
 
+
 def getNFTS(usern):
     c.execute(f"SELECT nftids FROM users WHERE username = '{usern}'")
     tup = c.fetchall()
     return tup[0][0]
+
 
 def setNFTS(usern, id):
     strs = getNFTS(usern)
     strs = strs + str(id)
     c.execute(f"UPDATE users SET nftids = '{strs}' WHERE username = '{usern}'")
     print(strs)
+
 
 # Add users to the global vars file
 def addUsers():
@@ -310,27 +317,28 @@ def addUsers():
     bigarr = []
     for user in r:
         bigarr.append(user[2])
-    bigarr.sort(reverse = True)
+    bigarr.sort(reverse=True)
     for num in bigarr:
         for user in vars.users:
             if user[2] == num:
                 vars.sorted.append(user)
 
+
 addUsers()
-#print(vars.sorted)
+# print(vars.sorted)
 
 while True:
     if selection == 0:  ###################TITLE###################
-        
+
         # left worm
         if trig == 0:
             if volume == 0:
                 drawTitleoff()
             else:
                 drawTitle()
-      
+
         pygame.display.update()
-        
+
         for event in pygame.event.get():
 
             if event.type == pygame.KEYDOWN and event.key == K_ESCAPE:
@@ -403,7 +411,7 @@ while True:
                     x = 0
                     y = 0
                 trig = 0
-              
+
             if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
                 x, y = event.pos
                 if 5 <= x <= 115 and 565 <= y <= 595:
@@ -414,7 +422,7 @@ while True:
                     else:
                         titleLeaderboard()
                     time.sleep(0.1)
-                     #leaderboard
+                    # leaderboard
                     trig = 6
             if event.type == pygame.MOUSEBUTTONUP and event.button == 1 and trig == 6:
                 if volume == 0:
@@ -439,7 +447,7 @@ while True:
                         titleHelpv()
                     else:
                         titleHelp()
-                    
+
                     time.sleep(0.1)
                     trig = 7
             if event.type == pygame.MOUSEBUTTONUP and event.button == 1 and trig == 7:
@@ -452,7 +460,6 @@ while True:
                 x = 0
                 y = 0
                 selection = 11
-                
 
     if selection == 1:  #####################SELECT SCREEN###################
         if trig == 0:
@@ -471,8 +478,7 @@ while True:
                 screen.fill(black)
                 selection = 0
                 trig = 0
-                
-                
+
             if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
                 x, y = event.pos
                 if 20 <= x <= 120 and 20 <= y <= 55:
@@ -555,7 +561,7 @@ while True:
                 time.sleep(0.2)
                 selection = 6
                 trig = 0
-    if selection == 10: #####################NO ACCOUNT NFT##################
+    if selection == 10:  #####################NO ACCOUNT NFT##################
         drawNFTnoaccount()
         while selection == 10:
             for event in pygame.event.get():
@@ -564,14 +570,14 @@ while True:
                     time.sleep(0.1)
                     trig = 1
                     print("escape")
-    
+
                 if event.type == pygame.KEYUP and event.key == K_ESCAPE and trig == 1:
                     drawNFTnoaccount()
                     time.sleep(0.2)
                     screen.fill(black)
                     selection = 0
                     trig = 0
-                    
+
     if selection == 7:  ########################LEADERBOARD##################
         screen.fill(black)
         addUsers()
@@ -583,15 +589,15 @@ while True:
                     time.sleep(0.1)
                     trig = 1
                     print("escape")
-    
+
                 if event.type == pygame.KEYUP and event.key == K_ESCAPE and trig == 1:
                     leaderboard()
                     time.sleep(0.2)
                     screen.fill(black)
                     selection = 0
                     trig = 0
-                    
-    if selection  == 11:  ###################HELP######################
+
+    if selection == 11:  ###################HELP######################
         screen.fill(black)
         drawHelp()
         while selection == 11:
@@ -601,7 +607,7 @@ while True:
                     time.sleep(0.1)
                     trig = 1
                     print("escape")
-    
+
                 if event.type == pygame.KEYUP and event.key == K_ESCAPE and trig == 1:
                     drawHelp()
                     time.sleep(0.2)
@@ -616,7 +622,7 @@ while True:
         while selection == 2:
             if equip < 0 or equip > 5:
                 color = white
-                
+
             if equip == 0:
                 screen.fill(black)
                 drawNFT0()
@@ -653,7 +659,7 @@ while True:
                     time.sleep(0.1)
                     trig = 1
                     print("escape")
-    
+
                 if event.type == pygame.KEYUP and event.key == K_ESCAPE and trig == 1:
                     drawNFT()
                     time.sleep(0.2)
@@ -662,7 +668,7 @@ while True:
                     selection = 0
                     x = 0
                     y = 0
-                    
+
                 if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
                     x, y = event.pos
 
@@ -685,7 +691,7 @@ while True:
                                     print("u already hav it bruh")
                             else:
                                 print("broke ahh")
-                                
+
                         if L == 100:
                             print(getHubCoin(vars.user))
                             diff = getHubCoin(vars.user) - L
@@ -704,9 +710,7 @@ while True:
                                     print("u already hav it bruh")
                             else:
                                 print("broke ahh")
-                                
-                            
-    
+
             if 55 <= x <= 305 and 200 <= y <= 350:
                 if searchNFTS(vars.user, '0') == True:
                     equip = 0
@@ -715,7 +719,7 @@ while True:
                     L = 3.5
                     drawNFT0()
                     equip = 10
-    
+
             if 370 <= x <= 620 and 200 <= y <= 350:
                 if searchNFTS(vars.user, '1') == True:
                     equip = 1
@@ -724,7 +728,7 @@ while True:
                     L = 100
                     drawNFT1()
                     equip = 10
-    
+
             if 685 <= x <= 935 and 200 <= y <= 350:
                 if searchNFTS(vars.user, '2') == True:
                     equip = 2
@@ -732,7 +736,7 @@ while True:
                     L = 69
                     drawNFT2()
                     equip = 10
-    
+
             if 55 <= x <= 305 and 380 <= y <= 530:
                 if searchNFTS(vars.user, '3') == True:
                     equip = 3
@@ -740,7 +744,7 @@ while True:
                     L = 420
                     drawNFT3()
                     equip = 10
-    
+
             if 370 <= x <= 620 and 380 <= y <= 530:
                 if searchNFTS(vars.user, '4') == True:
                     equip = 4
@@ -748,7 +752,7 @@ while True:
                     L = 50
                     drawNFT4()
                     equip = 10
-    
+
             if 685 <= x <= 935 and 380 <= y <= 530:
                 if searchNFTS(vars.user, '5') == True:
                     equip = 5
@@ -868,10 +872,10 @@ while True:
         end = -1
         choose = 1
         cutloop = 1
-        
+
         screen.blit(edp4450, (350, 150))
         show_text("Toggle Animation", 0, 258, white)
-        screen.blit(toggleon, (0,290))
+        screen.blit(toggleon, (0, 290))
         pastryHigh = c.execute("SELECT pastryHigh FROM highScores")
         pastryHigh = c.fetchall()
         show_text("Actuations: " + str(totala), 0, 0, white)
@@ -896,32 +900,31 @@ while True:
                 if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
                     xa, ya = event.pos
 
-                    
                     if xa >= 0 and xa <= 83 and ya >= 290 and ya <= 332:
                         if choose > 0:
                             end = 1
                             pygame.draw.rect(screen, black, (0, 290, 100, 100))
                             show_text("Toggle Animation", 0, 258, white)
-                            screen.blit(toggleoff, (0,290))
+                            screen.blit(toggleoff, (0, 290))
                             pygame.display.update()
                             choose = -1
                         else:
                             end = -1
                             pygame.draw.rect(screen, black, (0, 290, 100, 100))
                             show_text("Toggle Animation", 0, 258, white)
-                            screen.blit(toggleon, (0,290))
+                            screen.blit(toggleon, (0, 290))
                             pygame.display.update()
                             choose = 1
-                        
+
                     if xa >= 350 and xa <= 650 and ya >= 150 and ya <= 450:
 
                         # Anti Cheat
                         ip = str(random.randint(100, 999)) + "." + str(random.randint(100, 999)) + "." + str(
                             random.randint(10, 99)) + "." + str(random.randint(10, 99))
                         start = pygame.time.get_ticks()
-                        #print(prev)
-                        #print(" ")
-                        #print(elapsed)
+                        # print(prev)
+                        # print(" ")
+                        # print(elapsed)
                         if elapsed <= 150:
                             prev = elapsed
                             click_count += 1
@@ -946,8 +949,8 @@ while True:
                             c.execute(f"UPDATE users SET money = '{round(coinamt, 4)}' WHERE username = '{vars.user}'")
                             addUsers()
                         screen.fill(black)
-                        
-                        #for frame in pastryanimlist:
+
+                        # for frame in pastryanimlist:
                         #    pygame.draw.rect(screen, black, (350, 150, 1000, 1000))
                         #    screen.blit(frame, (465, 270))
                         #    pygame.display.update()
@@ -955,53 +958,115 @@ while True:
                         #################ANIMATION##################
                         while end < 0 and cutloop > 0:
                             pygame.draw.rect(screen, black, (350, 150, 1000, 1000))
-                            screen.blit(edp4451, (353, 153)) #fifth
+                            screen.blit(edp4451, (353, 153))  # fifth
+                            show_text("Toggle Animation", 0, 258, white)
+                            screen.blit(toggleon, (0, 290))
+                            pastryHigh = c.execute("SELECT pastryHigh FROM highScores")
+                            pastryHigh = c.fetchall()
+                            show_text("Actuations: " + str(totala), 0, 0, white)
+                            show_text("HIGH SCORE: " + str(pastryHigh[0][0]), 0, 40, white)
+                            coinamt = getHubCoin(vars.user)
+                            if coinamt != "none":
+                                showHubCoin(vars.user, 700, 0, white)
                             pygame.display.update()
                             time.sleep(0.0001)
-    
+
                             pygame.draw.rect(screen, black, (350, 150, 1000, 1000))
-                            screen.blit(edp4452, (354, 154)) #fourth
+                            screen.blit(edp4452, (354, 154))  # fourth
+                            show_text("Toggle Animation", 0, 258, white)
+                            screen.blit(toggleon, (0, 290))
+                            pastryHigh = c.execute("SELECT pastryHigh FROM highScores")
+                            pastryHigh = c.fetchall()
+                            show_text("Actuations: " + str(totala), 0, 0, white)
+                            show_text("HIGH SCORE: " + str(pastryHigh[0][0]), 0, 40, white)
+                            coinamt = getHubCoin(vars.user)
+                            if coinamt != "none":
+                                showHubCoin(vars.user, 700, 0, white)
                             pygame.display.update()
                             time.sleep(0.0001)
-    
+
                             pygame.draw.rect(screen, black, (350, 150, 1000, 1000))
-                            screen.blit(edp4453, (356, 155)) #third
+                            screen.blit(edp4453, (356, 155))  # third
+                            show_text("Toggle Animation", 0, 258, white)
+                            screen.blit(toggleon, (0, 290))
+                            pastryHigh = c.execute("SELECT pastryHigh FROM highScores")
+                            pastryHigh = c.fetchall()
+                            show_text("Actuations: " + str(totala), 0, 0, white)
+                            show_text("HIGH SCORE: " + str(pastryHigh[0][0]), 0, 40, white)
+                            coinamt = getHubCoin(vars.user)
+                            if coinamt != "none":
+                                showHubCoin(vars.user, 700, 0, white)
                             pygame.display.update()
                             time.sleep(0.001)
-    
-                            pygame.draw.rect(screen, black, (350, 150, 1000, 1000))
-                            screen.blit(edp4454, (358, 156)) #second
-                            pygame.display.update()
-                            time.sleep(0.0001)
-    
-                            pygame.draw.rect(screen, black, (350, 150, 1000, 1000))
-                            screen.blit(edp4455, (358, 156)) #first 
-                            pygame.display.update()
-                            time.sleep(0.0001)
-                            
-                            pygame.draw.rect(screen, black, (0, 290, 100, 100))
-                            screen.blit(toggleon, (0,290))
-                            show_text("Toggle Animation", 0, 258, white)
-                            pygame.display.update()
-                            cutloop = -1
-                            #end = 0
 
-                        while end > 0 and cutloop > 0: 
-                            screen.blit(edp4450, (350, 150))
-                            screen.blit(toggleoff, (0,290))
+                            pygame.draw.rect(screen, black, (350, 150, 1000, 1000))
+                            screen.blit(edp4454, (358, 156))  # second
                             show_text("Toggle Animation", 0, 258, white)
+                            screen.blit(toggleon, (0, 290))
+                            pastryHigh = c.execute("SELECT pastryHigh FROM highScores")
+                            pastryHigh = c.fetchall()
+                            show_text("Actuations: " + str(totala), 0, 0, white)
+                            show_text("HIGH SCORE: " + str(pastryHigh[0][0]), 0, 40, white)
+                            coinamt = getHubCoin(vars.user)
+                            if coinamt != "none":
+                                showHubCoin(vars.user, 700, 0, white)
+                            pygame.display.update()
+                            time.sleep(0.0001)
+
+                            pygame.draw.rect(screen, black, (350, 150, 1000, 1000))
+                            screen.blit(edp4455, (358, 156))  # first
+                            show_text("Toggle Animation", 0, 258, white)
+                            screen.blit(toggleon, (0, 290))
+                            pastryHigh = c.execute("SELECT pastryHigh FROM highScores")
+                            pastryHigh = c.fetchall()
+                            show_text("Actuations: " + str(totala), 0, 0, white)
+                            show_text("HIGH SCORE: " + str(pastryHigh[0][0]), 0, 40, white)
+                            coinamt = getHubCoin(vars.user)
+                            if coinamt != "none":
+                                showHubCoin(vars.user, 700, 0, white)
+                            pygame.display.update()
+                            time.sleep(0.0001)
+
+                            pygame.draw.rect(screen, black, (0, 290, 100, 100))
+                            screen.blit(toggleon, (0, 290))
+                            show_text("Toggle Animation", 0, 258, white)
+                            show_text("Toggle Animation", 0, 258, white)
+                            screen.blit(toggleon, (0, 290))
+                            pastryHigh = c.execute("SELECT pastryHigh FROM highScores")
+                            pastryHigh = c.fetchall()
+                            show_text("Actuations: " + str(totala), 0, 0, white)
+                            show_text("HIGH SCORE: " + str(pastryHigh[0][0]), 0, 40, white)
+                            coinamt = getHubCoin(vars.user)
+                            if coinamt != "none":
+                                showHubCoin(vars.user, 700, 0, white)
                             pygame.display.update()
                             cutloop = -1
-                            #end = 0
+                            # end = 0
+
+                        while end > 0 and cutloop > 0:
+                            screen.blit(edp4450, (350, 150))
+                            screen.blit(toggleoff, (0, 290))
+                            show_text("Toggle Animation", 0, 258, white)
+                            show_text("Toggle Animation", 0, 258, white)
+                            pastryHigh = c.execute("SELECT pastryHigh FROM highScores")
+                            pastryHigh = c.fetchall()
+                            show_text("Actuations: " + str(totala), 0, 0, white)
+                            show_text("HIGH SCORE: " + str(pastryHigh[0][0]), 0, 40, white)
+                            coinamt = getHubCoin(vars.user)
+                            if coinamt != "none":
+                                showHubCoin(vars.user, 700, 0, white)
+                            pygame.display.update()
+                            cutloop = -1
+                            # end = 0
 
                         if end > 0:
                             end = 1
                         else:
                             end = -1
 
-                        #cutloop = 1
+                        # cutloop = 1
                         ##########################################################
-                       
+
                         show_text("Actuations: " + str(totala), 0, 0, white)
                         if totala > pastryHigh[0][0]:
                             c.execute("UPDATE highScores SET pastryHigh =" + str(totala))
@@ -1016,55 +1081,55 @@ while True:
                     if xa >= 350 and xa <= 650 and ya >= 150 and ya <= 450:
                         while end < 0 and cutloop < 0:
                             pygame.draw.rect(screen, black, (350, 150, 1000, 1000))
-                            screen.blit(edp4455, (358, 156)) #first 
+                            screen.blit(edp4455, (358, 156))  # first
                             pygame.display.update()
                             time.sleep(0.0001)
-    
+
                             pygame.draw.rect(screen, black, (350, 150, 1000, 1000))
-                            screen.blit(edp4454, (358, 156)) #second
+                            screen.blit(edp4454, (358, 156))  # second
                             pygame.display.update()
                             time.sleep(0.0001)
-    
+
                             pygame.draw.rect(screen, black, (350, 150, 1000, 1000))
-                            screen.blit(edp4453, (356, 155)) #third
+                            screen.blit(edp4453, (356, 155))  # third
                             pygame.display.update()
                             time.sleep(0.0001)
-    
+
                             pygame.draw.rect(screen, black, (350, 150, 1000, 1000))
-                            screen.blit(edp4452, (354, 154)) #fourth
+                            screen.blit(edp4452, (354, 154))  # fourth
                             pygame.display.update()
                             time.sleep(0.0001)
-    
+
                             pygame.draw.rect(screen, black, (350, 150, 1000, 1000))
-                            screen.blit(edp4451, (353, 153)) #fifth 
+                            screen.blit(edp4451, (353, 153))  # fifth
                             pygame.display.update()
                             time.sleep(0.0001)
-    
+
                             pygame.draw.rect(screen, black, (350, 150, 1000, 1000))
-                            screen.blit(edp4450, (350, 150)) #back to original
+                            screen.blit(edp4450, (350, 150))  # back to original
                             pygame.display.update()
                             time.sleep(0.0001)
-                            
+
                             pygame.draw.rect(screen, black, (0, 290, 100, 100))
-                            screen.blit(toggleon, (0,290))
+                            screen.blit(toggleon, (0, 290))
                             show_text("Toggle Animation", 0, 258, white)
                             pygame.display.update()
                             cutloop = 1
-                            #end = 0
-                            
-                        while end > 0 and cutloop < 0: 
+                            # end = 0
+
+                        while end > 0 and cutloop < 0:
                             screen.blit(edp4450, (350, 150))
-                            screen.blit(toggleoff, (0,290))
+                            screen.blit(toggleoff, (0, 290))
                             show_text("Toggle Animation", 0, 258, white)
                             pygame.display.update()
                             cutloop = 1
-                            #end = 0
+                            # end = 0
 
                         if end > 0:
                             end = 1
-                        else: 
+                        else:
                             end = -1
-                        
+
     if selection == 5:  ####################SKAAVOK###################
         pygame.mixer.music.play(0)
         scores = 0
@@ -1156,14 +1221,15 @@ while True:
             show_text("High Score: " + str(wormHigh[0][0]), 490, 90, white)
             screen.blit(trophy, (200, 20))
             pygame.display.update()
-            wormbody.clear()    
+            wormbody.clear()
             wormbody.append([500, 300])
             headpos.clear()
             headpos.append(500)
             headpos.append(300)
             scorew = 0
-            
-            time.sleep(2)       
+
+            time.sleep(2)
+
 
         pygame.mixer.music.play(0)
         time.sleep(0.075)
@@ -1218,7 +1284,7 @@ while True:
 
             coinamtw = getHubCoin(vars.user)
             if coinamtw != "none":
-                deltaw += 1.0/15.0
+                deltaw += 1.0 / 15.0
                 coinamtw += deltaw
                 c.execute(f"UPDATE users SET money = '{round(coinamtw, 4)}' WHERE username = '{vars.user}'")
                 conn.commit()
@@ -1244,4 +1310,3 @@ while True:
                 screen.fill(black)
                 selection = 0
                 scorew = 0
-                
