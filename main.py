@@ -73,14 +73,10 @@ c = conn.cursor()
 
 # c.execute("DELETE FROM highScores WHERE pastryHigh = 0")
 
-# c.execute("UPDATE users SET money = 2000 WHERE username = 'Quandavious Dingleton'")
-
 # c.execute("UPDATE users SET money = 2000.0 WHERE username = 'sean'")
 
-c.execute("SELECT * FROM users")
-print(c.fetchall())
-
-# c.execute("ALTER TABLE users MODIFY nftids VARCHAR(255)")
+# c.execute("SELECT * FROM users")
+# print(c.fetchall())
 
 # c.execute("UPDATE users SET nftids = ''")
 
@@ -193,13 +189,15 @@ blue = (0, 0, 255)
 green = (0, 255, 0)
 black = (0, 0, 0)
 white = (255, 255, 255)
-orange = (255, 165, 0)
+orange = (247, 148, 30)
 red = (255, 0, 0)
 brown = (210, 105, 30)
 wormcolor = (251, 217, 177)
+purple = (102, 51, 153)
+cyan = (0, 255, 255)
 
 ###################SKINS####################
-color = white
+vars.color = white
 ############################################
 
 colors = [pink, blue, green]
@@ -270,7 +268,7 @@ pygame.mixer.music.set_volume(volume)
 click = pygame.mixer.Sound("Music/click.wav")
 balltap = pygame.mixer.Sound("Music/balltap.wav")
 yum = pygame.mixer.Sound("Music/yum.wav")
-pop = pygame.mixer.Sound("Music/pop.mp3")
+pop = pygame.mixer.Sound("Music/pop.wav")
 ## 0: title screen; 1:game selection; 2: nft market; 3: ping; 4: pastryactuator; 5: skaavok; 6:worm
 selection = 0
 titleLogo = pygame.image.load("Logo/titleLogo.png")
@@ -420,7 +418,7 @@ while True:
                     print("leaderboard")
                     pygame.mixer.Sound.play(click)
                     if volume == 0:
-                        titleLeaderboardV()
+                        titleLeaderboardv()
                     else:
                         titleLeaderboard()
                     time.sleep(0.1)
@@ -623,32 +621,32 @@ while True:
         drawNFT()
         while selection == 2:
             if equip < 0 or equip > 5:
-                color = white
+                vars.color = white
 
             if equip == 0:
                 screen.fill(black)
                 drawNFT0()
-                color = brown
+                vars.color = red
 
             if equip == 1:
                 screen.fill(black)
                 drawNFT1()
-                color = orange
+                vars.color = blue
 
             if equip == 2:
                 screen.fill(black)
                 drawNFT2()
-                color = pink
+                vars.color = purple
 
             if equip == 3:
                 screen.fill(black)
                 drawNFT3()
-                color = yellow
+                vars.color = orange
 
             if equip == 4:
                 screen.fill(black)
                 drawNFT4()
-                color = red
+                vars.color = cyan
 
             if equip == 5:
                 screen.fill(black)
@@ -856,7 +854,6 @@ while True:
                     equip = 10
 
     if selection == 3:  ############################PING######################
-        pygame.mixer.music.play(0)
         screen.fill(black)
         pygame.display.update()
         while selection == 3:
@@ -884,7 +881,7 @@ while True:
             screen.fill(black)
             show_text("Score:" + str(p1scorep), 40, 10, white)
             show_text("Score:" + str(p2scorep), 870, 10, white)
-            pygame.draw.circle(screen, color, (xp, yp), 10, 0)
+            pygame.draw.circle(screen, vars.color, (xp, yp), 10, 0)
             pygame.draw.rect(screen, blue, (50, ap, 20, 150))
             pygame.draw.rect(screen, red, (950, bp, 20, 150))
             pygame.draw.line(screen, white, (500, 0), (500, 600), 5)
@@ -893,9 +890,6 @@ while True:
                     if event.key == K_ESCAPE:
                         screen.fill(black)
                         selection = 0
-                        pygame.mixer.pre_init()
-                        pygame.mixer.music.load("Music/GloriousSound.mp3")
-                        pygame.mixer.music.play(-1)
                         print("escape")
                     if event.key == K_w:
                         acp = -2
@@ -955,7 +949,6 @@ while True:
             yp = yp + ychangep
 
     if selection == 4:  ######################PASTRY ACTUATOR########################
-        pygame.mixer.music.play(0)
         pastrySelect()
         screen.fill(black)
         pygame.display.update()
@@ -984,9 +977,6 @@ while True:
                 if event.type == pygame.KEYDOWN and event.key == K_ESCAPE:
                     screen.fill(black)
                     selection = 0
-                    pygame.mixer.pre_init()
-                    pygame.mixer.music.load("Music/GloriousSound.mp3")
-                    pygame.mixer.music.play(-1)
                     print("escape")
                 if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
                     xa, ya = event.pos
@@ -1088,7 +1078,7 @@ while True:
                             if coinamt != "none":
                                 showHubCoin(vars.user, 700, 0, white)
                             pygame.display.update()
-                            time.sleep(0.001)
+                            time.sleep(0.0001)
 
                             pygame.draw.rect(screen, black, (350, 150, 1000, 1000))
                             screen.blit(edp4454, (358, 156))  # second
@@ -1222,7 +1212,6 @@ while True:
                             end = -1
 
     if selection == 5:  ####################SKAAVOK###################
-        pygame.mixer.music.play(0)
         scores = 0
         countDownScreen()
         screen.fill(black)
@@ -1232,7 +1221,7 @@ while True:
         show_text("HIGH SCORE: " + str(skaavokHigh[0][0]), 300, 0, white)
         randx = random.randint(100, 900)
         randy = random.randint(100, 500)
-        pygame.draw.circle(screen, color, (randx, randy), 20)
+        pygame.draw.circle(screen, vars.color, (randx, randy), 20)
         coinamt = getHubCoin(vars.user)
         if coinamt != "none":
             showHubCoin(vars.user, 700, 0, white)
@@ -1251,18 +1240,12 @@ while True:
                 time.sleep(2)
                 screen.fill(black)
                 selection = 0
-                pygame.mixer.pre_init()
-                pygame.mixer.music.load("Music/GloriousSound.mp3")
-                pygame.mixer.music.play(-1)
 
                 scores = 0
             for event in pygame.event.get():
                 if event.type == pygame.KEYDOWN and event.key == K_ESCAPE:
                     screen.fill(black)
                     selection = 0
-                    pygame.mixer.pre_init()
-                    pygame.mixer.music.load("Music/GloriousSound.mp3")
-                    pygame.mixer.music.play(-1)
                     scores = 0
                     print("escape")
                 if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
@@ -1273,7 +1256,7 @@ while True:
                         scores = scores + 1
                         randx = random.randint(100, 900)
                         randy = random.randint(100, 500)
-                        pygame.draw.circle(screen, color, (randx, randy), 20)
+                        pygame.draw.circle(screen, vars.color, (randx, randy), 20)
                         show_text("Score: " + str(scores), 0, 0, white)
                         if (scores > skaavokHigh[0][0]):
                             c.execute("UPDATE highScores SET skaavokHigh =" + str(scores))
@@ -1299,18 +1282,16 @@ while True:
                         if coinamt != "none":
                             showHubCoin(vars.user, 700, 0, white)
                         show_text("HIGH SCORE: " + str(skaavokHigh[0][0]), 300, 0, white)
-                        pygame.draw.circle(screen, color, (randx, randy), 20)
+                        pygame.draw.circle(screen, vars.color, (randx, randy), 20)
                         pygame.display.update()
 
     if selection == 6:  #####################WORM#####################
         def crash(score1, num):
-            pygame.mixer.music.load("Music/angrychong.mp3")
             screen.fill(black)
-            pygame.mixer.music.play(0)
             show_text("Your worm died.", 480, 30, white)
             show_text("Score: " + str(score1), 490, 60, white)
             show_text("High Score: " + str(wormHigh[0][0]), 490, 90, white)
-            show_text("You now have " + str(num) + "HubCoins", 480, 120, white)
+            show_text("You now have " + str(round(num, 2)) + " HubCoins", 480, 120, white)
             screen.blit(trophy, (200, 20))
             pygame.display.update()
             wormbody.clear()
@@ -1323,14 +1304,13 @@ while True:
             time.sleep(2)
 
 
-        pygame.mixer.music.play(0)
         time.sleep(0.075)
         # print(wormbody)
         wormHigh = c.execute("SELECT wormHigh FROM highScores")
         wormHigh = c.fetchall()
         screen.fill(black)
         for n in wormbody:
-            pygame.draw.rect(screen, color, pygame.Rect(n[0], n[1], 20, 20))
+            pygame.draw.rect(screen, vars.color, pygame.Rect(n[0], n[1], 20, 20))
         pygame.draw.rect(screen, red, (foodx, foody, 20, 20))
         show_text("Score: " + str(scorew), 0, 0, white)
         show_text("High Score: " + str(wormHigh[0][0]), 300, 0, white)
@@ -1343,9 +1323,6 @@ while True:
                 if event.key == K_ESCAPE:
                     screen.fill(black)
                     selection = 0
-                    pygame.mixer.pre_init()
-                    pygame.mixer.music.load("Music/GloriousSound.mp3")
-                    pygame.mixer.music.play(-1)
                     print("escape")
                 if event.key == K_DOWN and dir != 1:
                     dir = 0

@@ -13,16 +13,17 @@ blue = (0, 0, 255)
 green = (0, 255, 0)
 black = (0, 0, 0)
 white = (255, 255, 255)
-orange = (255, 165, 0)
+orange = (247, 148, 30)
 red = (255, 0, 0)
 brown = (210, 105, 30)
 yellow = (255, 255, 0)
-weed = (75, 155, 74)
-purple = (230, 230, 250)
+dgreen = (75, 155, 74)
+purple = (102, 51, 153)
+cyan = (0, 255, 255)
 
 x = 0
 y = 0
-colors = [pink, blue, green, white]
+colors = [cyan, blue, green, white]
 screen = pygame.display.set_mode((1000, 600))
 pygame.display.set_caption("GAMEHUB")
 # More Logos
@@ -95,12 +96,12 @@ def hasBadge(usern):
 #############################################
 
 def displayprice():
-    displayHubCoin("3.50", 135, 295, weed)
-    displayHubCoin("5", 450, 295, weed)
-    displayHubCoin("69", 770, 295, weed)
-    displayHubCoin("100", 770, 475, weed)
-    displayHubCoin("75", 450, 475, weed)
-    displayHubCoin("50", 135, 475, weed)
+    displayHubCoin("3.50", 135, 295, dgreen)
+    displayHubCoin("5", 450, 295, dgreen)
+    displayHubCoin("69", 770, 295, dgreen)
+    displayHubCoin("100", 770, 475, dgreen)
+    displayHubCoin("75", 450, 475, dgreen)
+    displayHubCoin("50", 135, 475, dgreen)
 
 
 def showHubCoin(usern, xhc, yhc, color):
@@ -119,7 +120,8 @@ def showHubCoin(usern, xhc, yhc, color):
 
 
 def drawTitle():  # Title Screen
-    pygame.draw.rect(screen, white, (0, 0, 1000, 600), 2)
+    screen.fill(black)
+    pygame.draw.rect(screen, vars.color, (0, 0, 1000, 600), 2)
     screen.blit(playButton, (333, 266))
     screen.blit(nftButton, (333, 430))
     screen.blit(titleLogo, (230, 30))
@@ -136,7 +138,7 @@ def drawTitle():  # Title Screen
 
 def titleHelp():
     screen.fill(black)
-    pygame.draw.rect(screen, white, (0, 0, 1000, 600), 2)
+    pygame.draw.rect(screen, vars.color, (0, 0, 1000, 600), 2)
     screen.blit(playButton, (333, 266))
     screen.blit(nftButton, (333, 430))
     screen.blit(titleLogo, (230, 30))
@@ -153,7 +155,7 @@ def titleHelp():
 
 def titleHelpv():
     screen.fill(black)
-    pygame.draw.rect(screen, white, (0, 0, 1000, 600), 2)
+    pygame.draw.rect(screen, vars.color, (0, 0, 1000, 600), 2)
     screen.blit(playButton, (333, 266))
     screen.blit(nftButton, (333, 430))
     screen.blit(titleLogo, (230, 30))
@@ -171,7 +173,7 @@ def titleHelpv():
 
 def titleLeaderboard():
     screen.fill(black)
-    pygame.draw.rect(screen, white, (0, 0, 1000, 600), 2)
+    pygame.draw.rect(screen, vars.color, (0, 0, 1000, 600), 2)
     screen.blit(playButton, (333, 266))
     screen.blit(nftButton, (333, 430))
     screen.blit(titleLogo, (230, 30))
@@ -188,7 +190,7 @@ def titleLeaderboard():
 
 def titleLeaderboardv():
     screen.fill(black)
-    pygame.draw.rect(screen, white, (0, 0, 1000, 600), 2)
+    pygame.draw.rect(screen, vars.color, (0, 0, 1000, 600), 2)
     screen.blit(playButton, (333, 266))
     screen.blit(nftButton, (333, 430))
     screen.blit(titleLogo, (230, 30))
@@ -206,7 +208,7 @@ def titleLeaderboardv():
 
 def titlePlay():  # Play button animation
     screen.blit(plays, (355, 280))
-    pygame.draw.rect(screen, white, (0, 0, 1000, 600), 2)
+    pygame.draw.rect(screen, vars.color, (0, 0, 1000, 600), 2)
     screen.blit(nftButton, (333, 430))
     screen.blit(titleLogo, (230, 30))
     screen.blit(soundButton, (935, 540))
@@ -221,7 +223,7 @@ def titlePlay():  # Play button animation
 
 
 def titleNFT():  # NFT animation
-    pygame.draw.rect(screen, white, (0, 0, 1000, 600), 2)
+    pygame.draw.rect(screen, vars.color, (0, 0, 1000, 600), 2)
     screen.blit(playButton, (333, 266))
     screen.blit(nfts, (355, 430))
     screen.blit(titleLogo, (230, 30))
@@ -237,7 +239,8 @@ def titleNFT():  # NFT animation
 
 
 def drawTitleoff():  # Title Screen
-    pygame.draw.rect(screen, white, (0, 0, 1000, 600), 2)
+    screen.fill(black)
+    pygame.draw.rect(screen, vars.color, (0, 0, 1000, 600), 2)
     screen.blit(playButton, (333, 266))
     screen.blit(nftButton, (333, 430))
     screen.blit(titleLogo, (230, 30))
@@ -254,8 +257,9 @@ def drawTitleoff():  # Title Screen
 
 
 def titlePlayoff():  # Play button animation
+    screen.fill(black)
     screen.blit(plays, (355, 280))
-    pygame.draw.rect(screen, white, (0, 0, 1000, 600), 2)
+    pygame.draw.rect(screen, vars.color, (0, 0, 1000, 600), 2)
     screen.blit(nftButton, (333, 430))
     screen.blit(titleLogo, (230, 30))
     screen.blit(soundButton, (935, 540))
@@ -271,7 +275,8 @@ def titlePlayoff():  # Play button animation
 
 
 def titleNFToff():  # NFT animation
-    pygame.draw.rect(screen, white, (0, 0, 1000, 600), 2)
+    screen.fill(black)
+    pygame.draw.rect(screen, vars.color, (0, 0, 1000, 600), 2)
     screen.blit(playButton, (333, 266))
     screen.blit(nfts, (355, 430))
     screen.blit(titleLogo, (230, 30))
@@ -289,17 +294,16 @@ def titleNFToff():  # NFT animation
 
 def drawNFT():
     screen.fill(black)
-    pygame.draw.rect(screen, white, (0, 0, 1000, 600), 2)
+    pygame.draw.rect(screen, vars.color, (0, 0, 1000, 600), 2)
     showHubCoin(vars.user, 775, 3, white)
     screen.blit(nfts, (345, 25))
     screen.blit(escButton, (20, 20))
-    displayprice()
-    pygame.draw.rect(screen, brown, (55, 200, 230, 130), 10)
-    pygame.draw.rect(screen, orange, (370, 200, 230, 130), 10)
-    pygame.draw.rect(screen, pink, (685, 200, 230, 130), 10)
-    pygame.draw.rect(screen, purple, (55, 380, 230, 130), 10)
-    pygame.draw.rect(screen, red, (370, 380, 230, 130), 10)
-    pygame.draw.rect(screen, blue, (685, 380, 230, 130), 10)
+    pygame.draw.rect(screen, red, (55, 200, 230, 130), 10)
+    pygame.draw.rect(screen, blue, (370, 200, 230, 130), 10)
+    pygame.draw.rect(screen, purple, (685, 200, 230, 130), 10)
+    pygame.draw.rect(screen, orange, (55, 380, 230, 130), 10)
+    pygame.draw.rect(screen, cyan, (370, 380, 230, 130), 10)
+    pygame.draw.rect(screen, white, (685, 380, 230, 130), 10)
     # screen.blit(moonBig, (155, 420))
     # screen.blit(boltBig, (470, 420))
     screen.blit(starBig, (785, 420))
@@ -309,17 +313,17 @@ def drawNFT():
 
 def drawNFTesc():
     screen.fill(black)
-    pygame.draw.rect(screen, white, (0, 0, 1000, 600), 2)
+    pygame.draw.rect(screen, vars.color, (0, 0, 1000, 600), 2)
     showHubCoin(vars.user, 775, 3, white)
     screen.blit(nfts, (345, 25))
     screen.blit(sescButton, (20, 20))
-    displayprice()
-    pygame.draw.rect(screen, brown, (55, 200, 230, 130), 10)
-    pygame.draw.rect(screen, orange, (370, 200, 230, 130), 10)
-    pygame.draw.rect(screen, pink, (685, 200, 230, 130), 10)
-    pygame.draw.rect(screen, purple, (55, 380, 230, 130), 10)
-    pygame.draw.rect(screen, red, (370, 380, 230, 130), 10)
-    pygame.draw.rect(screen, blue, (685, 380, 230, 130), 10)
+    pygame.draw.rect(screen, red, (55, 200, 230, 130), 10)
+    pygame.draw.rect(screen, blue, (370, 200, 230, 130), 10)
+    pygame.draw.rect(screen, purple, (685, 200, 230, 130), 10)
+    pygame.draw.rect(screen, orange, (55, 380, 230, 130), 10)
+    pygame.draw.rect(screen, cyan, (370, 380, 230, 130), 10)
+    pygame.draw.rect(screen, white, (685, 380, 230, 130), 10)
+    screen.blit(starBig, (785, 420))
     displayprice()
     pygame.display.update()
 
@@ -327,7 +331,7 @@ def drawNFTesc():
 def drawNFTnoaccount():
     screen.fill(black)
     screen.blit(escButton, (20, 20))
-    pygame.draw.rect(screen, white, (0, 0, 1000, 600), 2)
+    pygame.draw.rect(screen, vars.color, (0, 0, 1000, 600), 2)
     show_text("Howdy! You need money to buy things!", 200, 200, white)
     show_text("Create an account to access the NFT Shop!", 200, 268, white)
     pygame.display.update()
@@ -336,7 +340,7 @@ def drawNFTnoaccount():
 def drawNFTnoaccountesc():
     screen.fill(black)
     screen.blit(sescButton, (20, 20))
-    pygame.draw.rect(screen, white, (0, 0, 1000, 600), 2)
+    pygame.draw.rect(screen, vars.color, (0, 0, 1000, 600), 2)
     show_text("Howdy! You need money to buy things!", 200, 200, white)
     show_text("Create an account to access the NFT Shop!", 200, 268, white)
     pygame.display.update()
@@ -344,17 +348,16 @@ def drawNFTnoaccountesc():
 
 def drawNFT0():
     screen.fill(black)
-    pygame.draw.rect(screen, white, (0, 0, 1000, 600), 2)
+    pygame.draw.rect(screen, vars.color, (0, 0, 1000, 600), 2)
     showHubCoin(vars.user, 775, 3, white)
     screen.blit(nfts, (345, 25))
     screen.blit(escButton, (20, 20))
-    displayprice()
-    pygame.draw.rect(screen, brown, (55, 200, 230, 130), 75)
-    pygame.draw.rect(screen, orange, (370, 200, 230, 130), 10)
-    pygame.draw.rect(screen, pink, (685, 200, 230, 130), 10)
-    pygame.draw.rect(screen, purple, (55, 380, 230, 130), 10)
-    pygame.draw.rect(screen, red, (370, 380, 230, 130), 10)
-    pygame.draw.rect(screen, blue, (685, 380, 230, 130), 10)
+    pygame.draw.rect(screen, red, (55, 200, 230, 130), 75)
+    pygame.draw.rect(screen, blue, (370, 200, 230, 130), 10)
+    pygame.draw.rect(screen, purple, (685, 200, 230, 130), 10)
+    pygame.draw.rect(screen, orange, (55, 380, 230, 130), 10)
+    pygame.draw.rect(screen, cyan, (370, 380, 230, 130), 10)
+    pygame.draw.rect(screen, white, (685, 380, 230, 130), 10)
     screen.blit(purchase, (450, 530))
     screen.blit(purchase, (450, 530))
     # screen.blit(moonBig, (155, 420))
@@ -366,17 +369,16 @@ def drawNFT0():
 
 def drawNFT0esc():
     screen.fill(black)
-    pygame.draw.rect(screen, white, (0, 0, 1000, 600), 2)
+    pygame.draw.rect(screen, vars.color, (0, 0, 1000, 600), 2)
     showHubCoin(vars.user, 775, 3, white)
     screen.blit(nfts, (345, 25))
     screen.blit(sescButton, (20, 20))
-    displayprice()
-    pygame.draw.rect(screen, brown, (55, 200, 230, 130), 75)
-    pygame.draw.rect(screen, orange, (370, 200, 230, 130), 10)
-    pygame.draw.rect(screen, pink, (685, 200, 230, 130), 10)
-    pygame.draw.rect(screen, purple, (55, 380, 230, 130), 10)
-    pygame.draw.rect(screen, red, (370, 380, 230, 130), 10)
-    pygame.draw.rect(screen, blue, (685, 380, 230, 130), 10)
+    pygame.draw.rect(screen, red, (55, 200, 230, 130), 75)
+    pygame.draw.rect(screen, blue, (370, 200, 230, 130), 10)
+    pygame.draw.rect(screen, purple, (685, 200, 230, 130), 10)
+    pygame.draw.rect(screen, orange, (55, 380, 230, 130), 10)
+    pygame.draw.rect(screen, cyan, (370, 380, 230, 130), 10)
+    pygame.draw.rect(screen, white, (685, 380, 230, 130), 10)
 
     displayprice()
     pygame.display.update()
@@ -384,17 +386,16 @@ def drawNFT0esc():
 
 def drawNFT1():
     screen.fill(black)
-    pygame.draw.rect(screen, white, (0, 0, 1000, 600), 2)
+    pygame.draw.rect(screen, vars.color, (0, 0, 1000, 600), 2)
     showHubCoin(vars.user, 775, 3, white)
     screen.blit(nfts, (345, 25))
     screen.blit(escButton, (20, 20))
-    displayprice()
-    pygame.draw.rect(screen, brown, (55, 200, 230, 130), 10)
-    pygame.draw.rect(screen, orange, (370, 200, 230, 130), 75)
-    pygame.draw.rect(screen, pink, (685, 200, 230, 130), 10)
-    pygame.draw.rect(screen, purple, (55, 380, 230, 130), 10)
-    pygame.draw.rect(screen, red, (370, 380, 230, 130), 10)
-    pygame.draw.rect(screen, blue, (685, 380, 230, 130), 10)
+    pygame.draw.rect(screen, red, (55, 200, 230, 130), 10)
+    pygame.draw.rect(screen, blue, (370, 200, 230, 130), 75)
+    pygame.draw.rect(screen, purple, (685, 200, 230, 130), 10)
+    pygame.draw.rect(screen, orange, (55, 380, 230, 130), 10)
+    pygame.draw.rect(screen, cyan, (370, 380, 230, 130), 10)
+    pygame.draw.rect(screen, white, (685, 380, 230, 130), 10)
     screen.blit(purchase, (450, 530))
     # screen.blit(moonBig, (155, 420))
     # screen.blit(boltBig, (470, 420))
@@ -405,17 +406,16 @@ def drawNFT1():
 
 def drawNFT1esc():
     screen.fill(black)
-    pygame.draw.rect(screen, white, (0, 0, 1000, 600), 2)
+    pygame.draw.rect(screen, vars.color, (0, 0, 1000, 600), 2)
     showHubCoin(vars.user, 775, 3, white)
     screen.blit(nfts, (345, 25))
     screen.blit(sescButton, (20, 20))
-    displayprice()
-    pygame.draw.rect(screen, brown, (55, 200, 230, 130), 10)
-    pygame.draw.rect(screen, orange, (370, 200, 230, 130), 75)
-    pygame.draw.rect(screen, pink, (685, 200, 230, 130), 10)
-    pygame.draw.rect(screen, purple, (55, 380, 230, 130), 10)
-    pygame.draw.rect(screen, red, (370, 380, 230, 130), 10)
-    pygame.draw.rect(screen, blue, (685, 380, 230, 130), 10)
+    pygame.draw.rect(screen, red, (55, 200, 230, 130), 10)
+    pygame.draw.rect(screen, blue, (370, 200, 230, 130), 75)
+    pygame.draw.rect(screen, purple, (685, 200, 230, 130), 10)
+    pygame.draw.rect(screen, orange, (55, 380, 230, 130), 10)
+    pygame.draw.rect(screen, cyan, (370, 380, 230, 130), 10)
+    pygame.draw.rect(screen, white, (685, 380, 230, 130), 10)
     screen.blit(purchase, (450, 530))
     displayprice()
     pygame.display.update()
@@ -423,17 +423,16 @@ def drawNFT1esc():
 
 def drawNFT2():
     screen.fill(black)
-    pygame.draw.rect(screen, white, (0, 0, 1000, 600), 2)
+    pygame.draw.rect(screen, vars.color, (0, 0, 1000, 600), 2)
     showHubCoin(vars.user, 775, 3, white)
     screen.blit(nfts, (345, 25))
     screen.blit(escButton, (20, 20))
-    displayprice()
-    pygame.draw.rect(screen, brown, (55, 200, 230, 130), 10)
-    pygame.draw.rect(screen, orange, (370, 200, 230, 130), 10)
-    pygame.draw.rect(screen, pink, (685, 200, 230, 130), 75)
-    pygame.draw.rect(screen, purple, (55, 380, 230, 130), 10)
-    pygame.draw.rect(screen, red, (370, 380, 230, 130), 10)
-    pygame.draw.rect(screen, blue, (685, 380, 230, 130), 10)
+    pygame.draw.rect(screen, red, (55, 200, 230, 130), 10)
+    pygame.draw.rect(screen, blue, (370, 200, 230, 130), 10)
+    pygame.draw.rect(screen, purple, (685, 200, 230, 130), 75)
+    pygame.draw.rect(screen, orange, (55, 380, 230, 130), 10)
+    pygame.draw.rect(screen, cyan, (370, 380, 230, 130), 10)
+    pygame.draw.rect(screen, white, (685, 380, 230, 130), 10)
     screen.blit(purchase, (450, 530))
     # screen.blit(moonBig, (155, 420))
     # screen.blit(boltBig, (470, 420))
@@ -444,17 +443,16 @@ def drawNFT2():
 
 def drawNFT2esc():
     screen.fill(black)
-    pygame.draw.rect(screen, white, (0, 0, 1000, 600), 2)
+    pygame.draw.rect(screen, vars.color, (0, 0, 1000, 600), 2)
     showHubCoin(vars.user, 775, 3, white)
     screen.blit(nfts, (345, 25))
     screen.blit(sescButton, (20, 20))
-    displayprice()
-    pygame.draw.rect(screen, brown, (55, 200, 230, 130), 10)
-    pygame.draw.rect(screen, orange, (370, 200, 230, 130), 10)
-    pygame.draw.rect(screen, pink, (685, 200, 230, 130), 75)
-    pygame.draw.rect(screen, purple, (55, 380, 230, 130), 10)
-    pygame.draw.rect(screen, red, (370, 380, 230, 130), 10)
-    pygame.draw.rect(screen, blue, (685, 380, 230, 130), 10)
+    pygame.draw.rect(screen, red, (55, 200, 230, 130), 10)
+    pygame.draw.rect(screen, blue, (370, 200, 230, 130), 10)
+    pygame.draw.rect(screen, purple, (685, 200, 230, 130), 75)
+    pygame.draw.rect(screen, orange, (55, 380, 230, 130), 10)
+    pygame.draw.rect(screen, cyan, (370, 380, 230, 130), 10)
+    pygame.draw.rect(screen, white, (685, 380, 230, 130), 10)
     screen.blit(purchase, (450, 530))
     displayprice()
     pygame.display.update()
@@ -462,17 +460,17 @@ def drawNFT2esc():
 
 def drawNFT3():
     screen.fill(black)
-    pygame.draw.rect(screen, white, (0, 0, 1000, 600), 2)
+    pygame.draw.rect(screen, vars.color, (0, 0, 1000, 600), 2)
     showHubCoin(vars.user, 775, 3, white)
     screen.blit(nfts, (345, 25))
     screen.blit(escButton, (20, 20))
-    displayprice()
-    pygame.draw.rect(screen, brown, (55, 200, 230, 130), 10)
-    pygame.draw.rect(screen, orange, (370, 200, 230, 130), 10)
-    pygame.draw.rect(screen, pink, (685, 200, 230, 130), 10)
-    pygame.draw.rect(screen, purple, (55, 380, 230, 130), 75)
-    pygame.draw.rect(screen, red, (370, 380, 230, 130), 10)
-    pygame.draw.rect(screen, blue, (685, 380, 230, 130), 10)
+
+    pygame.draw.rect(screen, red, (55, 200, 230, 130), 10)
+    pygame.draw.rect(screen, blue, (370, 200, 230, 130), 10)
+    pygame.draw.rect(screen, purple, (685, 200, 230, 130), 10)
+    pygame.draw.rect(screen, orange, (55, 380, 230, 130), 75)
+    pygame.draw.rect(screen, cyan, (370, 380, 230, 130), 10)
+    pygame.draw.rect(screen, white, (685, 380, 230, 130), 10)
     screen.blit(purchase, (450, 530))
     # screen.blit(moonBig, (155, 420))
     # screen.blit(boltBig, (470, 420))
@@ -483,17 +481,16 @@ def drawNFT3():
 
 def drawNFT3esc():
     screen.fill(black)
-    pygame.draw.rect(screen, white, (0, 0, 1000, 600), 2)
+    pygame.draw.rect(screen, vars.color, (0, 0, 1000, 600), 2)
     showHubCoin(vars.user, 775, 3, white)
     screen.blit(nfts, (345, 25))
     screen.blit(sescButton, (20, 20))
-    displayprice()
-    pygame.draw.rect(screen, brown, (55, 200, 230, 130), 10)
-    pygame.draw.rect(screen, orange, (370, 200, 230, 130), 10)
-    pygame.draw.rect(screen, pink, (685, 200, 230, 130), 10)
-    pygame.draw.rect(screen, purple, (55, 380, 230, 130), 75)
-    pygame.draw.rect(screen, red, (370, 380, 230, 130), 10)
-    pygame.draw.rect(screen, blue, (685, 380, 230, 130), 10)
+    pygame.draw.rect(screen, red, (55, 200, 230, 130), 10)
+    pygame.draw.rect(screen, blue, (370, 200, 230, 130), 10)
+    pygame.draw.rect(screen, purple, (685, 200, 230, 130), 10)
+    pygame.draw.rect(screen, orange, (55, 380, 230, 130), 75)
+    pygame.draw.rect(screen, cyan, (370, 380, 230, 130), 10)
+    pygame.draw.rect(screen, white, (685, 380, 230, 130), 10)
     screen.blit(purchase, (450, 530))
     displayprice()
     pygame.display.update()
@@ -501,17 +498,16 @@ def drawNFT3esc():
 
 def drawNFT4():
     screen.fill(black)
-    pygame.draw.rect(screen, white, (0, 0, 1000, 600), 2)
+    pygame.draw.rect(screen, vars.color, (0, 0, 1000, 600), 2)
     showHubCoin(vars.user, 775, 3, white)
     screen.blit(nfts, (345, 25))
     screen.blit(escButton, (20, 20))
-    displayprice()
-    pygame.draw.rect(screen, brown, (55, 200, 230, 130), 10)
-    pygame.draw.rect(screen, orange, (370, 200, 230, 130), 10)
-    pygame.draw.rect(screen, pink, (685, 200, 230, 130), 10)
-    pygame.draw.rect(screen, purple, (55, 380, 230, 130), 10)
-    pygame.draw.rect(screen, red, (370, 380, 230, 130), 75)
-    pygame.draw.rect(screen, blue, (685, 380, 230, 130), 10)
+    pygame.draw.rect(screen, red, (55, 200, 230, 130), 10)
+    pygame.draw.rect(screen, blue, (370, 200, 230, 130), 10)
+    pygame.draw.rect(screen, purple, (685, 200, 230, 130), 10)
+    pygame.draw.rect(screen, orange, (55, 380, 230, 130), 10)
+    pygame.draw.rect(screen, cyan, (370, 380, 230, 130), 75)
+    pygame.draw.rect(screen, white, (685, 380, 230, 130), 10)
     screen.blit(purchase, (450, 530))
     # screen.blit(moonBig, (155, 420))
     # screen.blit(boltBig, (470, 420))
@@ -522,17 +518,16 @@ def drawNFT4():
 
 def drawNFT4esc():
     screen.fill(black)
-    pygame.draw.rect(screen, white, (0, 0, 1000, 600), 2)
+    pygame.draw.rect(screen, vars.color, (0, 0, 1000, 600), 2)
     showHubCoin(vars.user, 775, 3, white)
     screen.blit(nfts, (345, 25))
     screen.blit(sescButton, (20, 20))
-    displayprice()
-    pygame.draw.rect(screen, brown, (55, 200, 230, 130), 10)
-    pygame.draw.rect(screen, orange, (370, 200, 230, 130), 10)
-    pygame.draw.rect(screen, pink, (685, 200, 230, 130), 10)
-    pygame.draw.rect(screen, purple, (55, 380, 230, 130), 10)
-    pygame.draw.rect(screen, red, (370, 380, 230, 130), 75)
-    pygame.draw.rect(screen, blue, (685, 380, 230, 130), 10)
+    pygame.draw.rect(screen, red, (55, 200, 230, 130), 10)
+    pygame.draw.rect(screen, blue, (370, 200, 230, 130), 10)
+    pygame.draw.rect(screen, purple, (685, 200, 230, 130), 10)
+    pygame.draw.rect(screen, orange, (55, 380, 230, 130), 10)
+    pygame.draw.rect(screen, cyan, (370, 380, 230, 130), 75)
+    pygame.draw.rect(screen, white, (685, 380, 230, 130), 10)
     screen.blit(purchase, (450, 530))
     displayprice()
     pygame.display.update()
@@ -540,17 +535,17 @@ def drawNFT4esc():
 
 def drawNFT5():
     screen.fill(black)
-    pygame.draw.rect(screen, white, (0, 0, 1000, 600), 2)
+    pygame.draw.rect(screen, vars.color, (0, 0, 1000, 600), 2)
     showHubCoin(vars.user, 775, 3, white)
     screen.blit(nfts, (345, 25))
     screen.blit(escButton, (20, 20))
     displayprice()
-    pygame.draw.rect(screen, brown, (55, 200, 230, 130), 10)
-    pygame.draw.rect(screen, orange, (370, 200, 230, 130), 10)
-    pygame.draw.rect(screen, pink, (685, 200, 230, 130), 10)
-    pygame.draw.rect(screen, purple, (55, 380, 230, 130), 10)
-    pygame.draw.rect(screen, red, (370, 380, 230, 130), 10)
-    pygame.draw.rect(screen, blue, (685, 380, 230, 130), 75)
+    pygame.draw.rect(screen, red, (55, 200, 230, 130), 10)
+    pygame.draw.rect(screen, blue, (370, 200, 230, 130), 10)
+    pygame.draw.rect(screen, purple, (685, 200, 230, 130), 10)
+    pygame.draw.rect(screen, orange, (55, 380, 230, 130), 10)
+    pygame.draw.rect(screen, cyan, (370, 380, 230, 130), 10)
+    pygame.draw.rect(screen, white, (685, 380, 230, 130), 75)
     screen.blit(purchase, (450, 530))
     # screen.blit(moonBig, (155, 420))
     # screen.blit(boltBig, (470, 420))
@@ -561,14 +556,13 @@ def drawNFT5():
 
 def drawNFT5esc():
     screen.fill(black)
-    pygame.draw.rect(screen, white, (0, 0, 1000, 600), 2)
+    pygame.draw.rect(screen, vars.color, (0, 0, 1000, 600), 2)
     showHubCoin(vars.user, 775, 3, white)
     screen.blit(nfts, (345, 25))
     screen.blit(sescButton, (20, 20))
-    displayprice()
-    pygame.draw.rect(screen, brown, (55, 200, 230, 130), 10)
-    pygame.draw.rect(screen, orange, (370, 200, 230, 130), 10)
-    pygame.draw.rect(screen, pink, (685, 200, 230, 130), 10)
+    pygame.draw.rect(screen, white, (55, 200, 230, 130), 10)
+    pygame.draw.rect(screen, yellow, (370, 200, 230, 130), 10)
+    pygame.draw.rect(screen, cyan, (685, 200, 230, 130), 10)
     pygame.draw.rect(screen, purple, (55, 380, 230, 130), 10)
     pygame.draw.rect(screen, red, (370, 380, 230, 130), 10)
     pygame.draw.rect(screen, blue, (685, 380, 230, 130), 75)
@@ -595,7 +589,7 @@ def drawBroke():
 
 def drawSelect():  # select screen
     screen.fill(black)
-    pygame.draw.rect(screen, white, (0, 0, 1000, 600), 2)
+    pygame.draw.rect(screen, vars.color, (0, 0, 1000, 600), 2)
     screen.blit(titleLogo, (230, 30))
     screen.blit(escButton, (20, 20))
     screen.blit(pingLogo, (143, 270))
@@ -608,7 +602,7 @@ def drawSelect():  # select screen
 
 def pingSelect():  # ping anim
     screen.fill(black)
-    pygame.draw.rect(screen, white, (0, 0, 1000, 600), 2)
+    pygame.draw.rect(screen, vars.color, (0, 0, 1000, 600), 2)
     screen.blit(titleLogo, (230, 30))
     screen.blit(escButton, (20, 20))
     screen.blit(pings, (162, 280))
@@ -621,7 +615,7 @@ def pingSelect():  # ping anim
 
 def pastrySelect():  # pastry actuator anim
     screen.fill(black)
-    pygame.draw.rect(screen, white, (0, 0, 1000, 600), 2)
+    pygame.draw.rect(screen, vars.color, (0, 0, 1000, 600), 2)
     screen.blit(titleLogo, (230, 30))
     screen.blit(escButton, (20, 20))
     screen.blit(pingLogo, (143, 270))
@@ -634,7 +628,7 @@ def pastrySelect():  # pastry actuator anim
 
 def aimSelect():  # skaavok anim
     screen.fill(black)
-    pygame.draw.rect(screen, white, (0, 0, 1000, 600), 2)
+    pygame.draw.rect(screen, vars.color, (0, 0, 1000, 600), 2)
     screen.blit(titleLogo, (230, 30))
     screen.blit(escButton, (20, 20))
     screen.blit(pingLogo, (143, 270))
@@ -647,7 +641,7 @@ def aimSelect():  # skaavok anim
 
 def wormSelect():  # worm anim
     screen.fill(black)
-    pygame.draw.rect(screen, white, (0, 0, 1000, 600), 2)
+    pygame.draw.rect(screen, vars.color, (0, 0, 1000, 600), 2)
     screen.blit(titleLogo, (230, 30))
     screen.blit(escButton, (20, 20))
     screen.blit(pingLogo, (143, 270))
@@ -660,7 +654,7 @@ def wormSelect():  # worm anim
 
 def drawSelectEsc():  # select screen
     screen.fill(black)
-    pygame.draw.rect(screen, white, (0, 0, 1000, 600), 2)
+    pygame.draw.rect(screen, vars.color, (0, 0, 1000, 600), 2)
     screen.blit(titleLogo, (230, 30))
     screen.blit(sescButton, (20, 20))
     screen.blit(pingLogo, (143, 270))
@@ -673,7 +667,7 @@ def drawSelectEsc():  # select screen
 
 def countDownScreen():  # count down
     screen.fill(black)
-    pygame.draw.rect(screen, white, (0, 0, 1000, 600), 2)
+    pygame.draw.rect(screen, vars.color, (0, 0, 1000, 600), 2)
     # show_text_size("5", 400, 100, white, 400)
     # pygame.display.update()
     # time.sleep(1)
@@ -701,7 +695,7 @@ def countDownScreen():  # count down
 
 def banscreen():
     screen.fill(black)
-    pygame.draw.rect(screen, white, (0, 0, 1000, 600), 2)
+    pygame.draw.rect(screen, vars.color, (0, 0, 1000, 600), 2)
     screen.blit(cheaterdetected, (0, 0))
     pygame.display.update()
 
@@ -731,7 +725,7 @@ def leaderboard():
     if hasBadge(vars.sorted[9][0]) == True:  # 10
         screen.blit(starSmall, (315, 350))
 
-    pygame.draw.rect(screen, white, (0, 0, 1000, 600), 2)
+    pygame.draw.rect(screen, vars.color, (0, 0, 1000, 600), 2)
     show_text_size("Leaderboard", 380, 25, white, 69)
     # show top 10 networth
 
@@ -767,7 +761,7 @@ def leaderboard():
 
 def leaderboardesc():
     screen.blit(sescButton, (20, 20))
-    pygame.draw.rect(screen, white, (0, 0, 1000, 600), 2)
+    pygame.draw.rect(screen, vars.color, (0, 0, 1000, 600), 2)
 
     if hasBadge(vars.sorted[0][0]) == True:  # 1
         screen.blit(starBig, (285, 100))
@@ -827,7 +821,7 @@ def drawHelp():
     # pygame.mixer.music.load("Music/angrychong.mp3")
     # pygame.mixer.music.play(0)
     screen.blit(escButton, (20, 20))
-    pygame.draw.rect(screen, white, (0, 0, 1000, 600), 2)
+    pygame.draw.rect(screen, vars.color, (0, 0, 1000, 600), 2)
     show_text_size("Help", 380, 25, white, 69)
     show_text_size("Ping", 24, 100, white, 45)
     show_text("This is a two-player game. It functions just like the popular game Pong.", 25, 130, white)
@@ -854,7 +848,7 @@ def drawHelp():
 def drawHelpesc():
     screen.fill(black)
     screen.blit(sescButton, (20, 20))
-    pygame.draw.rect(screen, white, (0, 0, 1000, 600), 2)
+    pygame.draw.rect(screen, vars.color, (0, 0, 1000, 600), 2)
     show_text_size("Help", 380, 25, white, 69)
 
     show_text_size("Ping", 24, 100, white, 45)
