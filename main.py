@@ -74,7 +74,8 @@ c = conn.cursor()
 # c.execute("DELETE FROM highScores WHERE pastryHigh = 0")
 
 # c.execute("UPDATE users SET money = 2000 WHERE username = 'Quandavious Dingleton'")
-c.execute("UPDATE users SET money = 20.0 WHERE username = 'sean'")
+
+# c.execute("UPDATE users SET money = 2000.0 WHERE username = 'sean'")
 
 c.execute("SELECT * FROM users")
 print(c.fetchall())
@@ -277,6 +278,7 @@ trophy = pygame.image.load("Logo/trophy.png")
 nn = 0
 L = -1
 equip = -1
+badgeEquip = -1
 
 
 def show_text(msg, xp, yp, color):
@@ -651,7 +653,6 @@ while True:
             if equip == 5:
                 screen.fill(black)
                 drawNFT5()
-                color = blue
 
             for event in pygame.event.get():
                 if event.type == pygame.KEYDOWN and event.key == K_ESCAPE:
@@ -689,10 +690,12 @@ while True:
                                     pygame.display.update()
                                 else:
                                     print("u already hav it bruh")
+                                    drawHave()
                             else:
                                 print("broke ahh")
+                                drawBroke()
 
-                        if L == 100:
+                        if L == 5:
                             print(getHubCoin(vars.user))
                             diff = getHubCoin(vars.user) - L
                             if getHubCoin(vars.user) >= L:
@@ -708,8 +711,95 @@ while True:
                                     pygame.display.update()
                                 else:
                                     print("u already hav it bruh")
+                                    drawHave()
                             else:
                                 print("broke ahh")
+                                drawBroke()
+
+                        if L == 69:
+                            print(getHubCoin(vars.user))
+                            diff = getHubCoin(vars.user) - L
+                            if getHubCoin(vars.user) >= L:
+                                if searchNFTS(vars.user, '2') != True:
+                                    c.execute(f"UPDATE users SET money = '{diff}' WHERE username = '{vars.user}'")
+                                    c.execute(setNFTS(vars.user, 2))
+                                    print("updated")
+                                    addUsers()
+                                    screen.fill(black)
+                                    drawNFT2()
+                                    equip = 2
+                                    diff = 0
+                                    pygame.display.update()
+                                else:
+                                    print("u already hav it bruh")
+                                    drawHave()
+                            else:
+                                print("broke ahh")
+                                drawBroke()
+
+                        if L == 50:
+                            print(getHubCoin(vars.user))
+                            diff = getHubCoin(vars.user) - L
+                            if getHubCoin(vars.user) >= L:
+                                if searchNFTS(vars.user, '3') != True:
+                                    c.execute(f"UPDATE users SET money = '{diff}' WHERE username = '{vars.user}'")
+                                    c.execute(setNFTS(vars.user, 3))
+                                    print("updated")
+                                    addUsers()
+                                    screen.fill(black)
+                                    drawNFT3()
+                                    badgeEquip = 3
+                                    diff = 0
+                                    pygame.display.update()
+                                else:
+                                    print("u already hav it bruh")
+                                    drawHave()
+                            else:
+                                print("broke ahh")
+                                drawBroke()
+
+                        if L == 75:
+                            print(getHubCoin(vars.user))
+                            diff = getHubCoin(vars.user) - L
+                            if getHubCoin(vars.user) >= L:
+                                if searchNFTS(vars.user, '4') != True:
+                                    c.execute(f"UPDATE users SET money = '{diff}' WHERE username = '{vars.user}'")
+                                    c.execute(setNFTS(vars.user, 4))
+                                    print("updated")
+                                    addUsers()
+                                    screen.fill(black)
+                                    drawNFT4()
+                                    badgeEquip = 4
+                                    diff = 0
+                                    pygame.display.update()
+                                else:
+                                    print("u already hav it bruh")
+                                    drawHave()
+                                    drawHave()
+                            else:
+                                print("broke ahh")
+                                drawBroke()
+                                drawBroke()
+
+                        if L == 100:
+                            print(getHubCoin(vars.user))
+                            diff = getHubCoin(vars.user) - L
+                            if getHubCoin(vars.user) >= L:
+                                if searchNFTS(vars.user, '5') != True:
+                                    c.execute(f"UPDATE users SET money = '{diff}' WHERE username = '{vars.user}'")
+                                    c.execute(setNFTS(vars.user, 5))
+                                    print("updated")
+                                    addUsers()
+                                    screen.fill(black)
+                                    drawNFT5()
+                                    diff = 0
+                                    pygame.display.update()
+                                else:
+                                    print("u already hav it bruh")
+                                    drawHave()
+                            else:
+                                print("broke ahh")
+                                drawBroke()
 
             if 55 <= x <= 305 and 200 <= y <= 350:
                 if searchNFTS(vars.user, '0') == True:
@@ -723,15 +813,16 @@ while True:
             if 370 <= x <= 620 and 200 <= y <= 350:
                 if searchNFTS(vars.user, '1') == True:
                     equip = 1
-                    L = 3.5
+                    L = 5
                 else:
-                    L = 100
+                    L = 5
                     drawNFT1()
                     equip = 10
 
             if 685 <= x <= 935 and 200 <= y <= 350:
                 if searchNFTS(vars.user, '2') == True:
                     equip = 2
+                    L = 69
                 else:
                     L = 69
                     drawNFT2()
@@ -740,24 +831,27 @@ while True:
             if 55 <= x <= 305 and 380 <= y <= 530:
                 if searchNFTS(vars.user, '3') == True:
                     equip = 3
+                    L = 50
                 else:
-                    L = 420
+                    L = 50
                     drawNFT3()
                     equip = 10
 
             if 370 <= x <= 620 and 380 <= y <= 530:
                 if searchNFTS(vars.user, '4') == True:
                     equip = 4
+                    L = 75
                 else:
-                    L = 50
+                    L = 75
                     drawNFT4()
                     equip = 10
 
             if 685 <= x <= 935 and 380 <= y <= 530:
                 if searchNFTS(vars.user, '5') == True:
                     equip = 5
+                    L = 100
                 else:
-                    L = 75
+                    L = 100
                     drawNFT5()
                     equip = 10
 
@@ -865,9 +959,6 @@ while True:
         pastrySelect()
         screen.fill(black)
         pygame.display.update()
-        pygame.mixer.pre_init()
-        pygame.mixer.music.load("Music/bangarang.mp3")
-        pygame.mixer.music.play(-1)
 
         end = -1
         choose = 1
@@ -1212,13 +1303,14 @@ while True:
                         pygame.display.update()
 
     if selection == 6:  #####################WORM#####################
-        def crash(score1):
+        def crash(score1, num):
             pygame.mixer.music.load("Music/angrychong.mp3")
             screen.fill(black)
             pygame.mixer.music.play(0)
             show_text("Your worm died.", 480, 30, white)
             show_text("Score: " + str(score1), 490, 60, white)
             show_text("High Score: " + str(wormHigh[0][0]), 490, 90, white)
+            show_text("You now have " + str(num) + "HubCoins", 480, 120, white)
             screen.blit(trophy, (200, 20))
             pygame.display.update()
             wormbody.clear()
@@ -1299,14 +1391,14 @@ while True:
             wormbody.pop(-1)
 
         if headpos[0] < 0 or headpos[0] > 1000 or headpos[1] < 0 or headpos[1] > 600:
-            crash(scorew)
+            crash(scorew, coinamtw)
             screen.fill(black)
             selection = 0
             scorew = 0
 
         for segment in wormbody[1:]:
             if headpos[0] == segment[0] and headpos[1] == segment[1]:
-                crash(scorew)
+                crash(scorew, coinamtw)
                 screen.fill(black)
                 selection = 0
                 scorew = 0

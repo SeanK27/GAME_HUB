@@ -1,1 +1,1 @@
-Welcome to GameHub
+GAMEHUB is a free unblocked online game that you can play in class and compete with others with a built in online leaderboard. We have 4 games that you can play. Those 6 games consist of ping, pastry actuator, skaavok, and worm. Three of the four games contribute to our in-game currency, HubCoin, that places you on our leaderboard. Best of luck and don't get caught by your teacher.
